@@ -4,7 +4,7 @@
  #### Danh sách thành viên (3 thành viên)
        - Phan Thị Mỹ Duyên
        - Nguyễn Tuấn Tú
-       - Dương Công Hậu
+       - Nguyễn Võ Quang Vinh
   #### Mục tiêu: 
   - Xây	dựng	website	đặt	vé	xem	phim
  - Hệ thống	rạp	phim	bao	gồm	nhiều	cụm	rạp,	mỗi	cụm	rạp	bao	gồm	nhiều	rạp	chiếu	khác	
