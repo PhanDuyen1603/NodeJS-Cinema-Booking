@@ -1,0 +1,118 @@
+html,
+body {
+    background-image: url('../image/bgLogin.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    font-family: 'Numans', sans-serif;
+}
+
+#wrap {
+    background-image: -ms-linear-gradient(top, #FFFFFF 0%, #D3D8E8 100%);
+    /* Mozilla Firefox */
+    background-image: -moz-linear-gradient(top, #FFFFFF 0%, #D3D8E8 100%);
+    /* Opera */
+    background-image: -o-linear-gradient(top, #FFFFFF 0%, #D3D8E8 100%);
+    /* Webkit (Safari/Chrome 10) */
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FFFFFF), color-stop(1, #D3D8E8));
+    /* Webkit (Chrome 11+) */
+    background-image: -webkit-linear-gradient(top, #FFFFFF 0%, #D3D8E8 100%);
+    /* W3C Markup, IE10 Release Preview */
+    background-image: linear-gradient(to bottom, #FFFFFF 0%, #D3D8E8 100%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    width: 700px;
+}
+
+legend {
+    color: #141823;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.signup-btn {
+    border: none;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    text-transform: uppercase;
+    outline: none;
+    overflow: hidden;
+    position: relative;
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    background-color: #222;
+    padding: 10px 30px;
+    margin: 0 auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.20);
+    border-radius: 20px;
+}
+
+.signup-btn:hover {
+    background: #79bc64;
+    background-image: -webkit-linear-gradient(top, #79bc64, #5e7056);
+    background-image: -moz-linear-gradient(top, #79bc64, #5e7056);
+    background-image: -ms-linear-gradient(top, #79bc64, #5e7056);
+    background-image: -o-linear-gradient(top, #79bc64, #5e7056);
+    background-image: linear-gradient(to bottom, #79bc64, #5e7056);
+    text-decoration: none;
+}
+
+.navbar-default .navbar-brand {
+    color: #fff;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.form .form-control {
+    margin-bottom: 10px;
+}
+
+@media (min-width:768px) {
+    #home {
+        margin-top: 50px;
+    }
+    #home .slogan {
+        color: #0e385f;
+        line-height: 29px;
+        font-weight: bold;
+    }
+    .row {
+        background-color: #A7BED8 !important;
+    }
+}
+
+h3 {
+    color: white;
+    text-align: center;
+    font-size: 33px;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+    width: 120px;
+    height: 100px;
+}
+
+.form-gap {
+    padding-top: 30px;
+}
+
+.input-lg {
+    width: 100%;
+    margin: auto;
+    border-radius: 20px;
+}
+
+.centerReset {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+    width: 100px;
+    height: 100px;
+}

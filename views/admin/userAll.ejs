@@ -1,0 +1,24 @@
+<% if(userAll) { %>
+    <div id="table">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Họ và Tên </th>
+                <th>Email </th>
+                <th>Số điên thoại người dùng</th>
+                <th>Thao tác</th>
+            </tr>
+        <% for (let i=0;i < userAll.length ; i++ ) { %>
+            <tr>
+                <td> <%= userAll[i].dataValues.user_ID  %></td>
+                <td> <%= userAll[i].dataValues.user_Name %></td>
+                <td> <%= userAll[i].dataValues.user_Email %></td>
+                <td> <%= userAll[i].dataValues.user_NumberPhone %></td>
+                
+                <td> <a href="/admin/delete/user/<%= userAll[i].dataValues.user_ID %>" onclick="return confirmAction()" >Xóa</a></td>
+            </tr>
+        <% } %>
+        </table>
+        
+    </div>
+<% } %>

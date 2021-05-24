@@ -1,0 +1,15 @@
+<% const filmPublic = filmChieu.filmDangChieu %> 
+<% for (var i = 0; i < filmPublic.length; i++ ) { %>
+        <div class="col-md-3 col-sm-3 movie-item">
+            <div class="article-movie-home">
+                <a href="/phim/<%= filmPublic[i].dataValues.film_ID %>">
+                    <img id="img-film-indexContent" src="<%= filmPublic[i].dataValues.film_Image %>" alt="Không load được ảnh" width="216" height="324">
+                </a>
+            </div>
+            <a href="/phim/<%= filmPublic[i].dataValues.film_ID %>">
+                <div class="title-movie">
+                    <h4><%= filmPublic[i].dataValues.film_Name %></h4>
+                </div>
+            </a>
+        </div>
+<% } %>

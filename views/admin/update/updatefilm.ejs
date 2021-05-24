@@ -1,0 +1,14 @@
+<% if(typeof filmID !== 'undefined') { %>
+    <div>
+        <form action="" method="POST">
+            <% var d = new Date(filmID.dataValues.film_DatePublic); %>
+            <%= d.getDate(); %>
+            <%= d.getMonth()+1; %>
+            <%= d.getFullYear(); %>
+            <label>Tên :</label><input type="text" id="txtFilmName" name ="txtFilmName" size="40" value="<%= filmID.dataValues.film_Name %>"/> <br/>
+            <lable>Ngày công chiếu :</label> <input type="date" id="datePlublic" name="datePlublic" value="<%= d.getDate() %>"/> <br/>
+            <label>Hình ảnh :</label><img src="<%= filmID.dataValues.film_Image %>"/>
+            <input type="submit" value="cập nhật "/>
+        </form> 
+    </div>
+<% } %>

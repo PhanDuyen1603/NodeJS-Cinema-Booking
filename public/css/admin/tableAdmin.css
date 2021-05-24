@@ -1,0 +1,152 @@
+/* table admin*/
+#table table{
+    border-collapse: collapse;
+    width: 100%;
+    border: #4CAF50 1px solid;
+}
+
+#table table th,td {
+    text-align: center;
+    padding:8px;
+    border: #4CAF50 1px solid;
+}
+
+#table table tr th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+
+#table table tr td img {
+    width: 50px;
+    height: 50px;
+}
+
+#search{
+    margin-top: 20px;
+    background-image: url('/public/image/icon-search.png');
+    background-position: 10px 12px;
+    background-repeat: no-repeat;
+    width: 100%;
+    font-size: 10px;
+    padding: 12px 20px 12px 40px ;
+    border :1px solid #ddd;
+    margin-bottom: 12px;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    padding-top: 60px;
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: 5px auto; /* 15% from the top and centered */
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
+
+.close {
+    /* Position it in the top right corner outside of the modal */
+    position: absolute;
+    right: 25px;
+    top: 0; 
+    color: #000;
+    font-size: 35px;
+    font-weight: bold;
+}
+.close:hover,.close:focus {
+  color: red;
+  cursor: pointer;
+}
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+    from {-webkit-transform: scale(0)} 
+    to {-webkit-transform: scale(1)}
+}
+  
+@keyframes animatezoom {
+    from {transform: scale(0)} 
+    to {transform: scale(1)}
+}
+
+.modal form {
+    border: 3px solid #f1f1f1;
+}
+
+.modal input[type=text], input[type=file],input[type=date],input[type=number],input [type=time] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+.modal button[type = submit]{
+    background-color: #4CAF50;
+}
+
+.modal select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.modal button{
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+.modal button:hover {
+    opacity: 0.8;
+}
+.cancelbtn{
+    width: auto;
+    padding: 10px 18px;
+    background-color: #f44336;
+}
+.container {
+    padding: 16px;
+}
+  
+  
+.table table{
+    border-collapse: collapse;
+    width: 100%;
+    border: #4CAF50 1px solid;
+}
+
+.table table th,td {
+    text-align: center;
+    padding:8px;
+    border: #4CAF50 1px solid;
+}
+
+.table table tr th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+
+.table table tr td img {
+    width: 50px;
+    height: 50px;
+}
