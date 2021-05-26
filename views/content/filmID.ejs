@@ -1,0 +1,193 @@
+<script>
+    jQuery(document).ready(function ($) {
+
+        $(".btnrating").on('click', (function (e) {
+
+            var previous_value = $("#selected_rating").val();
+
+            var selected_value = $(this).attr("data-attr");
+            $("#selected_rating").val(selected_value);
+
+            $(".selected-rating").empty();
+            $(".selected-rating").html(selected_value);
+
+            for (i = 1; i <= selected_value; ++i) {
+                $("#rating-star-" + i).toggleClass('btn-warning');
+                $("#rating-star-" + i).toggleClass('btn-default');
+            }
+
+            for (ix = 1; ix <= previous_value; ++ix) {
+                $("#rating-star-" + ix).toggleClass('btn-warning');
+                $("#rating-star-" + ix).toggleClass('btn-default');
+            }
+
+        }));
+    });
+</script>
+
+<div class="content-area">
+    <div class="row">
+        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+            <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                <div>
+                    <img id="img-film-indexContent" src="<%= filmID.dataValues.film_Image %>" alt="Không load được ảnh"
+                        width="220px" height="360px">
+                </div>
+            </div>
+            <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7">
+                <h3 style="text-align: center; font-weight: bold"><%= filmID.dataValues.film_Name %></h3>
+                <div style="text-align: center">
+                    <strong>4.9</strong><span>/10</span>
+                    <div><strong>Lượt đánh giá: </strong> 56</div>
+                    <button class="btn btn-default radius" type="submit" id="myBtn">Đánh giá</button>
+
+                    <div id="myModal" class="modal">
+                        
+                        <!-- Đánh giá -->
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <h4>Đánh giá bộ phim</h4>
+                            <div class="form-group" id="rating-ability-wrapper">
+                                <label class="control-label" for="rating">
+                                    <span class="field-label-info"></span>
+                                    <input type="hidden" id="selected_rating" name="selected_rating" value=""
+                                        required="required">
+                                </label>
+                                <h2 class="bold rating-header">
+                                    <span class="selected-rating">0</span><small>/10</small>
+                                </h2>
+                                <% for(var i = 1; i<= 10; i++) { %>
+                                <button type="button" class="btnrating btn btn-default btn-lg" data-attr="<%= i%>" id="rating-star-<%= i%>" style="text-align: center; padding-left: 10px">
+                                    <i class="fa fa-star" aria-hidden="true" id="star" style="width: 20px; height: 20px;"></i>
+                                </button>
+                                <% } %>
+                            </div>
+                        </div>
+
+                    </div>
+                    <script>
+                        //form Rating
+                        var modal = document.getElementById("myModal");
+                        var btn = document.getElementById("myBtn");
+                        var span = document.getElementsByClassName("close")[0];
+                        btn.onclick = function () {
+                            modal.style.display = "block";
+                        }
+                        span.onclick = function () {
+                            modal.style.display = "none";
+                        }
+                        window.onclick = function (event) {
+                            if (event.target == modal) {
+                                modal.style.display = "none";
+                            }
+                        }
+                    </script>
+                </div>
+
+                <br />
+                <p><strong>Thời lượng: </strong><%= filmID.dataValues.film_Time %> phút</p>
+                <p><strong>Ngày khởi chiếu: </strong><% var d = new Date(filmID.dataValues.film_DatePublic); %>
+                    <%= d.getDate(); %>
+                    /
+                    <%= d.getMonth()+1; %>
+                    /
+                    <%= d.getFullYear(); %>
+                </p>
+                <br />
+                <p><strong>Nội dung: </strong><%= filmID.dataValues.film_Content %></p>
+                <br />
+            </div>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <% var day_now = new Date();%>
+                <% if (filmID.dataValues.film_DatePublic < day_now) { %>
+                <!--Hiển thị form-control cho cụm rạp và rạp-->
+                <form action="" method="POST" class="form-fix">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                        <div class="form-group">
+                            <label for="form_control1">Chọn cụm rạp phim</label>
+                            <select class="form-control" id="form_control1">
+                                <% for (var i = -1; i < cineplex.length; i++) { %>
+                                <% if (i == -1) { %>
+                                <option class="option" value="-1">Tất cả cụm rạp</option>
+                                <% } else { %>
+                                <option class="option" value="<%= cineplex[i].dataValues.cineplex_ID %>">
+                                    <%= cineplex[i].dataValues.cineplex_Name %></option>
+                                <% } %>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                        <div class="form-group">
+                            <label for="form_control2">Chọn rạp phim</label>
+                            <select class="form-control" id="form_control2">
+                                <% for (var i = -1; i < cinema.length; i++) { %>
+                                <% if (i == -1) { %>
+                                <option class="option" value="-1">Tất cả rạp</option>
+                                <% } else { %>
+                                <option class="option" value="<%= cinema[i].dataValues.cinema_ID %>">
+                                    <%= cinema[i].dataValues.cinema_Name %></option>
+                                <% } %>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+
+                <!--Load các xuất chiếu và thông báo-->
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <% if (cinemaTimeShow.length == 0) { %>
+                    <h4 style="text-align: center; color: red; text-transform: uppercase; font-weight: bold">Hiện tại
+                        chưa có xuất chiếu nào cho phim này!!!</h4>
+                    <% } else { %>
+                    <div class="content-rap">
+                        <% for (var i = 0; i< cinemaTimeShow.length; i++ ) { %>
+                        <% if (i==0 || cinemaTimeShow[i].dataValues.cinema_ID != cinemaTimeShow[i-1].dataValues.cinema_ID) { %>
+                        <div class="content-rap-bg">
+                            <h5 class="content-rap-bg-fix" name="cinemaID">
+                                <%= cinemaTimeShow[i].dataValues.Cinema.cinema_Name %></h5>
+                        </div>
+                        <div class="content-rap-box"></div>
+                        <a href="/phim/muave/<%= cinemaTimeShow[i].dataValues.cinemaTimeShow_ID  %>"
+                            class="content-rap-box-btn">
+                            <%= cinemaTimeShow[i].dataValues.TimeShow.timeShow_Start %>
+                        </a>
+                        <% } else { %>
+                        <a href="/phim/muave/<%= cinemaTimeShow[i].dataValues.cinemaTimeShow_ID  %>"
+                            class="content-rap-box-btn">
+                            <%= cinemaTimeShow[i].dataValues.TimeShow.timeShow_Start %>
+                        </a>
+                        <% } %>
+                        <% } %>
+                    </div>
+                    <% } %>
+                </div>
+                <% } else { %>
+                <h3 style="text-align: center; color: red; text-transform: uppercase; font-weight: bold"> Phim chưa được
+                    công chiếu, hiện tại không thể đặc vé!</h3>
+                <% } %>
+            </div>
+            <!--================================================================================
+                                    Đoạn js xử lý chọn Cụm rạp và Rạp
+            =================================================================================-->
+
+
+
+
+        </div>
+
+        <!--Phim đang chiếu bên phải-->
+        <div style="text-align: center;" class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 title-movie">
+            <h4 style="text-transform: uppercase">Phim đang chiếu</h4>
+            <% for (var i=0; i< 4; i++) { %>
+            <a href="/film/<%= filmDangChieu2[i].dataValues.film_ID %>">
+                <img src="<%= filmDangChieu2[i].dataValues.film_Image %>" alt="Không load được ảnh" width="150px"
+                    height="190px">
+                <div class="title-movie">
+                    <h4><%= filmDangChieu2[i].dataValues.film_Name %></h4>
+                </div>
+            </a>
+            <% } %>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Việt Nam Cinema</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <script src="/public/js/jquery/jquery-1.10.2.min.js"></script>
+    <script src="/public/js/jquery/noconflict.js"></script>
+    <script src="/public/js/jquery/varien_format_js.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="/public/css/user/muave.css">
+</head>
+
+<body>
+    <div >
+        <div style="background-image: url('/public/image/background_all/button.gif')">
+            <div style="padding-left: 10%; padding-right: 10%">
+                <div class="col-main">
+                    <div class="booking-progress">
+                        <h1>Đặt vé trực tuyến</h1>
+                    </div>
+                    <div class="main-content">
+                        <ul class="progress">
+                            <li class="booking-step cycle-slide cycle-slide-active" style="position: absolute; top: 0px; left: 0px; z-index: 100; opacity: 1; display: block; visibility: visible;">
+                                <label class="top-content">Phòng chiếu</label>    
+                                <div class="ticketbox">
+                                    <img src="/public/image/screen.JPG" >
+                                    <% var st1 = 'ABCDEFGHJKLMNOP'; %>
+                                    <% var chuoiLayla1 = st1.substring(0,cinemaTimeShow.dataValues.Cinema.cinema_Length/2); %>
+                                    <% var chuoiLayla2 = st1.substring(cinemaTimeShow.dataValues.Cinema.cinema_Length/2,cinemaTimeShow.dataValues.Cinema.cinema_Length); %>
+
+                                    <% if (cinemaTimeShow.dataValues.Cinema.cinema_Type == "2D") { %>
+                                        <% for (var z in chuoiLayla1) { %>
+                                        <div class="row">
+                                            <% for (var i = 0; i < cinemaTimeShow.dataValues.Cinema.cinema_Width; i++) { %>
+                                            <div class="seat seat-standard active" onclick="selected(this)" zone="Thường" loc="<%= chuoiLayla1[z]%><%= i+1%>" id="<%= chuoiLayla1[z]%><%= i+1%>"
+                                                price="75000"> <%= chuoiLayla1[z]%><%= i+1 %> </div>
+                                            <% } %>
+                                        </div>
+                                        <% } %>
+                                        <% for (var z in chuoiLayla2 ) { %>
+                                        <div class="row">
+                                            <% for (var i = 0; i < cinemaTimeShow.dataValues.Cinema.cinema_Width ; i++) { %>
+                                            <div class="seat seat-vipprime active" onclick="selected(this)" zone="Vipprime"
+                                                loc="<%= chuoiLayla2[z] %><%= i+1 %>" id="<%= chuoiLayla2[z] %><%= i+1 %>" price="90000"> <%= chuoiLayla2[z] %><%=  i+1 %> </div>
+                                            <% } %>
+                                        </div>
+                                        <% } %>
+                                    <% } else { %> 
+                                        <% for (var z in chuoiLayla1) { %>
+                                        <div class="row">
+                                            <% for (var i = 0; i < cinemaTimeShow.dataValues.Cinema.cinema_Width; i++) { %>
+                                            <div class="seat seat-standard active" onclick="selected(this)" zone="Thường" loc="<%= chuoiLayla1[z]%><%= i+1%>" id="<%= chuoiLayla1[z]%><%= i+1%>"
+                                                price="95000"> <%= chuoiLayla1[z]%><%= i+1 %> </div>
+                                            <% } %>
+                                        </div>
+                                        <% } %>
+                                        <% for (var z in chuoiLayla2 ) { %>
+                                        <div class="row">
+                                            <% for (var i = 0; i < cinemaTimeShow.dataValues.Cinema.cinema_Width ; i++) { %>
+                                            <div class="seat seat-vipprime active" onclick="selected(this)" zone="Vipprime"
+                                                loc="<%= chuoiLayla2[z] %><%= i+1 %>" id="<%= chuoiLayla2[z] %><%= i+1 %>" price="110000"> <%= chuoiLayla2[z] %><%=  i+1 %> </div>
+                                            <% } %>
+                                        </div>
+                                        <% } %>
+                                    <% } %>
+                                </div>
+
+                                <div class="ticketbox-notice">
+                                    <div class="iconlist">
+                                        <div class="icon checked">Đã chọn</div>
+                                        <div class="icon occupied">Đã được đặt</div>
+                                        <div></div>
+                                    </div>
+                        
+                                    <div class="iconlist">
+                                        <div class="icon zone-standard" title="Standard"> Thường </div>
+                                        <div class="icon zone-vipprime" title="VIP(Prime)"> VIP(Prime) </div>
+                                    </div>
+                                </div>
+                                <div class="ticketbox-notice" style="text-align: right; padding-right: 5%">
+                                    <div style="text-align: right">
+                                        <a href="/phim/muave/comeback/<%= cinemaTimeShow.dataValues.Film.film_ID %>">
+                                            <button type="submit" class="btnhome">Quay lại</button>
+                                        </a>
+                                    </div>                                
+                                </div>
+                            </li>
+                        </ul>
+                        <div id="ghe_da_dat" value="<%= ghe_da_dat %>" style="display: none"></div>
+                        <div id="chieu_dai" value="<%= cinemaTimeShow.dataValues.Cinema.cinema_Length %>" style="display: none"></div>
+                        <div id="chieu_rong" value="<%= cinemaTimeShow.dataValues.Cinema.cinema_Width %>" style="display: none"></div>
+                    </div>
+
+                    <div class="bottom-content">
+                        <div class="format-bg-top"></div>
+                        <form action="/phim/muave/thongtinve/<%= cinemaTimeShow.dataValues.cinemaTimeShow_ID %>" method="POST">
+                            <div class="minicart-wrapper">
+                                <ul>
+                                    <li class="item first" xmlns="http://www.w3.org/1999/html">
+                                        <div class="product-details">
+                                            <table class="info-wrapper">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <img src="<%= cinemaTimeShow.dataValues.Film.film_Image %>"
+                                                                alt="Không load được ảnh">
+                                                        </td>
+                                                        <td>
+                                                            <table class="info-wrapper">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="name_film" style="text-align: center">
+                                                                            <%= cinemaTimeShow.dataValues.Film.film_Name %></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="label">Loại</td>
+                                                                        <td><%= cinemaTimeShow.dataValues.Cinema.cinema_Type %></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="label">Xuất chiếu</td>
+                                                                        <td><%= cinemaTimeShow.dataValues.TimeShow.timeShow_Start %></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </li>
+                        
+                                    <li class="item" xmlns="http://www.w3.org/1999/html">
+                                        <div class="product-details">
+                                            <table class="info-wrapper">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="label">Cụm rạp</td>
+                                                        <td get=""><%= cinemaTimeShow.dataValues.Cinema.Cineplex.cineplex_Name %></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="label">Ngày chiếu</td>
+                                                        <td>
+                                                            <% var d = new Date(cinemaTimeShow.dataValues.cinemaTimeShow_Date); %>
+                                                            <%= d.getDate(); %>
+                                                            /
+                                                            <%= d.getMonth()+1; %>
+                                                            /
+                                                            <%= d.getFullYear(); %>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="label">Rạp chiếu phim</td>
+                                                        <td get="<%= cinemaTimeShow.dataValues.Cinema_ID %>">
+                                                            <%= cinemaTimeShow.dataValues.Cinema.cinema_Name %></td>
+                                                    </tr>
+                                                    <tr class="block-seats" style="display: none;">
+                                                        <td class="label">Ghế</td>
+                                                        <td class="data">
+                                                            
+                                                        </td>
+                                                        <input id="txtChairType" class="item-options" name="txtChairType" value="">
+                                                            <input id="txtChair" class="item-options" name="txtChair" value="">
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </li>
+                        
+                                    <li class="item" xmlns="http://www.w3.org/1999/html">
+                                        <div class="product-details">
+                                            <table class="info-wrapper">
+                                                <thead>
+                                                    <tr class="block-box">
+                                                        <td class="label">Phim</td>
+                                                        <td class="price">0&nbsp;₫</td>
+                                                        <td class="data">
+                                                            <div class="truncated">
+                                                                <div class="truncated_full_value"></div>
+                                                                <a href="javascript: void(0);" onclick="return false;" class="details">I</a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </thead>
+                        
+                                                <tbody>
+                                                    <tr class="block-con">
+                                                        <td class="label">Combo</td>
+                                                        <td class="price"><span class="price">0&nbsp;₫</span></td>
+                                                        <td class="data">
+                                                            <div class="truncated">
+                                                                <div class="truncated_full_value"></div>
+                                                                <a href="javascript: void(0);" onclick="return false;" class="details">I</a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                        
+                                                <tfoot class="block-price">
+                                                    <tr>
+                                                        <td class="label">Tổng</td>
+                                                        <td class="price" colspan="2">0&nbsp;₫</td>
+                                                        <input id="txtTotalMoney" class="item-options" name="txtTotalMoney" value="">
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                            <div class="button_muave"></div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </form>
+                        <div class="format-bg-bottom"></div>
+                    </div>
+                </div>
+            </div>
+<!--==============================================================================================
+                            Đoạn js xử lý chọn và tính tiền
+   ============================================================================================-->
+
+            <script>
+
+                /* Xử lý chuỗi */
+                var string_df = $j("#ghe_da_dat").attr('value');
+                var string = string_df.slice(0,string_df.length-2);
+                var i = 0;
+                var chuoi = [];
+
+                while (i < string.length) {
+                    var tam = "";
+                    while (i < string.length) {
+                        if (string[i] != ",") {
+                            tam += string.slice(i, i + 1);
+                            i++;
+                        } else {
+                            break;
+                        }
+                    }
+                    chuoi.push(tam);
+                    i += 2;
+                };
+
+                /* Set ghế đã đặt*/
+                var chieu_dai = $j("#chieu_dai").attr('value');
+                var chieu_rong = $j("#chieu_rong").attr('value');
+                var chuoi_ghe = [];
+
+                var st1 = 'ABCDEFGHJKLMNOP';
+                var chuoi_dai = st1.slice(0,chieu_dai);
+                for(var j in chuoi_dai){
+                    var ghe = chuoi_dai[j] ;
+                    for (var z = 0; z < chieu_rong; z++) {
+                        ghe = ghe + String(z + 1);
+                        for (var k = 0; k < chuoi.length; k++) {
+                            if (ghe == chuoi[k]) {
+                                var ma_ghe = chuoi[k];
+                                $j("#" + ma_ghe).removeClass('active');
+                                
+                                $j("#" + ma_ghe).addClass('seat-disable');
+                                $j("#" + ma_ghe).addClass('disable');
+                                $j("#" + ma_ghe).attr('onclick', "");
+                                $j("#" + ma_ghe).attr('zone', "");
+                                $j("#" + ma_ghe).attr('loc', "");
+                                $j("#" + ma_ghe).attr('price', "");
+                                if(j < chuoi_dai.length/2){
+                                    $j("#" + ma_ghe).removeClass('seat-standard');
+                                } else {
+                                    $j("#" + ma_ghe).removeClass('seat-vipprime');
+                                }
+                                console.log("Đã set được ghế: " + chuoi[k]);
+                            }
+                        }
+                        ghe = chuoi_dai[j];
+                    }
+                }
+
+
+                var boxprice = boxlimit = conprice = 0;
+
+                function selected(obj) {
+                    /* Giới hạn chọn ghế cùng loại */
+                    if ($j('.seat').hasClass('checked')) {
+                        if ($j(obj).attr('zone') != $j('.seat.checked').attr('zone')) {
+                            alert('Vui lòng chọn tất cả ghế cùng loại');
+                            return;
+                        }
+                    }
+
+                    /* Hiệu ứng chọn ghế + số lượng ghế tối đa*/
+                    if (!$j(obj).hasClass('checked')) {
+                        if ($j(obj).attr('spec')) {
+                            if (boxlimit < 7) {
+                                var data = $j('.ticketbox .seat.active');
+                                $j(data).each(function () {
+                                    if ($j(obj).attr('spec') == $j(this).attr('spec')) {
+                                        $j(this).addClass('checked');
+                                        boxlimit += 1;
+                                    }
+
+                                });
+                            } else {
+                                alert('Bạn có thể chọn tối đa 8 ghế');
+                            }
+                        } else {
+                            if (boxlimit < 8) {
+                                $j(obj).addClass('checked');
+                                boxlimit += 1;
+                            } else {
+                                alert('Bạn có thể chọn tối đa 8 ghế');
+                            }
+                        }
+                    } else {
+                        if ($j(obj).attr('spec')) {
+                            var data = $j('.ticketbox .seat.checked');
+                            $j(data).each(function () {
+                                if ($j(obj).attr('spec') == $j(this).attr('spec')) {
+                                    $j(this).removeClass('checked');
+                                    boxlimit -= 1;
+                                }
+                            });
+                        } else {
+                            $j(obj).removeClass('checked');
+                            boxlimit -= 1;
+                        }
+                    }
+
+                    /* Tính tiền + hiển thị ghế đã chọn*/
+                    box = {};
+                    boxprice = 0;
+                    fseats = {};
+                    ftickets = 0;
+                    var columns = $j('.ticketbox .seat.checked');
+                    $j(columns).each(function () {
+                        if (typeof box[$j(this).attr('zone')] == 'undefined') box[$j(this).attr('zone')] = {};
+
+                        box[$j(this).attr('zone')][$j(this).attr('loc')] = {
+                            label: $j(this).text().replace(/\s/g, ''),
+                            price: parseInt($j(this).attr('price'))
+                        };
+
+                    });
+
+                    var htmlbox;
+                    if (Object.keys(box).length > 0) {
+                        var label = {};
+                        htmlbox = '<dl class="item-options">';
+                        for (var key in box) {
+                            if (box.hasOwnProperty(key)) {
+                                var so_ghe_da_chon = 0;
+                                $j.each(box[key], function (index, value) {
+                                    if (!label[key]) {
+                                        label[key] = value.label;
+                                    } else {
+                                        label[key] += ', ' + value.label;
+                                    }
+
+                                    if (value.price > 0){
+                                        boxprice += value.price;
+                                    } 
+                                    so_ghe_da_chon += 1;
+                                });
+                                htmlbox += '<dt>' + key + '</dt>';
+                                htmlbox += '<dd>' + so_ghe_da_chon + '</dd>';
+                            }
+                        }
+                        htmlbox += '</dl>';
+
+                        var html;
+                        var html_btn_muave;
+                        $j.each(label, function (index, value) {
+                            if (!html) {
+                                html = '<span style="clear: both; float: left;" >' + index + '</span>';                  
+                            } else {
+                                html += '<span style="clear: both; float: left;" >' + index + '</span>';
+                            }
+                            html += '<span style="clear: both; float: left;">' + value + '</span>';
+                            html_btn_muave = '<table class="info-wrapper"><button type="submit" class="muave" id="check_muave"> Mua vé </button></table>';
+                            $j('#txtChairType').attr("value",index);
+                            $j('#txtChair').attr("value",value);
+                        });
+                        
+                        $j('#txtTotalMoney').attr("value",boxprice);
+
+                        
+                        
+
+                        $j('.minicart-wrapper .block-seats .data').html(html);
+                        $j('.minicart-wrapper .product-details .button_muave').html(html_btn_muave);
+                        $j('.block-seats').show();
+                        $j('.button_muave').show();
+
+                    } else {
+                        $j('.minicart-wrapper .block-seats .data').empty();
+                        $j('.minicart-wrapper .product-details .button_muave').empty();
+                        $j('.block-seats').hide();
+                        $j('.button_muave').hide();
+                    }
+                    $j('.minicart-wrapper .block-box .data .truncated_full_value').empty();
+                    $j('.minicart-wrapper .block-box .data .truncated_full_value').html(htmlbox);
+                    $j('.minicart-wrapper .block-box .price').html(formatCurrency(boxprice, { "pattern": "%s\u00a0\u20ab", "precision": 0, "requiredPrecision": 0, "decimalSymbol": ",", "groupSymbol": ".", "groupLength": 3, "integerRequired": 1 }));
+                    $j('.minicart-wrapper .block-price .price').html(formatCurrency(boxprice + conprice, { "pattern": "%s\u00a0\u20ab", "precision": 0, "requiredPrecision": 0, "decimalSymbol": ",", "groupSymbol": ".", "groupLength": 3, "integerRequired": 1 }));
+                };
+
+            </script>
+
+
+        </div>
+    </div>
+</body>
+</html>
