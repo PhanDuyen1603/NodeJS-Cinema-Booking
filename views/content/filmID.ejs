@@ -175,19 +175,23 @@
 
 
         </div>
-
         <!--Phim đang chiếu bên phải-->
-        <div style="text-align: center;" class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 title-movie">
-            <h4 style="text-transform: uppercase">Phim đang chiếu</h4>
-            <% for (var i=0; i< 4; i++) { %>
-            <a href="/film/<%= filmDangChieu2[i].dataValues.film_ID %>">
-                <img src="<%= filmDangChieu2[i].dataValues.film_Image %>" alt="Không load được ảnh" width="150px"
-                    height="190px">
-                <div class="title-movie">
-                    <h4><%= filmDangChieu2[i].dataValues.film_Name %></h4>
-                </div>
-            </a>
-            <% } %>
-        </div>
+        <% if(typeof(filmDangChieu2) != 'undefined' && filmDangChieu2.length>0)  { %>
+            <div style="text-align: center;" class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 title-movie">
+                <h4 style="text-transform: uppercase">Phim đang chiếu</h4>
+                <% for (var i=0; i< 4; i++) { %> 
+                    <% if(typeof(filmDangChieu2[i]) != 'undefined')  { %>  
+                    <a href="/phim/<%= filmDangChieu2[i].dataValues.film_ID %>">
+                        <img src="<%= filmDangChieu2[i].dataValues.film_Image %>" alt="Không load được ảnh" width="150px"height="190px">
+                        <div class="title-movie">
+                            <h4><%= filmDangChieu2[i].dataValues.film_Name %></h4>
+                        </div>
+                    </a>
+                    <% } %>
+                <% } %>
+            </div>
+        <% } %>
+ 
+        
     </div>
 </div>
