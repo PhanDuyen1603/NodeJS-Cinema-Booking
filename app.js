@@ -1,6 +1,5 @@
 const express = require('express');
 const db = require('./models/db');
-const bodyParser = require('body-parser');
 const session = require('express-session');
 const multer = require('multer');
 const path  = require('path');
@@ -13,7 +12,7 @@ const port = process.env.PORT || 3000 ;
 app.set('view engine' , 'ejs');
 app.set('views','./views');
 app.use('/public',express.static('public'));
-app.use(bodyParser.urlencoded({
+app.use(express.urlencoded({
 	extended: true,
   }));
   app.use(session({
