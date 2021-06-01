@@ -214,11 +214,16 @@ router.get('/phim/:id',async function(req,res){
 	const filmDangChieu2 = await Film.findAll({
 		where :{
 			film_DatePublic :{
-				[Op.gt] : dateNow ,
+				[Op.lte] : dateNow ,
 			},
+			'$film_ID$': { [Op.ne]: id},
 			film_Public : true ,
 		},
+		order:[
+			['film_DatePublic','DESC']
+		],
 	});
+	//console.log(filmDangChieu2);
 	const cinema = await Cinema.findAll();
 	const cineplex = await Cineplex.findAll();
 	const cinemaTimeShow = await CinemaTimeShow.findAll({
