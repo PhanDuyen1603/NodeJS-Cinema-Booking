@@ -42,6 +42,30 @@
         padding: 12px;
     }
     
+    .item {
+        height: 404px;
+    }
+    
+    label {
+        font-size: 16px;
+    }
+    
+    .ctnGioiThieu>h3 {
+        font-weight: 600;
+        font-size: 26px;
+    }
+    
+    h3.marginMap,
+    .col-md-6.col-md-6>h3 {
+        font-weight: 600;
+        margin-top: 50px;
+        margin-bottom: 40px;
+    }
+    
+    .ctnGioiThieu {
+        margin-top: 70px;
+    }
+    
     .menu_hover li:hover {
         background-color: #ccabab !important;
     }
