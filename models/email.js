@@ -7,13 +7,13 @@ async function sendEmail(to, subject, text, html) {
     port: 587,
     secure: false,
     auth: {
-        user: 'doanweb2@gmail.com',
-        pass: 'doanlaptrinhweb' 
+        user: '17k1.web2.demo@gmail.com',
+        pass: 'abcXYZ123~' 
     },
   });
 
   const info = await transporter.sendMail({
-    from: '"VN Cinema"<1660736@gmail.com>',
+    from: '<17k1.web2.demo@gmail.com>',
     to: to,
     subject: subject,
     text: text,
