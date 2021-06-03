@@ -11,10 +11,12 @@
     <!--Made with love by Mutiullah Samim -->
 
     <!--Bootsrap 4 CDN-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
 
     <!--Fontawesome CDN-->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
 
     <!--Custom styles-->
     <link rel="stylesheet" type="text/css" href="/public/css/login.css" />
@@ -28,16 +30,22 @@
                 <div class="card-body">
                     <form action="" method="POST">
                         <div class="input-group form-group">
-                            <input type="email" name="txtUserEmail" id="txtUserEmail" class="form-control" placeholder="Email" required />
+                            <input type="email" name="txtUserEmail" id="txtUserEmail" class="form-control"
+                                placeholder="Email" required />
                         </div>
                         <div class="input-group form-group">
-                            <input type="password" name="txtUserPassword" id="txtUserPassword" class="form-control" placeholder="Password" required />
+                            <input type="password" name="txtUserPassword" id="txtUserPassword" class="form-control"
+                                placeholder="Password" required />
                         </div>
                         <div class="d-flex justify-content-center">
-                            <% if ( typeof UserSaiPass !== 'undefined' ) { %>
-                                <label style="color: #e61515;">Bạn đã nhập sai mật khẩu</label><br />
-                                <% } if(typeof error !== 'undefined'){ %>
-                                    <label style="color: #e61515;">Vui lòng xác nhận Email</label><br />
+                            <% if ( typeof loginError !=='undefined' ) { %>
+                                <label style="color: #e61515;">
+                                    <%= loginError %>
+                                </label><br />
+                                <% } if(typeof activateError !=='undefined' ){ %>
+                                    <label style="color: #e61515;">
+                                        <%= activateError %>
+                                    </label><br />
                                     <% } %>
                         </div>
                         <div class="form-actions">
@@ -50,16 +58,20 @@
                         <h4>Or login with</h4>
                         <ul class="social-icons">
                             <li>
-                                <a class="social-icon-color facebook" data-original-title="facebook" href="javascript:;"></a>
+                                <a class="social-icon-color facebook" data-original-title="facebook"
+                                    href="javascript:;"></a>
                             </li>
                             <li>
-                                <a class="social-icon-color twitter" data-original-title="Twitter" href="javascript:;"></a>
+                                <a class="social-icon-color twitter" data-original-title="Twitter"
+                                    href="javascript:;"></a>
                             </li>
                             <li>
-                                <a class="social-icon-color googleplus" data-original-title="Goole Plus" href="javascript:;"></a>
+                                <a class="social-icon-color googleplus" data-original-title="Goole Plus"
+                                    href="javascript:;"></a>
                             </li>
                             <li>
-                                <a class="social-icon-color linkedin" data-original-title="Linkedin" href="javascript:;"></a>
+                                <a class="social-icon-color linkedin" data-original-title="Linkedin"
+                                    href="javascript:;"></a>
                             </li>
                         </ul>
                     </div>
