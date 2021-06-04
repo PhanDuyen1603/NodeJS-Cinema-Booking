@@ -69,7 +69,7 @@ router.get('/', async function (req, res) {
 	});
 
 	const film = { filmPublic: filmPublic, filmNoPublic: filmNoPublic, filmViewHigh: filmViewHigh };
-	res.render('home.ejs', { film, user });
+	res.render('home', { film, user });
 });
 
 router.get('/filmSearch', async function (req, res) {
@@ -113,11 +113,11 @@ router.get('/filmSearch', async function (req, res) {
 		});
 	};
 	const searchNameFilm = { searchNameFilmPublic: searchNameFilmPublic, searchNameFilmNoPublic: searchNameFilmNoPublic }
-	res.render('home.ejs', { searchNameFilm, user });
+	res.render('home', { searchNameFilm, user });
 });
 
 router.get('/forgotPassword', function (req, res) {
-	res.render('forgotPassword.ejs');
+	res.render('auth/forgotPassword');
 });
 
 router.get('/logout', function (req, res) {
@@ -174,7 +174,7 @@ router.get('/phim', async function (req, res) {
 		]
 	});
 	const filmChieu = { filmDangChieu: filmDangChieu, filmSapChieu: filmSapChieu, filmXemNhieu: filmXemNhieu };
-	res.render('home.ejs', { filmChieu, user });
+	res.render('home', { filmChieu, user });
 });
 
 router.get('/phim/:id', async function (req, res) {
@@ -240,7 +240,7 @@ router.get('/phim/:id', async function (req, res) {
 	});
 
 	//console.log(cinemaTimeShow);
-	res.render('home.ejs', { filmID, user, filmDangChieu2, cinemaTimeShow, cinema, cineplex });
+	res.render('home', { filmID, user, filmDangChieu2, cinemaTimeShow, cinema, cineplex });
 });
 
 
@@ -306,7 +306,7 @@ router.get('/phim/muave/:id', async function (req, res) {
 			res.render('users/muave.ejs', { user, cinemaTimeShow, ticket, ghe_da_dat });
 		}
 	} else {
-		res.render('login');
+		res.render('auth/login');
 	}
 });
 
@@ -320,7 +320,7 @@ router.post('/phim/muave/:id', async function (req, res) {
 	});
 	const id_req = String(req.params.id);
 	if (!user) {
-		res.render('login', { UserSaiPass });
+		res.render('auth/login', { UserSaiPass });
 	}
 	else {
 		const match = await bcrypt.compare(txtUserPassword, user.user_Password);
@@ -329,7 +329,7 @@ router.post('/phim/muave/:id', async function (req, res) {
 			res.redirect('/phim/muave/' + id_req);
 		}
 		else {
-			res.render('login', { UserSaiPass });
+			res.render('auth/login', { UserSaiPass });
 		}
 	}
 });
@@ -497,10 +497,10 @@ module.exports = router;
 
 router.get('/support', function (req, res) {
 	const support = true;
-	res.render('home.ejs', { support });
+	res.render('home', { support });
 });
 
 router.get('/intro', function (req, res) {
 	const intro = true;
-	res.render('home.ejs', { intro });
+	res.render('home', { intro });
 });

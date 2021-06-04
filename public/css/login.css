@@ -22,6 +22,7 @@ body {
     padding: 50px 10px 30px;
     overflow: hidden;
     position: relative;
+    max-height: 518px;
 }
 
 input[type="checkbox"] {

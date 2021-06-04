@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 
 // [GET] /login
 router.get('/', function (req, res) {
-	res.render('login');
+	res.render('auth/login');
 });
 
 // [POST] /login
@@ -21,10 +21,10 @@ router.post('/', async function (req, res) {
 	else {
 		const User = await user.findOne({ where: { user_Email: txtUserEmail, } });
 		if (!User) {
-			res.render('login', { loginError });
+			res.render('auth/login', { loginError });
 		} else {
 			if (User.accept_User === false) {
-				res.render('login', { activateError });
+				res.render('auth/login', { activateError });
 			}
 			else {
 				const match = await bcrypt.compare(txtUserPassword, User.user_Password);
@@ -33,7 +33,7 @@ router.post('/', async function (req, res) {
 					res.redirect('/');
 				}
 				if (match === false) {
-					res.render('login', { loginError });
+					res.render('auth/login', { loginError });
 				}
 			}
 		}

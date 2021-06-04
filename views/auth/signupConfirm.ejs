@@ -1,0 +1,56 @@
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<!------ Include the above in your HEAD tag ---------->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Nhập mã xác thực</title>
+  <link rel="stylesheet" type="text/css" href="../public/css/signUp.css">
+</head>
+
+<body>
+  <div class="form-gap">
+    <div class="container" id="wrap">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+
+          <form action="/signup/confirm" method="post" accept-charset="utf-8" class="form" role="form">
+            <h3>NHẬP MÃ XÁC THỰC</h3>
+            <% if (typeof invalidCode !=='undefined' ) { %>
+              <div style="text-align: center; color:rgb(221, 34, 34);font-size:17px">
+                <%= invalidCode %>
+              </div>
+              <% } %>
+
+                <% if (typeof invalidMail !=='undefined' ) { %>
+                  <div style="text-align: center; color:rgb(221, 34, 34);font-size:17px">
+                    <%= invalidMail %>
+                  </div>
+                  <% } %>
+
+                    <br>
+                    <input type="email" name="email" class="form-control input-lg" value="<%= user_Email %>"
+                      placeholder="Nhập email" required />
+
+                    <input type="text" name="code" id="user_ConfirmEmail" value="" class="form-control input-lg"
+                      placeholder="Nhập mã xác thực" required />
+                    <br />
+
+                    <button class="btn btn-lg btn-primary btn-block signup-btn" type="submit">Xác nhận</button>
+
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
