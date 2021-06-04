@@ -22,6 +22,11 @@ body {
     padding: 50px 10px 30px;
     overflow: hidden;
     position: relative;
+    max-height: 512px;
+}
+
+.card-body {
+    max-height: 361px;
 }
 
 input[type="checkbox"] {
