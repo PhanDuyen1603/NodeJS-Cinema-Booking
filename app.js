@@ -22,8 +22,11 @@ app.use(session({
 	resave: false,
 	saveUninitialized: true,
 }));
+// MIDDLEWAREs
+const authAdminMiddleWare = require('./middlewares/auth_admin');
+app.use(authAdminMiddleWare);
 
-//ROUTER
+//ROUTERS
 const forgotPasswordRouter = require('./routes/forgotPassword');
 const loginRouter = require('./routes/login');
 const signupRouter = require('./routes/signup');
