@@ -493,7 +493,7 @@ router.post('/phim/muave/thongtinve/back/:id', async function (req, res) {
 	res.redirect('/phim/' + film_id);
 });
 
-module.exports = router;
+
 
 router.get('/support', function (req, res) {
 	const support = true;
@@ -504,3 +504,10 @@ router.get('/intro', function (req, res) {
 	const intro = true;
 	res.render('home', { intro });
 });
+
+router.get('/:slug', (req, res) => {
+	res.render('404NotFound');
+})
+
+module.exports = router;
+

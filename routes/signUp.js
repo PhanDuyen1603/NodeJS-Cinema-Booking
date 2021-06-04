@@ -54,7 +54,7 @@ router.post('/', async function (req, res) {
 			}).then(async function (user) {
 				const info = await sendEmail(user_Email, '[MỘT CHÚT FILM] - XÁC THỰC TÀI KHOẢN', 'Content', `Đây là email tự động, vui lòng không gửi mail qua địa chỉ này.\nMã xác nhận của bạn: <b>${code}</b>`);
 
-				res.render('auth/confirm', { user_Email });
+				res.render('auth/signupConfirm', { user_Email });
 
 			}).catch(function (err) {
 				console.log(err, req.body);
@@ -65,7 +65,7 @@ router.post('/', async function (req, res) {
 
 router.get('/confirm', function (req, res) {
 	const user_Email = '';
-	res.render('auth/confirm', { user_Email });
+	res.render('auth/signupConfirm', { user_Email });
 });
 
 // [POST] /signup/confirm
@@ -79,7 +79,6 @@ router.post('/confirm', async function (req, res, next) {
 	user.findOne({
 		where: {
 			user_Email: user_Email,
-			user_Code: code,
 		}
 	})
 		.then((User) => {
@@ -94,11 +93,15 @@ router.post('/confirm', async function (req, res, next) {
 						res.redirect('/');
 					}).catch(next);
 			} else {
-				res.render('auth/confirm', { user_Email, invalidCode });
+				res.render('auth/signupConfirm', { user_Email, invalidCode });
 			}
-		}).catch(function (next) {
-			res.render('auth/confirm', { user_Email, invalidMail });
+		}).catch(() => {
+			res.render('auth/signupConfirm', { user_Email, invalidMail });
 		});
 });
+
+router.get('/:slug', (req, res) => {
+	res.render('404NotFound');
+})
 
 module.exports = router;
