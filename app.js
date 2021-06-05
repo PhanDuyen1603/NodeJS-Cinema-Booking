@@ -2,7 +2,8 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 const express = require('express');
 const db = require('./models/db');
-const session = require('express-session');
+// const session = require('express-session');
+const cookieSession = require('cookie-session');
 const multer = require('multer');
 const path = require('path');
 
@@ -17,11 +18,13 @@ app.use('/public', express.static('public'));
 app.use(express.urlencoded({
 	extended: true,
 }));
-app.use(session({
-	secret: 'keyboard cat',
-	resave: false,
-	saveUninitialized: true,
+
+app.use(cookieSession({
+	name: 'session',
+	keys: [process.env.COOKIE_KEY || 'secret'],
+	maxAge: 24 * 60 * 60 * 1000
 }));
+
 // MIDDLEWAREs
 const authAdminMiddleWare = require('./middlewares/auth_admin');
 app.use(authAdminMiddleWare);

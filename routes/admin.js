@@ -248,35 +248,41 @@ router.get('/logout', async function (req, res) {
 //FILM
 
 // [POST] /admin/create/film
+
 router.get('/create/film/', async function (req, res) {
-    res.render('admin/update/film');
+    res.redirect('/admin/update/film');
 });
 
 // [POST] /admin/create/film
 router.post('/create/film/', async function (req, res) {
-    var form = new formidable.IncomingForm();
-    await form.parse(req, function (err, filds, files) {
-        var oldpath = "dasdasdas";
-        var newpath = 'public/image' + file.filetoupload.name;
-        fs.rename(oldpath, newpath, function (err) {
-            if (err) throw err;
-            res.write('File uploaded and moved!');
-            res.end();
-        });
-    });
+    // var form = new formidable.IncomingForm();
+    // await form.parse(req, function (err, filds, files) {
+    //     var oldpath = "dasdasdas";
+    //     var newpath = 'public/image' + file.filetoupload.name;
+    //     fs.rename(oldpath, newpath, function (err) {
+    //         if (err) throw err;
+    //         res.write('File uploaded and moved!');
+    //         res.end();
+    //     });
+    // });
+
     var { txtFilmName, txtFilmDatePublic, txtFilmTime, txtFilmImage } = req.body;
-    if (form) {
-        await Film.create({
-            film_Name: txtFilmName,
-            film_Image: '/public/image/' + txtFilmImage,
-            film_DatePublic: txtFilmDatePublic,
-            film_Time: txtFilmTime,
-        });
-        res.redirect('/admin/update/film');
-    } else {
-        console.log("loi cmnr 2");
-        res.redirect('/admin/update/film');
-    }
+
+    // if (form) {
+    // await Film.create({
+    //     film_Name: txtFilmName,
+    //     film_Image: '/public/image/' + txtFilmImage,
+    //     film_DatePublic: txtFilmDatePublic,
+    //     film_Time: txtFilmTime,
+    // });
+    console.log(txtFilmName, txtFilmDatePublic, txtFilmTime, txtFilmImage);
+
+
+    res.redirect('/admin/update/film');
+    // } else {
+    // console.log("loi cmnr 2");
+    // res.redirect('/admin/update/film');
+    // }
 
 });
 
