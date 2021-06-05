@@ -2,21 +2,31 @@ const Router = require('express').Router;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const fs = require('fs');
-const user = require('../models/User.js');
-const ticket = require('../models/Ticket.js');
-const Cinema = require('../models/Cinema.js');
-const Cineplex = require('../models/Cineplex.js');
-const Film = require('../models/Film.js');
-const timeShow = require('../models/TimeShow.js');
-const CinemaTimeShow = require('../models/CinemaTimeShow.js');
-const router = new Router();
+
+//MODELS
+const user = require('../models/User');
+const ticket = require('../models/Ticket');
+const Cinema = require('../models/Cinema');
+const Cineplex = require('../models/Cineplex');
+const Film = require('../models/Film');
+const timeShow = require('../models/TimeShow');
+const CinemaTimeShow = require('../models/CinemaTimeShow');
+
+//UPLOAD FILE
+const { promisify } = require('util');
 var multer = require('multer');
+var upload = multer({ dest: './public/image/uploads/film/' })
+const rename = promisify(require('fs').rename);
+
+const router = new Router();
+
+
+
 var formidable = require('formidable');
+
 
 const ensureLoggedInAdmin = require('../middlewares/ensure_logged_in_admin');
 router.use(ensureLoggedInAdmin);
-
-const upload = multer({ dest: __dirname + '/uploads/images' });
 
 router.get('/', async function (req, res) {
     var D = new Date();
@@ -248,42 +258,27 @@ router.get('/logout', async function (req, res) {
 //FILM
 
 // [POST] /admin/create/film
-
 router.get('/create/film/', async function (req, res) {
     res.redirect('/admin/update/film');
 });
 
 // [POST] /admin/create/film
-router.post('/create/film/', async function (req, res) {
-    // var form = new formidable.IncomingForm();
-    // await form.parse(req, function (err, filds, files) {
-    //     var oldpath = "dasdasdas";
-    //     var newpath = 'public/image' + file.filetoupload.name;
-    //     fs.rename(oldpath, newpath, function (err) {
-    //         if (err) throw err;
-    //         res.write('File uploaded and moved!');
-    //         res.end();
-    //     });
-    // });
+router.post('/create/film/', upload.single('filmImage'), async function (req, res) {
+    var { filmName, filmPublicDate, filmTime } = req.body;
+    var path = './public/image/uploads/film/' + String(Date.now()) + '-' + req.file.originalname;
+    var filmImage = path.substr(1, path.length);
 
-    var { txtFilmName, txtFilmDatePublic, txtFilmTime, txtFilmImage } = req.body;
+    //Move file into path
+    await rename(req.file.path, path);
 
-    // if (form) {
-    // await Film.create({
-    //     film_Name: txtFilmName,
-    //     film_Image: '/public/image/' + txtFilmImage,
-    //     film_DatePublic: txtFilmDatePublic,
-    //     film_Time: txtFilmTime,
-    // });
-    console.log(txtFilmName, txtFilmDatePublic, txtFilmTime, txtFilmImage);
+    await Film.create({
+        film_Name: filmName,
+        film_DatePublic: filmPublicDate,
+        film_Time: filmTime,
+        film_Image: filmImage,
+    });
 
-
-    res.redirect('/admin/update/film');
-    // } else {
-    // console.log("loi cmnr 2");
-    // res.redirect('/admin/update/film');
-    // }
-
+    res.redirect('back');
 });
 
 
@@ -470,7 +465,7 @@ router.get('/update/cineplex', async function (req, res) {
     }); */
     /* var tempPhim = 0;
     while(SoFilm[tempPhim] !== undefined){
-
+ 
     } */
 
     const cineplex = await Cineplex.findAll({

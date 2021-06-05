@@ -6,7 +6,7 @@
                 <th>Tên phim </th>
                 <th>Ảnh phim </th>
                 <th>Ngày công chiếu</th>
-                <th>Lượt xem trên web</th>
+                <th>Lượt ghé thăm</th>
                 <th>Thao tác</th>
             </tr>
             <% for (let i=0;i < filmAll.length ; i++ ) { %>
@@ -52,13 +52,20 @@
             <span class="close" title="Close Modal" id="btn_close_film_<%= filmAll[i].film_ID %>">
                 &times;
             </span>
+
+            <!-- FORM CẬP NHẬT -->
             <form action="/admin/update/film/<%= filmAll[i].film_ID %>" method="POST" class="modal-content animate">
                 <div class="container">
+
                     <label> Tên phim :</label>
                     <input type="text" value="<%= filmAll[i].film_Name %>" name="txtFilmName" />
+
                     <label> Ảnh film :</label>
                     <input type="image" src="<%= filmAll[i].film_Image %>" name="txtFilmImage" />
+
+
                     <input type='file' id="film_Image" name="txtFilmImage" required>
+
                     <button type="submit" value="Cap nhat" class="insertbtn">
                         Cập nhật
                     </button>
@@ -69,6 +76,7 @@
                     </button>
                 </div>
             </form>
+
         </div>
         <% } %>
 
@@ -95,6 +103,7 @@
                     <a style="width:auto" class="btn_create" id="btn_create_film">
                         Thêm phim
                     </a>
+
                     <div id="create_film" class="modal">
                         <span class="close" title="Close Modal" id="btn_close_film_create">
                             &times;
@@ -107,19 +116,19 @@
                             <div class="container">
 
                                 <label>Tên phim: </label>
-                                <input type="text" placeholder="Tên phim" id="film_Name" name="txtFilmName" required />
+                                <input type="text" placeholder="Tên phim" id="film_Name" name="filmName" required />
                                 <br />
 
                                 <label>Ảnh film: </label>
-                                <input type="file" id="film_Image" name="txtFilmImage" required />
+                                <input type="file" id="film_Image" name="filmImage" required />
 
                                 <br />
                                 <label>Ngày công chiếu: </label>
-                                <input type="date" name="txtFilmDatePublic" id="txtFilmDatePublic" required />
+                                <input type="date" name="filmPublicDate" id="txtFilmPublicDate" required />
                                 <br />
 
                                 <label>Thời lượng: </label>
-                                <input placeholder="Số phút" type="number" id="film_Time" name="txtFilmTime" required>
+                                <input placeholder="Số phút" type="number" id="film_Time" name="filmTime" required>
                                 <br />
 
                                 <button type="submit" value="Thêm vào danh sách phim">
