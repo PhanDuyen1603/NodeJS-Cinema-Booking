@@ -1,114 +1,138 @@
 <% if(filmAll) { %>
     <div id="table">
-    <table>
-        <tr>
-            <th>STT </th>
-            <th>Tên phim </th>
-            <th>Ảnh phim </th>
-            <th>Ngày công chiếu</th>
-            <th>Số lượt bấm vào phim trên trang web </th>
-            <th>Thao tác</th>
-        </tr>
+        <table>
+            <tr>
+                <th>STT</th>
+                <th>Tên phim </th>
+                <th>Ảnh phim </th>
+                <th>Ngày công chiếu</th>
+                <th>Lượt xem trên web</th>
+                <th>Thao tác</th>
+            </tr>
             <% for (let i=0;i < filmAll.length ; i++ ) { %>
                 <tr>
-                    <td> <%= filmAll[i].dataValues.film_ID  %></td>
                     <td>
-                        <a href="/admin/update/cinemaTimeShow/film/<%= filmAll[i].dataValues.film_ID %>">  <%= filmAll[i].dataValues.film_Name %> </a>
+                        <%= i+1 %>
+
                     </td>
                     <td>
-                        <img src="<%= filmAll[i].dataValues.film_Image %>" alt="no load image"/>
+                        <a href="/admin/update/cinemaTimeShow/film/<%= filmAll[i].film_ID %>">
+                            <%= filmAll[i].film_Name %>
+                        </a>
                     </td>
-                    <td> 
-                            <% var d = new Date(filmAll[i].dataValues.film_DatePublic); %>
+                    <td>
+                        <img src="<%= filmAll[i].film_Image %>" alt=" Chưa có ảnh" />
+                    </td>
+                    <td>
+                        <% var d=new Date(filmAll[i].film_DatePublic); %>
                             <%= d.getDate(); %>
-                            /
-                            <%= d.getMonth()+1; %>
-                            /
-                            <%= d.getFullYear(); %>
+                                /
+                                <%= d.getMonth() + 1; %>
+                                    /
+                                    <%= d.getFullYear(); %>
                     </td>
-                    <td> <%= filmAll[i].dataValues.film_ViewCount %></td>
-                    <td><b id="btn_update_film_<%= filmAll[i].dataValues.film_ID %>">Cập nhật</b> &nbsp;
-                    <a href="/admin/delete/film/<%= filmAll[i].dataValues.film_ID %>" onclick="return confirmAction()" >Xóa </a></td>
-                    </tr>
-            <% } %>
-    </table>
+                    <td>
+                        <%= filmAll[i].film_ViewCount %>
+                    </td>
+                    <td style="cursor:pointer">
+                        <a id="btn_update_film_<%= filmAll[i].film_ID %>">
+                            <i class="fas fa-edit"></i>
+                        </a> &nbsp;
+                        <a href="/admin/delete/film/<%= filmAll[i].film_ID %>" onclick="return confirmAction()">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                <% } %>
+        </table>
     </div>
 
     <% for (let i=0;i < filmAll.length ; i++ ) { %>
-    <div id="btn_update_film_main_<%= filmAll[i].dataValues.film_ID %>" class="modal">
-            <span class="close" title="Close Modal" id="btn_close_film_<%= filmAll[i].dataValues.film_ID %>">
-                        &times;
+        <div id="btn_update_film_main_<%= filmAll[i].film_ID %>" class="modal">
+            <span class="close" title="Close Modal" id="btn_close_film_<%= filmAll[i].film_ID %>">
+                &times;
             </span>
-            <form action="/admin/update/film/<%= filmAll[i].dataValues.film_ID %>" method="POST" class="modal-content animate">
+            <form action="/admin/update/film/<%= filmAll[i].film_ID %>" method="POST" class="modal-content animate">
                 <div class="container">
                     <label> Tên phim :</label>
-                    <input type="text" value="<%= filmAll[i].dataValues.film_Name %>" name="txtFilmName"/>
+                    <input type="text" value="<%= filmAll[i].film_Name %>" name="txtFilmName" />
                     <label> Ảnh film :</label>
-                    <input type="image" src="<%= filmAll[i].dataValues.film_Image %>" name="txtFilmImage"/>
-                    <input type='file' id="film_Image" name="txtFilmImage" required >
+                    <input type="image" src="<%= filmAll[i].film_Image %>" name="txtFilmImage" />
+                    <input type='file' id="film_Image" name="txtFilmImage" required>
                     <button type="submit" value="Cap nhat" class="insertbtn">
-                            Cập nhật
+                        Cập nhật
                     </button>
                 </div>
                 <div class="container">
-                    <button type="button" class="cancelbtn" id="btn_close_film_1_<%= filmAll[i].dataValues.film_ID %>">
-                            Cancel 
+                    <button type="button" class="cancelbtn" id="btn_close_film_1_<%= filmAll[i].film_ID %>">
+                        Cancel
                     </button>
                 </div>
             </form>
-    </div>
-    <% } %>
-
-    <% for (let i=0;i < filmAll.length ; i++ ) { %>
-    <script>
-            $(document).ready(function(){
-                $("#btn_update_film_main_<%= filmAll[i].dataValues.film_ID %>").hide();
-                $("#btn_update_film_<%= filmAll[i].dataValues.film_ID %>").click(function(){
-                    $("#btn_update_film_main_<%= filmAll[i].dataValues.film_ID %>").show();
-                });
-                $("#btn_close_film_1_<%= filmAll[i].dataValues.film_ID %>").click(function(){
-                    $("#btn_update_film_main_<%= filmAll[i].dataValues.film_ID %>").hide();
-                });
-                $("#btn_close_film_<%= filmAll[i].dataValues.film_ID %>").click(function(){
-                    $("#btn_update_film_main_<%= filmAll[i].dataValues.film_ID %>").hide();
-                });
-                
-            });
-    </script>
-    <% } %>
-
-
-
-    <a style="width:auto" class="btn_create" id="btn_create_film">
-        Thêm phim 
-    </a>
-    <div id="create_film" class="modal">
-        <span class="close" title="Close Modal" id="btn_close_film_create">
-            &times;
-        </span>
-        <form action="/admin/create/film/" method="POST" class="modal-content animate" enctype=”multipart/form-data”>
-        <div class="container">
-            <label>Tên phim :</label>
-            <input type="text" placeholder="Nhap vao ten phim " id="film_Name" name="txtFilmName" required/>
-            <br/>
-            <label>Ảnh film :</label>
-            <input type="file" id="film_Image" name="txtFilmImage" required/>
-            <br/>
-            <label>Ngày công chiếu :</label>
-            <input type="date" name="txtFilmDatePublic" id="txtFilmDatePublic" required/>
-            <br/>
-            <label>Thời lượng :</label>
-            <input type="number" id="film_Time" name="txtFilmTime" required>
-            <br/>
-            <button type="submit" value="Thêm vào Film">
-                Thêm vào film
-            </button>
         </div>
-        <div class="container">
-            <button type="button" class="cancelbtn" id="btn_close_film_create_1">
-                Cancel 
-            </button>
-        </div>
-    </form>
-    </div>
-<% } %>
+        <% } %>
+
+            <% for (let i=0;i < filmAll.length ; i++ ) { %>
+                <script>
+                    $(document).ready(function () {
+                        $("#btn_update_film_main_<%= filmAll[i].film_ID %>").hide();
+                        $("#btn_update_film_<%= filmAll[i].film_ID %>").click(function () {
+                            $("#btn_update_film_main_<%= filmAll[i].film_ID %>").show();
+                        });
+                        $("#btn_close_film_1_<%= filmAll[i].film_ID %>").click(function () {
+                            $("#btn_update_film_main_<%= filmAll[i].film_ID %>").hide();
+                        });
+                        $("#btn_close_film_<%= filmAll[i].film_ID %>").click(function () {
+                            $("#btn_update_film_main_<%= filmAll[i].film_ID %>").hide();
+                        });
+
+                    });
+                </script>
+                <% } %>
+
+
+
+                    <a style="width:auto" class="btn_create" id="btn_create_film">
+                        Thêm phim
+                    </a>
+                    <div id="create_film" class="modal">
+                        <span class="close" title="Close Modal" id="btn_close_film_create">
+                            &times;
+                        </span>
+
+                        <!-- FORM THÊM PHIM -->
+                        <form action="/admin/create/film/" method="POST" class="modal-content animate"
+                            enctype="multipart/form-data">
+
+                            <div class="container">
+
+                                <label>Tên phim: </label>
+                                <input type="text" placeholder="Tên phim" id="film_Name" name="txtFilmName" required />
+                                <br />
+
+                                <label>Ảnh film: </label>
+                                <input type="file" id="film_Image" name="txtFilmImage" required />
+
+                                <br />
+                                <label>Ngày công chiếu: </label>
+                                <input type="date" name="txtFilmDatePublic" id="txtFilmDatePublic" required />
+                                <br />
+
+                                <label>Thời lượng: </label>
+                                <input placeholder="Số phút" type="number" id="film_Time" name="txtFilmTime" required>
+                                <br />
+
+                                <button type="submit" value="Thêm vào danh sách phim">
+                                    THÊM
+                                </button>
+
+                            </div>
+
+                            <div class="container">
+                                <button type="button" class="cancelbtn" id="btn_close_film_create_1">
+                                    HUỶ
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <% } %>

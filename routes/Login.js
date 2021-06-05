@@ -12,9 +12,9 @@ router.get('/', function (req, res) {
 router.post('/', async function (req, res) {
 	const { txtUserEmail, txtUserPassword } = req.body;
 	const loginError = 'Tên đăng nhập hoặc mật khẩu không hợp lệ !!';
-	const activateError = 'Vui lòng kích hoạt tài khoản bằng email !!';
+	const activateError = 'Tài khoản này chưa được kích hoạt !!';
 
-	if (txtUserEmail === "Admin123@gmail.com" && txtUserPassword === "123456") {
+	if (txtUserEmail === "admin@gmail.com" && txtUserPassword === "1") {
 		req.session.Admin = txtUserEmail;
 		res.redirect('/admin');
 	}
@@ -41,6 +41,8 @@ router.post('/', async function (req, res) {
 	}
 });
 
-
+router.get('/:slug', (req, res) => {
+	res.render('404NotFound');
+})
 
 module.exports = router;

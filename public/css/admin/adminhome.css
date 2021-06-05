@@ -64,6 +64,7 @@ body{
     border-radius: 20px; 
     text-decoration: none;
     color:  #09E7F2;
+    cursor: pointer;
 }
 
 .btn_create a{

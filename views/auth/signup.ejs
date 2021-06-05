@@ -27,40 +27,44 @@
                     <h3>ĐĂNG KÝ</h3>
 
 
-                    <% if (typeof emailError !=='undefined' ) { %>
-                        <div style="text-align: center; color: rgb(224, 24, 24);">
-                            <p>
-                                <%= emailError %>
-                                    <br> Vui Lòng chọn một tài khoản khác !!
-                            </p>
-                        </div>
+
+          <div style="text-align: center; color: rgb(224, 24, 24); font-size: 18px;">
+            <p>
+              <% if (typeof emailError !=='undefined' ) { %>
+                <%= emailError %>
+                  <br>
+                  Vui Lòng chọn một tài khoản khác !!
+                  <% } %>
+
+                    <% if (typeof phoneNumberError !=='undefined' ) { %>
+
+                      <%= phoneNumberError %>
+                        <br>
+                        Vui Lòng chọn một số điện thoại khác !!
                         <% } %>
+            </p>
+          </div>
 
-                            <% if (typeof phoneNumberError !=='undefined' ) { %>
-                                <div style="text-align: center; color: rgb(219, 26, 26);">
-                                    <p>
-                                        <%= phoneNumberError %>
-                                            <br> Vui Lòng chọn một số điện thoại khác !!
-                                    </p>
-                                </div>
+          <input type="email" name="user_Email" id="user_Email" value="" class="form-control input-lg form-label-group"
+            placeholder="Email" required />
 
-                                <% } %>
+          <input type="text" name="user_Name" id="user_Name" value="" class="form-control input-lg "
+            placeholder="Họ tên" required />
 
-                                    <input type="email" name="user_Email" id="user_Email" value="" class="form-control input-lg form-label-group" placeholder="Email" required />
+          <input type="text" name="user_NumberPhone" id="user_NumberPhone" value="" class="form-control input-lg"
+            placeholder="Số điện thoại" required />
 
-                                    <input type="text" name="user_Name" id="user_Name" value="" class="form-control input-lg " placeholder="Họ tên" required />
+          <input type="password" name="user_Password" id="user_Password" value="" class="form-control input-lg"
+            placeholder="Mật khẩu" required />
 
-                                    <input type="text" name="user_NumberPhone" id="user_NumberPhone" value="" class="form-control input-lg" placeholder="Số điện thoại" required />
+          <input type="password" name="user_ConfirmPassword" id="user_ConfirmPassword" value=""
+            class="form-control input-lg" placeholder="Nhập lại mật khẩu" required />
 
-                                    <input type="password" name="user_Password" id="user_Password" value="" class="form-control input-lg" placeholder="Mật khẩu" required />
-
-                                    <input type="password" name="user_ConfirmPassword" id="user_ConfirmPassword" value="" class="form-control input-lg" placeholder="Nhập lại mật khẩu" required />
-
-                                    <br>
-                                    <button class="btn btn-lg btn-primary btn-block signup-btn" type="submit">Tạo tài khoản</button>
-                                    <br>
-                </form>
-            </div>
+          <br>
+          <button class="btn btn-lg btn-primary btn-block signup-btn" type="submit">Tạo tài khoản</button>
+          <br>
+        </form>
+      </div>
 
 
         </div>

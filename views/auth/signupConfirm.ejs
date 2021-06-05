@@ -11,7 +11,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Nhập mã xác thực</title>
+  <title>Một chút Film - Xác thực tài khoản</title>
   <link rel="stylesheet" type="text/css" href="../public/css/signUp.css">
 </head>
 
@@ -23,27 +23,24 @@
 
           <form action="/signup/confirm" method="post" accept-charset="utf-8" class="form" role="form">
             <h3>NHẬP MÃ XÁC THỰC</h3>
-            <% if (typeof invalidCode !=='undefined' ) { %>
-              <div style="text-align: center; color:rgb(221, 34, 34);font-size:17px">
+
+            <div style="text-align: center; color:rgb(221, 34, 34);font-size:18px">
+              <% if (typeof invalidCode !=='undefined' ) { %>
                 <%= invalidCode %>
-              </div>
-              <% } %>
-
-                <% if (typeof invalidMail !=='undefined' ) { %>
-                  <div style="text-align: center; color:rgb(221, 34, 34);font-size:17px">
-                    <%= invalidMail %>
-                  </div>
                   <% } %>
+                    <% if (typeof invalidMail !=='undefined' ) { %>
+                      <%= invalidMail %>
+                        <% } %>
+            </div>
+            <br>
+            <input type="email" name="email" class="form-control input-lg" value="<%= user_Email %>"
+              placeholder="Nhập email" required />
 
-                    <br>
-                    <input type="email" name="email" class="form-control input-lg" value="<%= user_Email %>"
-                      placeholder="Nhập email" required />
+            <input type="text" name="code" id="user_ConfirmEmail" value="" class="form-control input-lg"
+              placeholder="Nhập mã xác thực" required />
+            <br />
 
-                    <input type="text" name="code" id="user_ConfirmEmail" value="" class="form-control input-lg"
-                      placeholder="Nhập mã xác thực" required />
-                    <br />
-
-                    <button class="btn btn-lg btn-primary btn-block signup-btn" type="submit">Xác nhận</button>
+            <button class="btn btn-lg btn-primary btn-block signup-btn" type="submit">Xác nhận</button>
 
 
           </form>

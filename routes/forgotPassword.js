@@ -95,5 +95,8 @@ router.post('/confirm', async function (req, res) {
 	}
 });
 
+router.get('/:slug', (req, res) => {
+	res.render('404NotFound');
+})
 
 module.exports = router;
