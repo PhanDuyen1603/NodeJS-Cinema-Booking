@@ -4,7 +4,7 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     height: 100%;
-    font-family: 'Numans', sans-serif;
+    font-family: 'Source Serif Pro';
 }
 
 #wrap {
@@ -30,6 +30,12 @@ legend {
     font-weight: bold;
 }
 
+.signUpConfirm {
+    position: fixed !important;
+    height: auto !important;
+    left: 478px;
+}
+
 .signup-btn {
     border: none;
     display: block;
@@ -49,7 +55,8 @@ legend {
     border-radius: 20px;
 }
 
-.signup-btn:hover {
+
+/* .signup-btn:hover {
     background: #79bc64;
     background-image: -webkit-linear-gradient(top, #79bc64, #5e7056);
     background-image: -moz-linear-gradient(top, #79bc64, #5e7056);
@@ -57,7 +64,7 @@ legend {
     background-image: -o-linear-gradient(top, #79bc64, #5e7056);
     background-image: linear-gradient(to bottom, #79bc64, #5e7056);
     text-decoration: none;
-}
+} */
 
 .navbar-default .navbar-brand {
     color: #fff;
@@ -130,7 +137,6 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     height: 100%;
-    font-family: 'Numans', sans-serif;
 }
 
 .container {
@@ -156,6 +162,7 @@ button.btn.green.uppercase {
     color: #FFF;
     background-color: #32c5d2;
     border-color: #32c5d2;
+    text-transform: uppercase;
 }
 
 .card-body {
