@@ -1,6 +1,6 @@
 html,
 body {
-    background-image: url('../image/bgLogin.jpg');
+    background-color: #364150!important;
     background-size: cover;
     background-repeat: no-repeat;
     height: 100%;
@@ -86,7 +86,7 @@ legend {
 h3 {
     color: white;
     text-align: center;
-    font-size: 33px;
+    font-size: 30px;
 }
 
 .center {
@@ -103,9 +103,12 @@ h3 {
 }
 
 .input-lg {
-    width: 100%;
     margin: auto;
-    border-radius: 20px;
+    width: 358px;
+    background-color: #dde3ec;
+    height: 43px;
+    color: #8290a3;
+    border: 1px solid #dde3ec;
 }
 
 .centerReset {
@@ -115,4 +118,282 @@ h3 {
     margin-top: 15px;
     width: 100px;
     height: 100px;
+}
+
+
+/* Made with love by Mutiullah Samim*/
+
+@import url('https://fonts.googleapis.com/css?family=Numans');
+html,
+body {
+    background-color: #364150!important;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    font-family: 'Numans', sans-serif;
+}
+
+.container {
+    height: 100%;
+    align-content: center;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 30px 30px 30px;
+    overflow: hidden;
+    position: relative;
+    height: 530px;
+    max-width: 435px;
+    margin: 0 auto;
+}
+
+button.btn.green.uppercase {
+    margin-top: 1px;
+    font-weight: 600;
+    padding: 10px 20px!important;
+    color: #FFF;
+    background-color: #32c5d2;
+    border-color: #32c5d2;
+}
+
+.card-body {
+    max-height: 361px;
+}
+
+input[type="checkbox"] {
+    margin: 10px;
+}
+
+.form-actions {
+    clear: both;
+    border: 0;
+    border-bottom: 1px solid #eee;
+    padding: 25px 30px;
+    margin-left: -30px;
+    margin-right: -30px;
+}
+
+.login-options {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+
+.login-options h4 {
+    float: left;
+    font-weight: 600;
+    font-size: 15px;
+    color: #7d91aa!important;
+}
+
+.login-options .social-icons {
+    float: right;
+    padding-top: 3px;
+}
+
+.social-icons li {
+    float: left;
+    display: inline;
+    list-style: none;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    text-indent: -9999px;
+}
+
+.social-icons li .facebook {
+    background: url(../img/social/facebook.png) no-repeat;
+}
+
+.social-icons li>a {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+    border-radius: 2px;
+    width: 28px;
+    height: 28px;
+    display: block;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+}
+
+.login-options .social-icons li a {
+    border-radius: 15px!important;
+    -moz-border-radius: 15px!important;
+    -webkit-border-radius: 15px!important;
+}
+
+.social-icon-color {
+    opacity: .7;
+    background-position: 0 -38px!important;
+}
+
+.social-icons li .facebook {
+    background: url(/public/image/facebook.png) no-repeat;
+}
+
+.social-icons li .twitter {
+    background: url(/public/image/twitter.png) no-repeat;
+}
+
+.social-icons li .googleplus {
+    background: url(/public/image/googleplus.png) no-repeat;
+}
+
+.social-icons li .linkedin {
+    background: url(/public/image/linkedin.png) no-repeat;
+}
+
+.create-account {
+    margin: 0 -40px -30px;
+    padding: 15px 0 17px;
+    text-align: center;
+    background-color: #6c7a8d;
+    -webkit-border-radius: 0 0 7px 7px;
+    -moz-border-radius: 0 0 7px 7px;
+    -ms-border-radius: 0 0 7px 7px;
+    -o-border-radius: 0 0 7px 7px;
+    border-radius: 0 0 7px 7px;
+}
+
+.create-account>#register-btn {
+    font-weight: 600;
+    font-size: 14px;
+    color: #c3cedd;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.form-actions {
+    font-size: 14px;
+}
+
+.social_icon span {
+    font-size: 60px;
+    margin-left: 10px;
+    color: #FFC312;
+}
+
+.social_icon span:hover {
+    color: white;
+    cursor: pointer;
+}
+
+h3.form-title.font-green {
+    color: #4db3a5;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 600!important;
+    margin-bottom: 20px;
+}
+
+input.btn.green.uppercase {
+    margin-top: 1px;
+    font-weight: 600;
+    padding: 10px 20px!important;
+    color: #FFF;
+    background-color: #32c5d2;
+    border-color: #32c5d2;
+}
+
+input#txtUserEmail,
+input#txtUserPassword {
+    background-color: #dde3ec;
+    height: 43px;
+    color: #8290a3;
+    border: 1px solid #dde3ec;
+}
+
+.social_icon {
+    position: absolute;
+    right: 20px;
+    top: -45px;
+}
+
+.input-group-prepend span {
+    width: 50px;
+    background-color: #FFC312;
+    color: black;
+    border: 0 !important;
+}
+
+input:focus {
+    outline: 0 0 0 0 !important;
+    box-shadow: 0 0 0 0 !important;
+}
+
+.remember {
+    color: white;
+}
+
+.remember input {
+    width: 20px;
+    height: 20px;
+    margin-left: 15px;
+    margin-right: 5px;
+}
+
+.login_btn {
+    border: none;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    text-transform: uppercase;
+    outline: none;
+    overflow: hidden;
+    position: relative;
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    background-color: #222;
+    padding: 10px 30px;
+    margin: 0 auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.20);
+    border-radius: 20px;
+}
+
+.login_btn:hover {
+    color: black;
+    background-color: white;
+}
+
+.links {
+    color: white;
+}
+
+.links a {
+    margin-left: 4px;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 220px;
+    height: 120px;
+}
+
+.container.center.row {
+    height: 60px;
+    margin-top: 30px;
+}
+
+.input-group {
+    border-radius: 20px;
+}
+
+.radius {
+    border-radius: 20px;
+}
+
+.input-group-text {
+    border-radius: 20px;
 }
