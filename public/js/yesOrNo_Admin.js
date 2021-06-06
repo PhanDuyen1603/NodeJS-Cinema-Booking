@@ -1,3 +1,3 @@
-function confirmAction(){
-    return confirm("Bạn muốn thực hiện thao tác . Nếu không hãy bấm Hủy  ");
+function confirmAction() {
+    return confirm("Bạn có chắc thực hiện thao tác này?");
 }

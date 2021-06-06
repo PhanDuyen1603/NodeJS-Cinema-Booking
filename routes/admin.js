@@ -18,9 +18,10 @@ var multer = require('multer');
 var upload = multer({ dest: './public/image/uploads/film/' })
 const rename = promisify(require('fs').rename);
 
+//REMOVE IMAGE FILE
+const unlinkAsync = promisify(fs.unlink)
+
 const router = new Router();
-
-
 
 var formidable = require('formidable');
 
@@ -257,13 +258,18 @@ router.get('/logout', async function (req, res) {
 
 //FILM
 
-// [POST] /admin/create/film
-router.get('/create/film/', async function (req, res) {
-    res.redirect('/admin/update/film');
+// [GET] /admin/film
+router.get('/film', async function (req, res) {
+    const filmAll = await Film.findAll({
+        order: [
+            ['film_ID', 'DESC']
+        ]
+    });
+    res.render('admin', { filmAll });
 });
 
-// [POST] /admin/create/film
-router.post('/create/film/', upload.single('filmImage'), async function (req, res) {
+// [POST] /admin/film/create
+router.post('/film/create', upload.single('filmImage'), async function (req, res) {
     var { filmName, filmPublicDate, filmTime } = req.body;
     var path = './public/image/uploads/film/' + String(Date.now()) + '-' + req.file.originalname;
     var filmImage = path.substr(1, path.length);
@@ -281,30 +287,55 @@ router.post('/create/film/', upload.single('filmImage'), async function (req, re
     res.redirect('back');
 });
 
-
-router.get('/update/film/', async function (req, res) {
-    const filmAll = await Film.findAll({
-        order: [
-            ['film_ID', 'ASC']
-        ]
-    });
-    res.render('admin.ejs', { filmAll });
-});
-
-router.post('/update/film/:id', async function (req, res) {
-    const id = req.params.id;
-    res.redirect('/admin/');
-});
-
-
-router.get('/delete/film/:id', async function (req, res) {
+// [POST] /admin/film/update/:id
+router.post('/film/update/:id', upload.single('filmImage'), async function (req, res) {
+    //Update ảnh film --> xoá ảnh cũ, thêm ảnh mới
     const id = Number(req.params.id);
+    var { filmName, filmPublicDate, filmTime } = req.body;
+
+    const updatedFilm = await Film.findByPk(id);
+    if (filmPublicDate) {
+        updatedFilm.film_DatePublic = filmPublicDate;
+    }
+    if (req.file) {
+        var path = './public/image/uploads/film/' + String(Date.now()) + '-' + req.file.originalname;
+        var filmImage = path.substr(1, path.length);
+
+        // Xoá ảnh cũ
+        fs.unlink(path, () => {
+            console.log(`successfully deleted ${path}`);
+        });
+        // THêm ảnh mới
+        await rename(req.file.path, path);
+
+        updatedFilm.film_Image = filmImage;
+    }
+
+    updatedFilm.film_Name = filmName;
+    updatedFilm.film_Time = filmTime;
+
+    await updatedFilm.save();
+
+    res.redirect('back');
+});
+
+// [GET] /admin/film/delete/:id
+router.get('/film/delete/:id', async function (req, res) {
+    const id = Number(req.params.id);
+
+    //Xoá ảnh từ folder khi xoá film
+    const deletedFilm = await Film.findByPk(id);
+    const fileNameWithPath = '.' + deletedFilm.film_Image;
+    fs.unlink(fileNameWithPath, () => {
+        console.log(`successfully deleted ${fileNameWithPath}`);
+    });
     await Film.destroy({
         where: {
             film_ID: id,
         },
     });
-    res.redirect('/admin/update/film/');
+
+    res.redirect('back');
 });
 
 
