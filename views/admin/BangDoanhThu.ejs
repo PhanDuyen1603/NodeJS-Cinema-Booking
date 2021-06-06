@@ -1,0 +1,43 @@
+<div class="Timkiem">
+    <h2>Thống kê doanh số từ ngày nhập một đến ngày nhập hai </h2>
+    <form action="" method="POST">
+        <label> Ngày nhập môt : </label> <input type="date" name="txtDateOne" required/>
+        <label> Ngày nhập hai :</label> <input type="date" name ="txtDateTwo" required/>
+        <input type="submit" value="Thống kê"/>
+    </form>
+</div>
+<br/>
+<h2> Bảng Doanh Thu Của Phim từ đầu tháng đến ngày hiện tại</h2>
+<div class="table">
+    <table>
+        <tr>
+            <th> Phim </th>
+            <th> Tổng doanh thu </th>
+            <th> Số vé bán được </th>
+        </tr>
+        <% for(let i = 0 ;i < thuocTinhFilm.length ; i++ ) { %>
+        <tr>
+            <td> <%= thuocTinhFilm[i].Name_film %> </td>
+            <td> <%= thuocTinhFilm[i].TotalMoney_film %></td>
+            <td> <%= thuocTinhFilm[i].CountTicket_film %></td>
+        </tr>
+        <% } %>
+    </table>
+</div>
+<h2>Bảng Doanh Thu Của Cụm Rạp từ đầu tháng đến ngày hiện tại</h2>
+<div class="table">
+        <table>
+            <tr>
+                <th> Cụm rạp </th>
+                <th> Tổng doanh thu </th>
+                <th> Số vé bán được </th>
+            </tr>
+            <% for(let i = 0 ;i < thuocTinhCumRap.length ; i++ ) { %>
+            <tr>
+                <td> <%= thuocTinhCumRap[i].Name_cineplex %> </td>
+                <td> <%= thuocTinhCumRap[i].TotalMoney_cineplex %></td>
+                <td> <%= thuocTinhCumRap[i].CountTicket_cineplex %></td>
+            </tr>
+            <% } %>
+        </table>
+    </div>

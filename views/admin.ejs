@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin web đặt vé phim</title>
+    <script src="/public/js/yesOrNo_Admin.js"></script>
+    <script src="/public/js/jquery/jquery-3.4.1.min.js"></script>
+    <script src="/public/js/jquery/adminjq.js"></script>
+    <link href="/public/css/admin/adminhome.css" rel="stylesheet" />
+    <link href="/public/css/admin/tableAdmin.css" rel="stylesheet" />
+    <link href="/public/css/admin/all.css" rel="stylesheet" />
+    <link href="/public/css/admin/w3.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- MỚI THÊM FONT AWESOME 04/06/2021 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body>
+    <div id="header_admin">
+        <ul style="display: flex; justify-content: space-between;">
+            <li><a href="/admin" id="logo">VNCinema</a></li>
+            <li><a href="/admin/film">QUẢN LÝ PHIM</a></li>
+            <li><a href="/admin/update/cinema">QUẢN LÝ RẠP</a></li>
+            <li><a href="/admin/update/cineplex">QUẢN LÝ CỤM RẠP</a></li>
+            <li><a href="/admin/update/user">QUẢN LÝ NGƯỜI DÙNG</a></li>
+            <li style="float: right"><a href="/admin/logout" id="logout">
+                    Đăng xuất
+                </a></li>
+        </ul>
+    </div>
+    <div id="content_admin">
+        <% if(typeof thuocTinhFilm !=='undefined' && typeof thuocTinhCumRap !=='undefined' ) { %>
+            <% include admin/BangDoanhThu.ejs %>
+                <% } %>
+                    <% if(typeof cinema !=='undefined' ) { %>
+                        <% include admin/cinema.ejs %>
+                            <% } %>
+                                <% if(typeof cinemaID !=='undefined' ) { %>
+                                    <% include admin/update/updatecinema.ejs %>
+                                        <% } %>
+                                            <% if(typeof userAll !=='undefined' ) { %>
+                                                <% include admin/userAll.ejs %>
+                                                    <% } %>
+                                                        <% if(typeof userID !=='undefined' ) { %>
+                                                            <% include admin/update/updateuser.ejs %>
+                                                                <% } %>
+                                                                    <% if(typeof filmAll !=='undefined' ) { %>
+                                                                        <% include admin/filmAll.ejs %>
+                                                                            <% } %>
+                                                                                <% if(typeof filmID !=='undefined' ) {
+                                                                                    %>
+                                                                                    <% include
+                                                                                        admin/update/updatefilm.ejs %>
+                                                                                        <% } %>
+                                                                                            <% if(typeof cineplex
+                                                                                                !=='undefined' ) { %>
+                                                                                                <% include
+                                                                                                    admin/cineplex.ejs
+                                                                                                    %>
+                                                                                                    <% } %>
+                                                                                                        <% if(typeof
+                                                                                                            timeShowCinemaIDcinema
+                                                                                                            !=='undefined'
+                                                                                                            ) { %>
+                                                                                                            <% include
+                                                                                                                admin/cinemaTimeShow/cinemaTimeShowCinema.ejs
+                                                                                                                %>
+                                                                                                                <% } %>
+    </div>
+</body>
+
+</html>

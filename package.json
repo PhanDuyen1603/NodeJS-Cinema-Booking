@@ -1,0 +1,46 @@
+{
+  "name": "a",
+  "version": "1.0.0",
+  "description": "+ fix load film ở trang home                    => done\r + fix resize image film theo kích thước cửa sổ  => done\r + fix tên film dài đổi thành ...                => done",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HuynhTri0811/DoAnCuoiKiWeb2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HuynhTri0811/DoAnCuoiKiWeb2/issues"
+  },
+  "homepage": "https://github.com/HuynhTri0811/DoAnCuoiKiWeb2#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.8",
+    "body-parser": "^1.19.0",
+    "cookie-session": "^1.4.0",
+    "ejs": "^2.6.1",
+    "ejs-lint": "^0.3.0",
+    "es2015": "0.0.0",
+    "express": "^4.17.0",
+    "express-promise-router": "^3.0.3",
+    "formidable": "^1.2.1",
+    "fs": "0.0.1-security",
+    "fs.promises": "^0.1.2",
+    "jsdom": "^15.1.1",
+    "long-stack-traces": "^0.1.2",
+    "multer": "^1.4.2",
+    "nexmo": "^2.4.1",
+    "nodejs": "0.0.0",
+    "nodemailer": "^6.2.1",
+    "nodemon": "^1.19.4",
+    "pg": "^7.11.0",
+    "sequelize": "^5.8.7",
+    "util": "^0.12.4",
+    "winston": "^3.2.1",
+    "yargs": "^13.2.4"
+  },
+  "devDependencies": {}
+}
