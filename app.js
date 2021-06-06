@@ -25,7 +25,7 @@ app.use(cookieSession({
 	maxAge: 24 * 60 * 60 * 1000
 }));
 
-// MIDDLEWAREs
+// MIDDLEWARES
 const authAdminMiddleWare = require('./middlewares/auth_admin');
 app.use(authAdminMiddleWare);
 

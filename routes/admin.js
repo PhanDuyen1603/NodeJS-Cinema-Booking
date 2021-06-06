@@ -2,21 +2,32 @@ const Router = require('express').Router;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const fs = require('fs');
-const user = require('../models/User.js');
-const ticket = require('../models/Ticket.js');
-const Cinema = require('../models/Cinema.js');
-const Cineplex = require('../models/Cineplex.js');
-const Film = require('../models/Film.js');
-const timeShow = require('../models/TimeShow.js');
-const CinemaTimeShow = require('../models/CinemaTimeShow.js');
-const router = new Router();
+
+//MODELS
+const user = require('../models/User');
+const ticket = require('../models/Ticket');
+const Cinema = require('../models/Cinema');
+const Cineplex = require('../models/Cineplex');
+const Film = require('../models/Film');
+const timeShow = require('../models/TimeShow');
+const CinemaTimeShow = require('../models/CinemaTimeShow');
+
+//UPLOAD FILE
+const { promisify } = require('util');
 var multer = require('multer');
+var upload = multer({ dest: './public/image/uploads/film/' })
+const rename = promisify(require('fs').rename);
+
+//REMOVE IMAGE FILE
+const unlinkAsync = promisify(fs.unlink)
+
+const router = new Router();
+
 var formidable = require('formidable');
+
 
 const ensureLoggedInAdmin = require('../middlewares/ensure_logged_in_admin');
 router.use(ensureLoggedInAdmin);
-
-const upload = multer({ dest: __dirname + '/uploads/images' });
 
 router.get('/', async function (req, res) {
     var D = new Date();
@@ -247,69 +258,84 @@ router.get('/logout', async function (req, res) {
 
 //FILM
 
-// [POST] /admin/create/film
-
-router.get('/create/film/', async function (req, res) {
-    res.redirect('/admin/update/film');
-});
-
-// [POST] /admin/create/film
-router.post('/create/film/', async function (req, res) {
-    // var form = new formidable.IncomingForm();
-    // await form.parse(req, function (err, filds, files) {
-    //     var oldpath = "dasdasdas";
-    //     var newpath = 'public/image' + file.filetoupload.name;
-    //     fs.rename(oldpath, newpath, function (err) {
-    //         if (err) throw err;
-    //         res.write('File uploaded and moved!');
-    //         res.end();
-    //     });
-    // });
-
-    var { txtFilmName, txtFilmDatePublic, txtFilmTime, txtFilmImage } = req.body;
-
-    // if (form) {
-    // await Film.create({
-    //     film_Name: txtFilmName,
-    //     film_Image: '/public/image/' + txtFilmImage,
-    //     film_DatePublic: txtFilmDatePublic,
-    //     film_Time: txtFilmTime,
-    // });
-    console.log(txtFilmName, txtFilmDatePublic, txtFilmTime, txtFilmImage);
-
-
-    res.redirect('/admin/update/film');
-    // } else {
-    // console.log("loi cmnr 2");
-    // res.redirect('/admin/update/film');
-    // }
-
-});
-
-
-router.get('/update/film/', async function (req, res) {
+// [GET] /admin/film
+router.get('/film', async function (req, res) {
     const filmAll = await Film.findAll({
         order: [
-            ['film_ID', 'ASC']
+            ['film_ID', 'DESC']
         ]
     });
-    res.render('admin.ejs', { filmAll });
+    res.render('admin', { filmAll });
 });
 
-router.post('/update/film/:id', async function (req, res) {
-    const id = req.params.id;
-    res.redirect('/admin/');
+// [POST] /admin/film/create
+router.post('/film/create', upload.single('filmImage'), async function (req, res) {
+    var { filmName, filmPublicDate, filmTime } = req.body;
+    var path = './public/image/uploads/film/' + String(Date.now()) + '-' + req.file.originalname;
+    var filmImage = path.substr(1, path.length);
+
+    //Move file into path
+    await rename(req.file.path, path);
+
+    await Film.create({
+        film_Name: filmName,
+        film_DatePublic: filmPublicDate,
+        film_Time: filmTime,
+        film_Image: filmImage,
+    });
+
+    res.redirect('back');
 });
 
-
-router.get('/delete/film/:id', async function (req, res) {
+// [POST] /admin/film/update/:id
+router.post('/film/update/:id', upload.single('filmImage'), async function (req, res) {
+    //Update ảnh film --> xoá ảnh cũ, thêm ảnh mới
     const id = Number(req.params.id);
+    var { filmName, filmPublicDate, filmTime } = req.body;
+
+    const updatedFilm = await Film.findByPk(id);
+    if (filmPublicDate) {
+        updatedFilm.film_DatePublic = filmPublicDate;
+    }
+    if (req.file) {
+        var path = './public/image/uploads/film/' + String(Date.now()) + '-' + req.file.originalname;
+        var filmImage = path.substr(1, path.length);
+
+        // Xoá ảnh cũ
+        fs.unlink(path, () => {
+            console.log(`successfully deleted ${path}`);
+        });
+        // THêm ảnh mới
+        await rename(req.file.path, path);
+
+        updatedFilm.film_Image = filmImage;
+    }
+
+    updatedFilm.film_Name = filmName;
+    updatedFilm.film_Time = filmTime;
+
+    await updatedFilm.save();
+
+    res.redirect('back');
+});
+
+// [GET] /admin/film/delete/:id
+router.get('/film/delete/:id', async function (req, res) {
+    const id = Number(req.params.id);
+
+    //Xoá ảnh từ folder khi xoá film
+    const deletedFilm = await Film.findByPk(id);
+    const fileNameWithPath = '.' + deletedFilm.film_Image;
+    fs.unlink(fileNameWithPath, () => {
+        console.log(`successfully deleted ${fileNameWithPath}`);
+    });
     await Film.destroy({
         where: {
             film_ID: id,
         },
     });
-    res.redirect('/admin/update/film/');
+
+    res.redirect('back');
 });
 
 
@@ -470,7 +496,7 @@ router.get('/update/cineplex', async function (req, res) {
     }); */
     /* var tempPhim = 0;
     while(SoFilm[tempPhim] !== undefined){
-
+ 
     } */
 
     const cineplex = await Cineplex.findAll({
