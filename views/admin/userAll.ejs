@@ -1,24 +1,39 @@
-<% if(userAll) { %>
+<div class="container">
     <div id="table">
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Họ và Tên </th>
-                <th>Email </th>
-                <th>Số điên thoại người dùng</th>
-                <th>Thao tác</th>
-            </tr>
-        <% for (let i=0;i < userAll.length ; i++ ) { %>
-            <tr>
-                <td> <%= userAll[i].dataValues.user_ID  %></td>
-                <td> <%= userAll[i].dataValues.user_Name %></td>
-                <td> <%= userAll[i].dataValues.user_Email %></td>
-                <td> <%= userAll[i].dataValues.user_NumberPhone %></td>
-                
-                <td> <a href="/admin/delete/user/<%= userAll[i].dataValues.user_ID %>" onclick="return confirmAction()" >Xóa</a></td>
-            </tr>
-        <% } %>
-        </table>
-        
+        <% if(userAll) { %>
+            <% if(userAll.length!=0){ %>
+                <table>
+                    <tr>
+                        <th>STT</th>
+                        <th>Họ và Tên </th>
+                        <th>Email </th>
+                        <th>Số điên thoại người dùng</th>
+                        <th>Thao tác</th>
+                    </tr>
+                    <% for (let i=0;i < userAll.length ; i++ ) { %>
+                        <tr>
+                            <td>
+                                <%= i+1 %>
+                            </td>
+                            <td>
+                                <%= userAll[i].user_Name %>
+                            </td>
+                            <td>
+                                <%= userAll[i].user_Email %>
+                            </td>
+                            <td>
+                                <%= userAll[i].user_NumberPhone %>
+                            </td>
+
+                            <td> <a href="/admin/user/delete/<%= userAll[i].user_ID %>"
+                                    onclick="return confirmAction()"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        <% } %>
+                </table>
+                <% }else{ %>
+                    <h1>Hiện tại hệ thống Một Chút Film chưa có user nào</h1>
+                    <% } %>
+                        <% } %>
     </div>
-<% } %>
+</div>

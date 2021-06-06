@@ -2,17 +2,17 @@
 #table table{
     border-collapse: collapse;
     width: 100%;
-    border: #4CAF50 1px solid;
+    border: #B31B1A 1px solid;
 }
 
 #table table th,td {
     text-align: center;
     padding:8px;
-    border: #4CAF50 1px solid;
+    border: #B31B1A 1px solid;
 }
 
 #table table tr th {
-    background-color: #4CAF50;
+    background-color: #B31B1A;
     color: white;
 }
 
@@ -95,7 +95,7 @@
     box-sizing: border-box;
 }
 .modal button[type = submit]{
-    background-color: #4CAF50;
+    background-color: #5CB85C;
 }
 
 .modal select {
@@ -121,7 +121,8 @@
 .cancelbtn{
     width: auto;
     padding: 10px 18px;
-    background-color: #f44336;
+    background-color: #D9534F;
+    
 }
 .container {
     padding: 16px;
@@ -131,17 +132,17 @@
 .table table{
     border-collapse: collapse;
     width: 100%;
-    border: #4CAF50 1px solid;
+    border: #B31B1A 1px solid;
 }
 
 .table table th,td {
     text-align: center;
     padding:8px;
-    border: #4CAF50 1px solid;
+    border: #B31B1A 1px solid;
 }
 
 .table table tr th {
-    background-color: #4CAF50;
+    background-color: #B31B1A;
     color: white;
 }
 
