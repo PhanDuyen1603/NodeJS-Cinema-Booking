@@ -11,6 +11,7 @@ const Cineplex = require('../models/Cineplex');
 const Film = require('../models/Film');
 const timeShow = require('../models/TimeShow');
 const CinemaTimeShow = require('../models/CinemaTimeShow');
+const Showtime = require('../models/Showtime')
 
 //UPLOAD FILE
 const { promisify } = require('util');
@@ -296,6 +297,7 @@ router.post('/film/update/:id', upload.single('filmImage'), async function (req,
     var { filmName, filmPublicDate, filmTime } = req.body;
 
     const updatedFilm = await Film.findByPk(id);
+
     if (filmPublicDate) {
         updatedFilm.film_DatePublic = filmPublicDate;
     }
@@ -419,25 +421,6 @@ router.get('/user', async function (req, res) {
     res.render('admin', { userAll });
 });
 
-//[POST] /admin/user/update/id
-// router.post('/user/update/:id', async function (req, res) {
-//     const id = Number(req.params.id);
-//     var { txtUserEmail, txtUserName, txtUserNumberPhone } = req.body;
-//     await user.update({
-//         user_Email: txtUserEmail,
-//         user_Name: txtUserName,
-//         user_NumberPhone: txtUserNumberPhone,
-//     }, {
-//         where: {
-//             user_ID: id,
-//         },
-//     }).then(() => {
-//         res.redirect('/admin/update/user/');
-//     }).catch(() => {
-//         res.render('404NotFound.ejs');
-//     });
-// });
-
 //[POST] /admin/user/delete/id
 router.get('/user/delete/:id', async function (req, res) {
     const id = Number(req.params.id);
@@ -500,6 +483,8 @@ router.get('/cineplex/delete/:id', async function (req, res) {
             cineplex_ID: id,
         }
     });
+
+
     res.redirect('back');
 });
 
@@ -520,7 +505,146 @@ router.post('/cineplex/update/:id', async function (req, res) {
 
 
 
-//CinemaTimeShow
+// SHOWTIME
+
+// [GET] /admin/showtime
+router.get('/showtime', async function (req, res) {
+    const showtime = await Showtime.findAll({
+        include: [
+            { model: Cinema, include: [{ model: Cineplex }] },
+            { model: Film }
+        ]
+    });
+
+    const allCinemas = await Cinema.findAll({
+        include: [{
+            model: Cineplex,
+        }],
+    });
+    const allFilms = await Film.findAll();
+
+    res.render('admin', { showtime, allCinemas, allFilms });
+});
+
+// [POST] /admin/showtime/create
+router.post('/showtime/create', async function (req, res) {
+    //Chưa kiểm tra các điều kiện khi thêm
+    const { cinemaID, filmID, showtimeDate, beginTime, showtimePrice } = req.body;
+
+    await Showtime.create({
+        showtime_Date: showtimeDate,
+        showtime_Begin: beginTime,
+        showtime_Price: showtimePrice,
+        showtime_Film: filmID,
+        showtime_Cinema: cinemaID,
+    });
+
+    console.log(cinemaID, filmID, showtimeDate, beginTime, showtimePrice);
+    res.redirect('back');
+});
+
+// [GET] /admin/showtime/delete/id
+router.get('/showtime/delete/:id', async function (req, res) {
+    const id = Number(req.params.id);
+    await Showtime.destroy({ where: { showtime_ID: id } });
+    res.redirect('back');
+});
+
+// [POST] /admin/showtime/update/id
+router.post('/showtime/update/:id', async function (req, res) {
+    const id = Number(req.params.id);
+    const { cinemaID, filmID, showtimeDate, beginTime, showtimePrice } = req.body;
+
+    // const updatedShowtime = await Showtime.findByPk(id);
+    if (showtimeDate) {
+        await Showtime.update({ showtime_Date: showtimeDate, }, { where: { showtime_ID: id } })
+    }
+    if (beginTime) {
+        Showtime.update({ showtime_Begin: beginTime, }, { where: { showtime_ID: id } })
+    }
+
+    Showtime.update({
+        showtime_Price: showtimePrice,
+        showtime_Film: filmID,
+        showtime_Cinema: cinemaID,
+    }, { where: { showtime_ID: id } });
+
+    // if (showtimeDate) {
+    //     updatedShowtime.showtime_Date = showtimeDate;
+    // }
+
+    // if (beginTime) {
+    //     updatedShowtime.showtime_Begin = beginTime;
+    // }
+
+    // updatedShowtime.showtime_Price = showtimePrice;
+    // updatedShowtime.showtime_Film = filmID;
+    // updatedShowtime.showtime_Cinema = cinemaID;
+
+    // await updatedShowtime.save();
+
+
+    res.redirect('back');
+});
+
+
+// HIỆN SHOWTIMES CỦA MỘT BỘ PHIM CỤ THỂ
+// [GET] /admin/showtime/film/id
+router.get('/showtime/film/:id', async function (req, res) {
+    const filmID = Number(req.params.id);
+    // showtime by film
+    const showtimesByFilm = await Showtime.findAll(
+        {
+            include: [
+                { model: Cinema, include: [{ model: Cineplex }] },
+                { model: Film },
+
+            ],
+            where: { showtime_Film: filmID },
+        },
+    );
+
+    const allCinemas = await Cinema.findAll({
+        include: [{
+            model: Cineplex,
+        }],
+    });
+    const allFilms = await Film.findAll();
+
+    res.render('admin', { showtimesByFilm, allCinemas, allFilms });
+});
+
+
+// HIỆN SHOWTIMES CỦA MỘT BỘ RẠP CỤ THỂ
+// [GET] /admin/showtime/cinema/id
+router.get('/showtime/cinema/:id', async function (req, res) {
+    const cinemaID = Number(req.params.id);
+    // showtime by cinema
+    const showtimesByCinema = await Showtime.findAll(
+        {
+            include: [
+                { model: Cinema, include: [{ model: Cineplex }] },
+                { model: Film },
+
+            ],
+            where: { showtime_Cinema: cinemaID },
+        },
+    );
+    const allCinemas = await Cinema.findAll({
+        include: [{
+            model: Cineplex,
+        }],
+    });
+    const allFilms = await Film.findAll();
+
+    res.render('admin', { showtimesByCinema, allCinemas, allFilms });
+    // console.log(
+    //     showtimesByCinema
+    // )
+    // res.render('admin', showtimesByCinema);
+});
+
+
 router.get('/update/cinemaTimeShow/cinema/:id', async function (req, res) {
     const id = Number(req.params.id);
     req.session.cinemaID = id;
@@ -555,7 +679,10 @@ router.get('/update/cinemaTimeShow/cinema/:id', async function (req, res) {
     });
     res.render('admin.ejs', { timeShowCinemaIDcinema, cinemaAll, filmCinemaTimeShow, TimeShow, loi });
 });
-router.get('/update/cinemaTimeShow/film/:id', async function (req, res) {
+
+
+// [GET] /admin/cinemaTimeShow/film/id
+router.get('/cinemaTimeShow/film/:id', async function (req, res) {
     const id = Number(req.params.id);
     req.session.cinemaID = id;
 
@@ -585,6 +712,8 @@ router.get('/update/cinemaTimeShow/film/:id', async function (req, res) {
     });
     res.render('admin.ejs', { timeShowCinemaIDcinema, cinemaAll, filmCinemaTimeShow, TimeShow });
 });
+
+//
 router.post('/create/cinemaTimeShow/', async function (req, res) {
     var { txtcinema_ID, txtCinemaTimeShow_Date, timeShowID, filmID } = req.body;
     console.log(txtCinemaTimeShow_Date);

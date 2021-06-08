@@ -18,7 +18,7 @@
                                 <%= i+1 %>
                             </td>
                             <td>
-                                <a href="/admin/update/film/cinemaTimeShow/<%= filmAll[i].film_ID %>">
+                                <a href="/admin/showtime/film/<%= filmAll[i].film_ID %>">
                                     <%= filmAll[i].film_Name %>
                                 </a>
                             </td>
@@ -59,6 +59,12 @@
                         <% } %>
     </div>
 </div>
+
+<a style="width:auto" class="btn_create" id="btn_create_film">
+    Thêm phim
+</a>
+
+
 <% for (let i=0;i < filmAll.length ; i++ ) { %>
     <div id="btn_update_film_main_<%= filmAll[i].film_ID %>" class="modal">
         <span class="close" title="Close Modal" id="btn_close_film_<%= filmAll[i].film_ID %>">
@@ -98,7 +104,7 @@
 
             <div class="container">
                 <button type="button" class="cancelbtn" id="btn_close_film_1_<%= filmAll[i].film_ID %>">
-                    Cancel
+                    HUỶ
                 </button>
             </div>
         </form>
@@ -107,9 +113,7 @@
     <% } %>
 
 
-        <a style="width:auto" class="btn_create" id="btn_create_film">
-            Thêm phim
-        </a>
+
 
         <div id="create_film" class="modal">
             <span class="close" title="Close Modal" id="btn_close_film_create">
@@ -157,6 +161,7 @@
                     $("#btn_update_film_<%= filmAll[i].film_ID %>").click(function () {
                         $("#btn_update_film_main_<%= filmAll[i].film_ID %>").show();
                     });
+
                     $("#btn_close_film_1_<%= filmAll[i].film_ID %>").click(function () {
                         $("#btn_update_film_main_<%= filmAll[i].film_ID %>").hide();
                     });
