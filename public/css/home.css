@@ -213,7 +213,7 @@
     }
     
     .content-rap-bg-fix {
-        font-family: "Times New Roman", Times, serif;
+        font-family: 'Source Serif Pro';
         font-size: 20px;
         margin: 0px;
         color: white;
@@ -234,7 +234,7 @@
     
     .content-rap-box-btn:link,
     .content-rap-box-btn:visited {
-        font-family: "Times New Roman", Times, serif;
+        font-family: 'Source Serif Pro';
         color: black;
         text-align: center;
         text-decoration: none;
@@ -510,11 +510,10 @@
         display: block;
         padding: 10px 0px;
     }
-    
-    .footer,
+    /* .footer,
     .footer button {
         font-family: "Helvetica Neue", Verdana, Arial, sans-serif;
-    }
+    } */
     /*rating*/
     /* The Modal (background) */
     
@@ -642,8 +641,4 @@
         margin-left: 20%;
         margin-right: 10%;
         margin-bottom: 40px;
-    }
-    
-    .bgInfoUser {
-        background-image: url('/public/image/background_all/bgInfo.jpg');
     }
