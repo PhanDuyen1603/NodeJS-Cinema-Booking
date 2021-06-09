@@ -1,3 +1,8 @@
+<!-- HOME ROUTE
+    URL: /, /phim
+-->
+
+<h2 style="text-align:center;margin-top: 30px;">DANH SÁCH PHIM</h2>
 <div class="content-area">
     <div class="tab-movies">
         <div class="tab-movies-line">
@@ -10,13 +15,12 @@
                 </li>
             </ul>
             <div class="tab-content">
-
-                <!--Phim đang chiếu-->
-                <div id="tab_default_1" class="tab-pane active">
-                    <div id="design-row-film-index" class="row">
-                        <% if (typeof film !=='undefined' ) { %>
+                <% if (typeof film !=='undefined' ) { %>
+                    <!--Phim đang chiếu-->
+                    <div id="tab_default_1" class="tab-pane active">
+                        <div id="design-row-film-index" class="row">
                             <% include film/nowShowingFilms %>
-                                <% } %>
+                                <% if(typeof film.full=="undefined" ){ %>
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12 col-xs-12 pull-right">
                                             <a href="/phim">
@@ -24,16 +28,15 @@
                                             </a>
                                         </div>
                                     </div>
-
+                                    <% } %>
+                        </div>
                     </div>
-                </div>
 
-                <!--Phim xem nhiều-->
-                <div id="tab_default_2" class="tab-pane">
-                    <div id="design-row-film-index" class="row">
-                        <% if (typeof film !=='undefined' ) { %>
+                    <!--Phim xem nhiều-->
+                    <div id="tab_default_2" class="tab-pane">
+                        <div id="design-row-film-index" class="row">
                             <% include film/highViewFilms %>
-                                <% } %>
+                                <% if(typeof film.full=="undefined" ){ %>
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12 col-xs-12 pull-right">
                                             <a href="/phim">
@@ -41,16 +44,15 @@
                                             </a>
                                         </div>
                                     </div>
-
+                                    <% } %>
+                        </div>
                     </div>
-                </div>
 
-                <!--Phim sắp chiếu-->
-                <div id="tab_default_3" class="tab-pane">
-                    <div id="design-row-film-index" class="row">
-                        <% if (typeof film !=='undefined' ) { %>
+                    <!--Phim sắp chiếu-->
+                    <div id="tab_default_3" class="tab-pane">
+                        <div id="design-row-film-index" class="row">
                             <% include film/upcomingFilms %>
-                                <% } %>
+                                <% if(typeof film.full=="undefined" ){ %>
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12 col-xs-12 pull-right">
                                             <a href="/phim">
@@ -58,9 +60,10 @@
                                             </a>
                                         </div>
                                     </div>
+                                    <% } %>
+                        </div>
                     </div>
-                </div>
-
+                    <% } %>
             </div>
         </div>
     </div>

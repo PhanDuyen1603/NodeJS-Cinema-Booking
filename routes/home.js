@@ -25,17 +25,12 @@ const router = new Router();
 // const ensureLoggedIn = require('../middlewares/ensure_logged_in');
 // router.use(ensureLoggedIn);
 
+// ROUTERS FOR HEADER
 
 // [GET] /
 router.get('/', async function (req, res) {
 	var dateNow = Date.now();
-	// var user;
 	var filmLimit = 12;
-
-	// const { user_Id } = req.session;
-	// if (user_Id) {
-	// 	user = await User.findByPk(user_Id);
-	// }
 
 	//Phim đang chiếu --> ngày chiếu <= ngày hiện tại && trạng thái: công chiếu
 	const nowShowingFilms = await Film.findAll({
@@ -79,7 +74,59 @@ router.get('/', async function (req, res) {
 	res.render('home', { film });
 });
 
+// [GET] /gioi-thieu
+router.get('/gioi-thieu', function (req, res) {
+	const intro = true;
+	res.render('home', { intro });
+});
 
+router.get('/ho-tro', function (req, res) {
+	const support = true;
+	res.render('home', { support });
+});
+
+// [GET] /phim
+router.get('/phim', async function (req, res) {
+	var dateNow = Date.now();
+
+	//Phim đang chiếu --> ngày chiếu <= ngày hiện tại && trạng thái: công chiếu
+	const nowShowingFilms = await Film.findAll({
+		where: {
+			film_DatePublic: {
+				[Op.lte]: dateNow,
+			},
+			film_Public: true,
+		},
+		order: [
+			['film_DatePublic', 'DESC']
+		],
+	});
+
+	const upcomingFilms = await Film.findAll({
+		where: {
+			film_DatePublic: {
+				[Op.gt]: dateNow,
+			},
+			film_Public: true,
+		},
+		order: [
+			['film_DatePublic', 'DESC']
+		],
+	});
+
+	const highViewFilms = await Film.findAll({
+		where: {
+			film_Public: true,
+		},
+		order: [
+			['film_ViewCount', 'DESC'],
+		],
+	});
+	var full = "Biến này dùng để ẩn nút Xem thêm";
+	const film = { nowShowingFilms, upcomingFilms, highViewFilms, full };
+	var hideSlideHeader = "Biến dùng để ẩn slide header đi kakaka";
+	res.render('home', { film, hideSlideHeader });
+});
 
 router.get('/filmSearch', async function (req, res) {
 	var dateNow = Date.now();
@@ -141,54 +188,8 @@ router.get('/logout', function (req, res) {
 
 
 
-// [GET] /film
-router.get('/phim', async function (req, res) {
-	var dateNow = Date.now();
-	var user;
-	const { user_Id } = req.session;
-	if (user_Id) {
-		user = await User.findOne({
-			where: {
-				user_ID: user_Id
-			},
-		});
-	}
-	const filmDangChieu = await Film.findAll({
-		where: {
-			film_DatePublic: {
-				[Op.lte]: dateNow,
-			},
-			film_Public: true,
-		},
-		order: [
-			['film_DatePublic', 'DESC']
-		],
-	});
-	const filmSapChieu = await Film.findAll({
-		where: {
-			film_DatePublic: {
-				[Op.gt]: dateNow,
-			},
-			film_Public: true,
-		},
-		order: [
-			['film_DatePublic', 'ASC']
-		],
-	});
-	const filmXemNhieu = await Film.findAll({
-		where: {
-			film_DatePublic: {
-				[Op.lte]: dateNow,
-			},
-			film_Public: true,
-		},
-		order: [
-			['film_ViewCount', 'DESC'],
-		]
-	});
-	const filmChieu = { filmDangChieu: filmDangChieu, filmSapChieu: filmSapChieu, filmXemNhieu: filmXemNhieu };
-	res.render('home', { filmChieu, user });
-});
+// [GET] /phim
+
 
 router.get('/phim/:id', async function (req, res) {
 	const id = Number(req.params.id);
@@ -508,15 +509,6 @@ router.post('/phim/muave/thongtinve/back/:id', async function (req, res) {
 
 
 
-router.get('/support', function (req, res) {
-	const support = true;
-	res.render('home', { support });
-});
-
-router.get('/intro', function (req, res) {
-	const intro = true;
-	res.render('home', { intro });
-});
 
 router.get('/:slug', (req, res) => {
 	res.render('404NotFound');
