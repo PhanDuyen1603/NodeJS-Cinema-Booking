@@ -25,8 +25,8 @@ app.use(cookieSession({
 }));
 
 // MIDDLEWARES
-const authAdminMiddleWare = require('./middlewares/auth_admin');
-app.use(authAdminMiddleWare);
+const authMiddleWare = require('./middlewares/auth');
+app.use(authMiddleWare);
 
 //ROUTERS
 const forgotPasswordRouter = require('./routes/forgotPassword');

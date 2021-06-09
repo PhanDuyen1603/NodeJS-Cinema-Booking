@@ -29,7 +29,10 @@ router.post('/', async function (req, res) {
 	const phoneNumberError = 'Số điện thoại này đã được đăng ký.';
 
 
+
 	if (User) {
+		res.render('auth/signup', { emailError });
+	} else if (user_Email === "admin@gmail.com") {
 		res.render('auth/signup', { emailError });
 	}
 	else {

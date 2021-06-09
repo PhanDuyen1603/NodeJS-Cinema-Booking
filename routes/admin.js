@@ -30,6 +30,7 @@ const router = new Router();
 const ensureLoggedInAdmin = require('../middlewares/ensure_logged_in_admin');
 router.use(ensureLoggedInAdmin);
 
+
 router.get('/', async function (req, res) {
     res.render('admin');
     // var D = new Date();

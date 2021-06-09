@@ -22,16 +22,20 @@ const nexmo = new Nexmo({
 
 const router = new Router();
 
+// const ensureLoggedIn = require('../middlewares/ensure_logged_in');
+// router.use(ensureLoggedIn);
+
+
 // [GET] /
 router.get('/', async function (req, res) {
 	var dateNow = Date.now();
-	var user;
+	// var user;
 	var filmLimit = 12;
 
-	const { user_Id } = req.session;
-	if (user_Id) {
-		user = await User.findByPk(user_Id);
-	}
+	// const { user_Id } = req.session;
+	// if (user_Id) {
+	// 	user = await User.findByPk(user_Id);
+	// }
 
 	//Phim đang chiếu --> ngày chiếu <= ngày hiện tại && trạng thái: công chiếu
 	const nowShowingFilms = await Film.findAll({
@@ -72,7 +76,7 @@ router.get('/', async function (req, res) {
 
 	const film = { nowShowingFilms, upcomingFilms, highViewFilms };
 
-	res.render('home', { film, user });
+	res.render('home', { film });
 });
 
 
@@ -126,14 +130,18 @@ router.get('/forgotPassword', function (req, res) {
 });
 
 router.get('/logout', function (req, res) {
-	delete req.session.user_Id;
+	if (req.session.user_Id) {
+		delete req.session.user_Id;
+	} else if (req.session.Admin) {
+		delete req.session.Admin;
+	}
 	res.redirect('/');
 });
 
 
 
 
-
+// [GET] /film
 router.get('/phim', async function (req, res) {
 	var dateNow = Date.now();
 	var user;

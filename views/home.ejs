@@ -26,10 +26,10 @@
     <header>
 
         <!--Header top-->
-        <% if ( typeof user !=='undefined' ) { %>
-            <% include Header/logged.ejs %>
+        <% if (currentUser) { %>
+            <% include header/logged %>
                 <% } else { %>
-                    <% include Header/noLogin.ejs %>
+                    <% include header/noLogin %>
                         <% } %>
                             <!--Menu header-->
                             <nav class="navbar navbar-default ">

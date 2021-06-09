@@ -15,7 +15,8 @@ router.post('/', async function (req, res) {
 	const activateError = 'Tài khoản này chưa được kích hoạt !!';
 
 	if (txtUserEmail === "admin@gmail.com" && txtUserPassword === "1") {
-		req.session.Admin = txtUserEmail;
+		const Admin = { user_Email: txtUserEmail, user_Password: txtUserPassword, user_Name: 'Admin' };
+		req.session.Admin = Admin;
 		res.redirect('/admin');
 	}
 	else {
