@@ -39,6 +39,8 @@ router.post('/', async function (req, res) {
 		}
 
 	}
+	console.log(txtUserEmail, txtUserPassword);
+	res.redirect('back');
 });
 
 router.get('/:slug', (req, res) => {

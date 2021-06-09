@@ -2,7 +2,6 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 const express = require('express');
 const db = require('./models/db');
-// const session = require('express-session');
 const cookieSession = require('cookie-session');
 const multer = require('multer');
 const path = require('path');

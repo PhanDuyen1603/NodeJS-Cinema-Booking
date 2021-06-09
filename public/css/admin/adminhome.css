@@ -40,12 +40,18 @@ body{
 }
 
 #logout {
-    border: 1px solid #09E700;
-    padding-top: 5px;
+    border: 1px solid #E40002;
+    padding: 5px 10px;
+    /* padding-top: 5px; */
     margin: 10px;
-    margin-top: 3px;
-    background-color: #09E7F2;
+    /* margin-top: 3px; */
+    background-color: #E40002;
     border-radius: 20px; 
+    color:black !important;
+}
+
+#logout:hover{
+color:white !important;
 }
 
 #logout a{
@@ -55,15 +61,15 @@ body{
 
 
 .btn_create{
-    float: right;
-    border: 1px solid #09E700;
-    padding: 5px;
-    margin: 10px;
-    margin-top: 3px;
-    background-color: #09E700;
+    float: left;
+    border: 1px solid #B31B1A;
+    padding: 10px 20px;
+    margin: 15px;
+    /* margin-top: 10px; */
+    background-color: #B31B1A;
     border-radius: 20px; 
     text-decoration: none;
-    color:  #09E7F2;
+    color:  white;
     cursor: pointer;
 }
 
