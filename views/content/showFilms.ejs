@@ -1,0 +1,67 @@
+<div class="content-area">
+    <div class="tab-movies">
+        <div class="tab-movies-line">
+            <ul class="nav nav-tabs movie-home">
+                <li class="active"><a href="#tab_default_1" data-toggle="tab" aria-expanded="true">Phim đang chiếu</a>
+                </li>
+                <li class=""><a href="#tab_default_2" data-toggle="tab" aria-expanded="false">Phim xem nhiều nhất</a>
+                </li>
+                <li class=""><a href="#tab_default_3" data-toggle="tab" aria-expanded="false">Phim sắp chiếu</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+
+                <!--Phim đang chiếu-->
+                <div id="tab_default_1" class="tab-pane active">
+                    <div id="design-row-film-index" class="row">
+                        <% if (typeof film !=='undefined' ) { %>
+                            <% include film/nowShowingFilms %>
+                                <% } %>
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12 col-xs-12 pull-right">
+                                            <a href="/phim">
+                                                <button class="btns"><span>Xem thêm</span></button>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                    </div>
+                </div>
+
+                <!--Phim xem nhiều-->
+                <div id="tab_default_2" class="tab-pane">
+                    <div id="design-row-film-index" class="row">
+                        <% if (typeof film !=='undefined' ) { %>
+                            <% include film/highViewFilms %>
+                                <% } %>
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12 col-xs-12 pull-right">
+                                            <a href="/phim">
+                                                <button class="btns"><span>Xem thêm</span></button>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                    </div>
+                </div>
+
+                <!--Phim sắp chiếu-->
+                <div id="tab_default_3" class="tab-pane">
+                    <div id="design-row-film-index" class="row">
+                        <% if (typeof film !=='undefined' ) { %>
+                            <% include film/upcomingFilms %>
+                                <% } %>
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12 col-xs-12 pull-right">
+                                            <a href="/phim">
+                                                <button class="btns"><span>Xem thêm</span></button>
+                                            </a>
+                                        </div>
+                                    </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

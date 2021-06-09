@@ -20,57 +20,62 @@ const nexmo = new Nexmo({
 	apiSecret: 'id5zkHyT3AOaJEWh',
 });
 
-
-
 const router = new Router();
+
+// [GET] /
 router.get('/', async function (req, res) {
 	var dateNow = Date.now();
 	var user;
+	var filmLimit = 12;
+
 	const { user_Id } = req.session;
 	if (user_Id) {
-		user = await User.findOne({
-			where: {
-				user_ID: user_Id
-			},
-		});
+		user = await User.findByPk(user_Id);
 	}
-	const filmPublic = await Film.findAll({
+
+	//Phim đang chiếu --> ngày chiếu <= ngày hiện tại && trạng thái: công chiếu
+	const nowShowingFilms = await Film.findAll({
 		where: {
 			film_DatePublic: {
 				[Op.lte]: dateNow,
 			},
 			film_Public: true,
 		},
+		limit: filmLimit,
 		order: [
 			['film_DatePublic', 'DESC']
 		],
 	});
-	const filmNoPublic = await Film.findAll({
+
+	const upcomingFilms = await Film.findAll({
 		where: {
 			film_DatePublic: {
 				[Op.gt]: dateNow,
 			},
 			film_Public: true,
 		},
+		limit: filmLimit,
 		order: [
-			['film_DatePublic', 'ASC']
+			['film_DatePublic', 'DESC']
 		],
 	});
-	const filmViewHigh = await Film.findAll({
+
+	const highViewFilms = await Film.findAll({
 		where: {
-			film_DatePublic: {
-				[Op.lte]: dateNow,
-			},
 			film_Public: true,
 		},
+		limit: filmLimit,
 		order: [
 			['film_ViewCount', 'DESC'],
-		]
+		],
 	});
 
-	const film = { filmPublic: filmPublic, filmNoPublic: filmNoPublic, filmViewHigh: filmViewHigh };
+	const film = { nowShowingFilms, upcomingFilms, highViewFilms };
+
 	res.render('home', { film, user });
 });
+
+
 
 router.get('/filmSearch', async function (req, res) {
 	var dateNow = Date.now();

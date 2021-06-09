@@ -273,7 +273,7 @@ router.get('/film', async function (req, res) {
 
 // [POST] /admin/film/create
 router.post('/film/create', upload.single('filmImage'), async function (req, res) {
-    var { filmName, filmPublicDate, filmTime } = req.body;
+    var { filmName, filmPublicDate, filmTime, filmContent, filmPublic } = req.body;
     var path = './public/image/uploads/film/' + String(Date.now()) + '-' + req.file.originalname;
     var filmImage = path.substr(1, path.length);
 
@@ -284,7 +284,9 @@ router.post('/film/create', upload.single('filmImage'), async function (req, res
         film_Name: filmName,
         film_DatePublic: filmPublicDate,
         film_Time: filmTime,
+        film_Content: filmContent,
         film_Image: filmImage,
+        film_Public: filmPublic,
     });
 
     res.redirect('back');
@@ -294,7 +296,7 @@ router.post('/film/create', upload.single('filmImage'), async function (req, res
 router.post('/film/update/:id', upload.single('filmImage'), async function (req, res) {
     //Update ảnh film --> xoá ảnh cũ, thêm ảnh mới
     const id = Number(req.params.id);
-    var { filmName, filmPublicDate, filmTime } = req.body;
+    var { filmName, filmPublicDate, filmTime, filmContent, filmPublic } = req.body;
 
     const updatedFilm = await Film.findByPk(id);
 
@@ -317,6 +319,8 @@ router.post('/film/update/:id', upload.single('filmImage'), async function (req,
 
     updatedFilm.film_Name = filmName;
     updatedFilm.film_Time = filmTime;
+    updatedFilm.film_Content = filmContent;
+    updatedFilm.film_Public = filmPublic;
 
     await updatedFilm.save();
 

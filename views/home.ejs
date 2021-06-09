@@ -10,7 +10,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/public/css/home.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,300;0,400;0,700;1,300;1,600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,300;0,400;0,700;1,300;1,600&display=swap"
+        rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -24,7 +26,7 @@
     <header>
 
         <!--Header top-->
-        <% if ( typeof user !== 'undefined' ) { %>
+        <% if ( typeof user !=='undefined' ) { %>
             <% include Header/logged.ejs %>
                 <% } else { %>
                     <% include Header/noLogin.ejs %>
@@ -32,8 +34,10 @@
                             <!--Menu header-->
                             <nav class="navbar navbar-default ">
                                 <div class="container-fluid menu_hover">
-                                    <div class="logo">
-                                        <img src="/public/image/Logo-Dien-03.png" width="170px" alt="Một Chiếc Phim">
+                                    <div class="logo" style="cursor: pointer;">
+                                        <a href="/"> <img src="/public/image/Logo-Dien-03.png" width="170px"
+                                                alt="Một Chút Phim">
+                                        </a>
                                     </div>
                                     <div class="navbar-header">
                                         <ul class="nav navbar-nav">
@@ -44,9 +48,11 @@
                                             <li><a href="/support">Hỗ trợ</a></li>
                                         </ul>
 
-                                        <form class="navbar-form navbar-left" role="search" method="GET" action="/filmSearch">
+                                        <form class="navbar-form navbar-left" role="search" method="GET"
+                                            action="/filmSearch">
                                             <div class="form-group">
-                                                <input type="text" name="txtSearch" id="txtSearch" class="form-control radius" placeholder="Nhập tên phim cần tìm">
+                                                <input type="text" name="txtSearch" id="txtSearch"
+                                                    class="form-control radius" placeholder="Nhập tên phim cần tìm">
                                             </div>
                                             <button type="submit" class="btn btn-primary radiusSearch">Search</button>
                                         </form>
@@ -77,43 +83,50 @@
                                         </div>
                                     </div>
                                     <div class="item">
-                                        <img src="../public/image/slide_header/slide-header-godzilla-de-vuong-bat-tu.jpg" alt="Không load được ảnh">
+                                        <img src="../public/image/slide_header/slide-header-godzilla-de-vuong-bat-tu.jpg"
+                                            alt="Không load được ảnh">
                                         <div class="carousel-caption">
                                             ...
                                         </div>
                                     </div>
                                     <div class="item">
-                                        <img src="../public/image/slide_header/slide-header-vo-gian-dao.jpg" alt="Không load được ảnh">
+                                        <img src="../public/image/slide_header/slide-header-vo-gian-dao.jpg"
+                                            alt="Không load được ảnh">
                                         <div class="carousel-caption">
                                             ...
                                         </div>
                                     </div>
                                     <div class="item">
-                                        <img src="../public/image/slide_header/banner-bo-gia-final-2.jpg" alt="Không load được ảnh">
+                                        <img src="../public/image/slide_header/banner-bo-gia-final-2.jpg"
+                                            alt="Không load được ảnh">
                                         <div class="carousel-caption">
                                             ...
                                         </div>
                                     </div>
                                     <div class="item">
-                                        <img src="../public/image/slide_header/slide-header-vo-gian-dao.jpg" alt="Không load được ảnh">
+                                        <img src="../public/image/slide_header/slide-header-vo-gian-dao.jpg"
+                                            alt="Không load được ảnh">
                                         <div class="carousel-caption">
                                             ...
                                         </div>
                                     </div>
                                     <div class="item">
-                                        <img src="../public/image/slide_header/slide-header-x-men-phuong-hoang-bong-toi.jpg" alt="Không load được ảnh">
+                                        <img src="../public/image/slide_header/slide-header-x-men-phuong-hoang-bong-toi.jpg"
+                                            alt="Không load được ảnh">
                                         <div class="carousel-caption">
                                             ...
                                         </div>
                                     </div>
                                     <div class="item">
-                                        <img src="../public/image/slide_header/slide-header-khuyen-mai-1.jpg" alt="Không load được ảnh">
+                                        <img src="../public/image/slide_header/slide-header-khuyen-mai-1.jpg"
+                                            alt="Không load được ảnh">
                                         <div class="carousel-caption">
                                             ...
                                         </div>
                                     </div>
                                     <div class="item">
-                                        <img src="../public/image/slide_header/slide-header-khuyen-mai-2.jpg" alt="Không load được ảnh">
+                                        <img src="../public/image/slide_header/slide-header-khuyen-mai-2.jpg"
+                                            alt="Không load được ảnh">
                                         <div class="carousel-caption">
                                             ...
                                         </div>
@@ -121,39 +134,39 @@
                                 </div>
 
                                 <!-- Controls -->
-                                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                                <a class="left carousel-control" href="#carousel-example-generic" role="button"
+                                    data-slide="prev">
                                     <span class="glyphicon glyphicon-chevron-left"></span>
                                 </a>
-                                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                                <a class="right carousel-control" href="#carousel-example-generic" role="button"
+                                    data-slide="next">
                                     <span class="glyphicon glyphicon-chevron-right"></span>
                                 </a>
                             </div>
 
 
     </header>
-
-    <% if (typeof support !== 'undefined') { %>
-        <% include content/support.ejs %>
+    <% if (typeof support !=='undefined' ) { %>
+        <% include content/support %>
             <% } %>
-                <% if (typeof intro !== 'undefined') { %>
-                    <% include content/intro.ejs %>
+                <% if (typeof intro !=='undefined' ) { %>
+                    <% include content/intro %>
                         <% } %>
                             <!--======================================================================================
                                             Content area
     =======================================================================================-->
 
-                            <% if (typeof film !== 'undefined') { %>
-                                <% include content/index.ejs %>
-                                    <% } if (typeof filmID !== 'undefined') { %>
-                                        <% include content/filmID.ejs %>
-                                            <% } if (typeof searchNameFilm !== 'undefined') { %>
-                                                <% include content/searchNameFilm.ejs %>
-                                                    <% } if (typeof filmChieu !== 'undefined') { %>
-                                                        <% include content/index.ejs %>
+                            <% if (typeof film !=='undefined' ) { %>
+
+
+                                <% include content/showFilms %>
+                                    <% } if (typeof filmID !=='undefined' ) { %>
+                                        <% include content/filmID %>
+                                            <% } if (typeof searchNameFilm !=='undefined' ) { %>
+                                                <% include content/searchNameFilm %>
+                                                    <% } if (typeof filmChieu !=='undefined' ) { %>
+                                                        <% include content/showFilms %>
                                                             <% } %>
-
-
-
 
                                                                 <!--======================================================================================
                                             Footer
@@ -163,16 +176,29 @@
                                                                         <div class="footer-brand-slide">
                                                                             <div class="sect-smuse">
                                                                                 <ul>
-                                                                                    <li><a class="dx" href="/">4DX</a></li>
-                                                                                    <li><a class="imax" href="/">Imax</a></li>
-                                                                                    <li><a class="starium" href="/">Starium</a></li>
-                                                                                    <li><a class="gold-class" href="/">Goldclass</a></li>
-                                                                                    <li><a class="lamour" href="/">L'amour</a></li>
-                                                                                    <li><a class="sweet" href="/">Sweetbox</a></li>
-                                                                                    <li><a class="dolby-atmos" href="/">Dolby Atmos</a></li>
-                                                                                    <li><a class="premium-cinema" href="/">Premium Cinema</a></li>
-                                                                                    <li><a class="screenx" href="/">Screenx</a></li>
-                                                                                    <li><a class="cine-foret" href="/">Cine &amp; Foret</a></li>
+                                                                                    <li><a class="dx" href="/">4DX</a>
+                                                                                    </li>
+                                                                                    <li><a class="imax"
+                                                                                            href="/">Imax</a></li>
+                                                                                    <li><a class="starium"
+                                                                                            href="/">Starium</a></li>
+                                                                                    <li><a class="gold-class"
+                                                                                            href="/">Goldclass</a></li>
+                                                                                    <li><a class="lamour"
+                                                                                            href="/">L'amour</a></li>
+                                                                                    <li><a class="sweet"
+                                                                                            href="/">Sweetbox</a></li>
+                                                                                    <li><a class="dolby-atmos"
+                                                                                            href="/">Dolby Atmos</a>
+                                                                                    </li>
+                                                                                    <li><a class="premium-cinema"
+                                                                                            href="/">Premium Cinema</a>
+                                                                                    </li>
+                                                                                    <li><a class="screenx"
+                                                                                            href="/">Screenx</a></li>
+                                                                                    <li><a class="cine-foret"
+                                                                                            href="/">Cine &amp;
+                                                                                            Foret</a></li>
 
                                                                                 </ul>
                                                                             </div>
@@ -182,46 +208,73 @@
                                                                                 <div class="cgv-vietnam">
                                                                                     <h3>MỘT CHÚT PHIM</h3>
                                                                                     <ul>
-                                                                                        <li><a href="/">Giới Thiệu</a></li>
-                                                                                        <li><a href="/">Tiện Ích Online</a></li>
-                                                                                        <li><a href="/">Thẻ Quà Tặng</a></li>
-                                                                                        <li><a href="/">Tuyển Dụng</a></li>
-                                                                                        <li><a href="/">Liên Hệ Quảng Cáo CGV</a></li>
+                                                                                        <li><a href="/">Giới Thiệu</a>
+                                                                                        </li>
+                                                                                        <li><a href="/">Tiện Ích
+                                                                                                Online</a></li>
+                                                                                        <li><a href="/">Thẻ Quà Tặng</a>
+                                                                                        </li>
+                                                                                        <li><a href="/">Tuyển Dụng</a>
+                                                                                        </li>
+                                                                                        <li><a href="/">Liên Hệ Quảng
+                                                                                                Cáo Một Chút Film</a>
+                                                                                        </li>
                                                                                     </ul>
                                                                                 </div>
                                                                                 <div class="cgv-policy">
                                                                                     <h3>Điều khoản sử dụng</h3>
                                                                                     <ul>
-                                                                                        <li><a href="/">Điều Khoản Chung</a></li>
-                                                                                        <li><a href="/">Điều Khoản Giao Dịch</a></li>
-                                                                                        <li><a href="/">Chính Sách Thanh Toán</a></li>
-                                                                                        <li><a href="/">Chính Sách Bảo Mật</a></li>
-                                                                                        <li><a href="/">Câu Hỏi Thường Gặp</a></li>
+                                                                                        <li><a href="/">Điều Khoản
+                                                                                                Chung</a></li>
+                                                                                        <li><a href="/">Điều Khoản Giao
+                                                                                                Dịch</a></li>
+                                                                                        <li><a href="/">Chính Sách Thanh
+                                                                                                Toán</a></li>
+                                                                                        <li><a href="/">Chính Sách Bảo
+                                                                                                Mật</a></li>
+                                                                                        <li><a href="/">Câu Hỏi Thường
+                                                                                                Gặp</a></li>
                                                                                     </ul>
                                                                                 </div>
                                                                                 <div class="cgv-follow-us">
                                                                                     <h3>Kết nối với chúng tôi</h3>
                                                                                     <ul>
                                                                                         <li>
-                                                                                            <a class="follow-fb" href="https://www.facebook.com/cgvcinemavietnam" target="_blank"></a>
+                                                                                            <a class="follow-fb"
+                                                                                                href="https://www.facebook.com/cgvcinemavietnam"
+                                                                                                target="_blank"></a>
                                                                                         </li>
                                                                                         <li>
-                                                                                            <a class="follow-yt" href="https://www.youtube.com/cgvvietnam" target="_blank"></a>
+                                                                                            <a class="follow-yt"
+                                                                                                href="https://www.youtube.com/cgvvietnam"
+                                                                                                target="_blank"></a>
                                                                                         </li>
                                                                                         <li>
-                                                                                            <a class="follow-instagram" href="http://instagram.com/cgvcinemasvietnam" target="_blank"></a>
+                                                                                            <a class="follow-instagram"
+                                                                                                href="http://instagram.com/cgvcinemasvietnam"
+                                                                                                target="_blank"></a>
                                                                                         </li>
                                                                                         <li>
-                                                                                            <a class="follow-zalo" href="http://zalo.me/1884424922722396289" target="_blank"></a>
+                                                                                            <a class="follow-zalo"
+                                                                                                href="http://zalo.me/1884424922722396289"
+                                                                                                target="_blank"></a>
                                                                                         </li>
                                                                                     </ul>
                                                                                     <div class="cgv-permision">
-                                                                                        <h2><a href="http://online.gov.vn/HomePage/CustomWebsiteDisplay.aspx?DocId=30278" target="_blank">cgv</a></h2>
+                                                                                        <h2><a href="http://online.gov.vn/HomePage/CustomWebsiteDisplay.aspx?DocId=30278"
+                                                                                                target="_blank">cgv</a>
+                                                                                        </h2>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="customer-cgv">
                                                                                     <h3>Chăm sóc khách hàng</h3>
-                                                                                    <p style="line-height: 22px;">Hotline: 1900 6017<br>Giờ làm việc: 8:00 - 22:00 (Tất cả các ngày bao gồm cả Lễ Tết)<br>Email hỗ trợ: <a href="mailto:hoidap@cgv.vn">hoidap@cgv.vn</a></p>
+                                                                                    <p style="line-height: 22px;">
+                                                                                        Hotline: 1900 6017<br>Giờ làm
+                                                                                        việc: 8:00 - 22:00 (Tất cả các
+                                                                                        ngày bao gồm cả Lễ Tết)<br>Email
+                                                                                        hỗ trợ: <a
+                                                                                            href="mailto:hoidap@cgv.vn">hoidap@motchutfilm.vn</a>
+                                                                                    </p>
                                                                                 </div>
                                                                             </div>
                                                                         </div>

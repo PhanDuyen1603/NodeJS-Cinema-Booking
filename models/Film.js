@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('./db');
 
-const film = db.define('Film', {
+const Film = db.define('Film', {
     film_ID: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -26,22 +26,16 @@ const film = db.define('Film', {
     },
     film_ViewCount: {
         type: Sequelize.INTEGER,
-        allowNull: true,
-        get() {
-            return 0;
-        }
+        defaultValue: 0,
     },
     film_Public: {
         type: Sequelize.BOOLEAN,
-        allowNull: true,
-        get() {
-            return false;
-        }
+        defaultValue: true,
     },
     film_Content: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: true,
     },
 });
 
-module.exports = film;
+module.exports = Film;
