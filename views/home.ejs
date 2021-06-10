@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Một Chút Phim</title>
+    <title>MỘT CHÚT FILM</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -51,8 +51,8 @@
                         <% } if (typeof film !=='undefined' ){ %>
                             <!-- SHOW FILM -->
                             <% include content/showFilms %>
-                                <% } if (typeof filmID !=='undefined' ) { %>
-                                    <% include content/filmID %>
+                                <% } if (typeof currentFilm !=='undefined' ) { %>
+                                    <% include content/film/film_details %>
                                         <% } if (typeof searchNameFilm !=='undefined' ) { %>
                                             <% include content/searchNameFilm %>
                                                 <% } if (typeof filmChieu !=='undefined' ) { %>

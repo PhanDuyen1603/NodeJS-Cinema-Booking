@@ -7,7 +7,7 @@ const User = require('../models/User.js');
 const Cineplex = require('../models/Cineplex.js');
 const Cinema = require('../models/Cinema.js');
 const TimeShow = require('../models/TimeShow.js');
-const CinemaTimeShow = require('../models/CinemaTimeShow.js');
+const Showtime = require('../models/Showtime');
 const Ticket = require('../models/Ticket.js');
 const sendEmail = require('../models/email.js');
 const bcrypt = require('bcrypt');
@@ -172,10 +172,12 @@ router.get('/filmSearch', async function (req, res) {
 	res.render('home', { searchNameFilm, user });
 });
 
+// [GET] /forgotPassword
 router.get('/forgotPassword', function (req, res) {
 	res.render('auth/forgotPassword');
 });
 
+// [GET] /logout
 router.get('/logout', function (req, res) {
 	if (req.session.user_Id) {
 		delete req.session.user_Id;
@@ -187,116 +189,145 @@ router.get('/logout', function (req, res) {
 
 
 
-
-// [GET] /phim
-
-
 router.get('/phim/:id', async function (req, res) {
 	const id = Number(req.params.id);
+	var dateNow = Date.now();
 
-	var viewCount_new = await Film.findOne({
-		where: {
-			film_ID: id,
-		}
-	})
-	await Film.update(
-		{ film_ViewCount: viewCount_new.dataValues.film_ViewCount + 1 },
-		{
-			where: {
-				film_ID: id,
-			}
-		}
-	)
-	const filmID = await Film.findOne({
+	//TĂNG LƯỢT GHÉ THĂM PHIM
+	await Film.increment({ film_ViewCount: 1 }, { where: { film_ID: id } });
+
+	const currentFilm = await Film.findOne({
 		where: {
 			film_ID: id,
 			film_Public: true,
 		}
 	});
-	var user;
-	const { user_Id } = req.session;
-	if (user_Id) {
-		user = await User.findOne({
-			where: {
-				user_ID: user_Id
-			},
-		});
-	}
-	var dateNow = Date.now();
-	const filmDangChieu2 = await Film.findAll({
+	const cinema = await Cinema.findAll();
+	const cineplex = await Cineplex.findAll();
+
+	// //LẤY CÁC PHIM ĐANG CHIẾU KHÁC PHIM HIỆN TẠI (4 PHIM) ĐỂ SHOW BÊN PHẢI
+	const otherNowShowingFilms = await Film.findAll({
 		where: {
+			'film_ID': { [Op.ne]: id },
 			film_DatePublic: {
 				[Op.lte]: dateNow,
 			},
-			'$film_ID$': { [Op.ne]: id },
 			film_Public: true,
 		},
 		order: [
 			['film_DatePublic', 'DESC']
 		],
+		limit: 4,
 	});
-	//console.log(filmDangChieu2);
-	const cinema = await Cinema.findAll();
-	const cineplex = await Cineplex.findAll();
-	const cinemaTimeShow = await CinemaTimeShow.findAll({
+
+
+	const showtimesOfFilm = await Showtime.findAll({
 		where: {
-			film_ID: id,
+			showtime_Film: id,
 		},
 		order: [
-			['cinema_ID', 'ASC'],
-			['timeShow_ID', 'ASC'],
+			['showtime_Cinema', 'ASC'],
+			['showtime_Film', 'ASC'],
 		],
 		include: [
-			{ model: Cinema },
+			{ model: Cinema, include: [{ model: Cineplex }] },
 			{ model: Film },
-			{ model: TimeShow },
 		]
 	});
 
-	//console.log(cinemaTimeShow);
-	res.render('home', { filmID, user, filmDangChieu2, cinemaTimeShow, cinema, cineplex });
+	res.render('home', { currentFilm, cinema, cineplex, otherNowShowingFilms, showtimesOfFilm });
+
 });
 
-
+// [POST] /phim/id
 router.post('/phim/:id', async function (req, res) {
-	const id_reqfilm = Number(req.params.id);
+	const id = Number(req.params.id);
+	var dateNow = Date.now();
+	var { cineplexID } = req.body;
 
-	var cinemaChosen = req.body.cinemaID;
-	req.session.cinemaIDChosen = cinemaChosen;
-	//console.log(cineplexIDChosen);
-	res.redirect('/phim/muave/' + id_reqfilm);
+	var currentCineplex = await Cineplex.findByPk(cineplexID);
+
+	const currentFilm = await Film.findOne({
+		where: {
+			film_ID: id,
+			film_Public: true,
+		}
+	});
+	const cinema = await Cinema.findAll();
+	const cineplex = await Cineplex.findAll();
+	const otherNowShowingFilms = await Film.findAll({
+		where: {
+			'film_ID': { [Op.ne]: id },
+			film_DatePublic: {
+				[Op.lte]: dateNow,
+			},
+			film_Public: true,
+		},
+		order: [
+			['film_DatePublic', 'DESC']
+		],
+		limit: 4,
+	});
+
+
+	//LẤY CÁC RẠP CỦA CỤM RẠP NÀY
+	const allCinemasOfCineplex = await Cinema.findAll({
+		where: {
+			CineplexCineplexID: cineplexID,
+		}
+	});
+
+	var list_cinemaID = [];
+	allCinemasOfCineplex.forEach(cinema => {
+		list_cinemaID.push(Number(cinema.cinema_ID));
+	});
+
+	//showtimes theo cum rap
+	const showtimesOfFilm = await Showtime.findAll({
+		include: [
+			{ model: Cinema, include: [{ model: Cineplex }] },
+			{ model: Film },
+		],
+		where: {
+			showtime_Film: id,
+			showtime_Cinema: {
+				[Op.in]: list_cinemaID, //list_cinemaID
+			}
+		},
+		order: [
+			['showtime_Cinema', 'ASC'],
+			['showtime_Film', 'ASC'],
+		],
+
+	});
+
+
+	res.render('home', { currentFilm, cinema, cineplex, otherNowShowingFilms, showtimesOfFilm, currentCineplex });
 });
 
 
+// [GET] /phim/mua-ve
+router.get('/phim/mua-ve/:id', async function (req, res) {
+	const showtimeID = Number(req.params.id);
+	const user = req.currentUser;
 
-
-
-router.get('/phim/muave/:id', async function (req, res) {
-	const id_Chosen = Number(req.params.id);
-	const { user_Id } = req.session;
-	if (user_Id) {
-		var user = await User.findOne({
+	if (user.user_Email === "admin@gmail.com") {
+		res.redirect('back');
+	} else {
+		const showtimes = await Showtime.findOne({
 			where: {
-				user_ID: user_Id
-			},
-		});
-		const cinemaTimeShow = await CinemaTimeShow.findOne({
-			where: {
-				cinemaTimeShow_ID: id_Chosen,
+				showtime_ID: showtimeID,
 			},
 			include: [
-				{
-					model: Cinema, include: [
-						{ model: Cineplex },
-					]
-				},
+				{ model: Cinema, include: [{ model: Cineplex }] },
 				{ model: Film },
 				{ model: TimeShow },
 			]
 		});
+
 		const ticket = await Ticket.findAll({
 			where: {
-				cinemaTimeShow_ID: id_Chosen,
+				cinemaTimeShow_ID: showtimeID,
 			},
 			include: [
 				{ model: CinemaTimeShow }
@@ -319,10 +350,11 @@ router.get('/phim/muave/:id', async function (req, res) {
 		} else {
 			res.render('users/muave.ejs', { user, cinemaTimeShow, ticket, ghe_da_dat });
 		}
-	} else {
-		res.render('auth/login');
 	}
 });
+
+
+
 
 router.post('/phim/muave/:id', async function (req, res) {
 	var { txtUserEmail, txtUserPassword } = req.body;
