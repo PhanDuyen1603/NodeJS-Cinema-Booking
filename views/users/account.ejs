@@ -5,15 +5,14 @@
             <br />
             <div class="title-info">Mật khẩu : </div>
         </div>
-        <form action="/updateInfo/email" method="POST">
+        <form>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                <input type="email" class="radiusInfo" name='txtUserEmail'
-                    placeholder="<%= user.dataValues.user_Email %>">
+                <input type="email" class="radiusInfo" name='txtUserEmail' placeholder="<%= currentUser.user_Email %>">
                 <br />
                 <br />
             </div>
             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
-                <button type="submit" class="btnuser">Cập nhật</button>
+                <!-- <button class="btnuser">Cập nhật</button> -->
                 <br />
                 <br />
             </div>
@@ -29,7 +28,7 @@
             <br />
         </div>
         <!--Password lần 2-->
-        <form action="/updateInfo/password" method="POST">
+        <form action="/user/thong-tin-ca-nhan/cap-nhat/mat-khau" method="POST">
             <div id="myModal2" class="modal">
                 <div class="modal-content">
                     <div class="row" style="text-align: center">
@@ -42,7 +41,7 @@
                     </div>
                     <div class="row">
                         <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
-                            <input id="input_repass" type='password' name="txtUserPassword"
+                            <input id="input_repass" type='password' name="userPassword"
                                 placeholder="Nhập mật khẩu của bạn vào đây" style="width: 60%">
                         </div>
                         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">

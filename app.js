@@ -33,7 +33,6 @@ app.use(authMiddleWare);
 const forgotPasswordRouter = require('./routes/forgotPassword');
 const loginRouter = require('./routes/login');
 const signupRouter = require('./routes/signup');
-const updateInfoRouter = require('./routes/updateInfo');
 const adminRouter = require('./routes/admin');
 const userRouter = require('./routes/user');
 
@@ -43,7 +42,6 @@ const homeRouter = require('./routes/home');
 app.use('/forgotPassword', forgotPasswordRouter);
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
-app.use('/updateInfo', updateInfoRouter);
 app.use('/admin', adminRouter);
 app.use('/user', userRouter);
 

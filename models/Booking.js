@@ -18,6 +18,10 @@ const Booking = db.define('Booking', {
         type: Sequelize.INTEGER,
         allowNull: false,
     },
+    booking_Seat: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
     booking_Date: {
         type: Sequelize.DATEONLY,
         defaultValue: DATE.now,

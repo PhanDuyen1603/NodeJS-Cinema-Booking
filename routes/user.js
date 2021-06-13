@@ -1,14 +1,17 @@
 const Router = require('express').Router;
+const router = new Router();
 const fs = require('fs');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
+// MODELS
 const User = require('../models/User');
 const Film = require('../models/Film');
 const Cinema = require('../models/Cinema');
 const Cineplex = require('../models/Cineplex');
 const Showtime = require('../models/Showtime');
 const Booking = require('../models/Booking');
+const Ticket = require('../models/Ticket');
 
 const sendEmail = require('../models/email.js');
 const bcrypt = require('bcrypt');
@@ -21,21 +24,100 @@ const nexmo = new Nexmo({
     apiSecret: 'id5zkHyT3AOaJEWh',
 });
 
-const router = new Router();
 
+// UTIL
+const format = require('../util/formatSomething');
+
+
+//MIDDLEWARE KIỂM TRA TÌNH TRẠNG ĐĂNG NHẬP CỦA USER
 const ensureLoggedIn = require('../middlewares/ensure_logged_in');
 router.use(ensureLoggedIn);
 
+// [GET] /user/thong-tin-ca-nhan
+router.get('/thong-tin-ca-nhan', async function (req, res) {
 
-// router.get('/logout', function (req, res) {
-//     if (req.session.user_Id) {
-//         delete req.session.user_Id;
-//     } else if (req.session.Admin) {
-//         delete req.session.Admin;
-//     }
-//     res.redirect('/');
-// });
+    const user = req.currentUser;
 
+    var totalMoneyOfUser = await Booking.sum('booking_TotalPrice', {
+        where: {
+            booking_User: user.user_ID
+        }
+    });
+
+    var allBookings = await Booking.findAll({
+        where: {
+            booking_User: user.user_ID,
+        },
+        include: [
+            {
+                model: Showtime,
+                include: [
+                    { model: Film },
+                    {
+                        model: Cinema, include: [{ model: Cineplex },]
+                    }]
+            },
+        ]
+    }).catch(console.error);
+
+    res.render('users/profile', { allBookings, totalMoneyOfUser });
+});
+
+// [GET] /user/thong-tin-ca-nhan/cap-nhat/so-dien-thoai
+router.post('/thong-tin-ca-nhan/cap-nhat/so-dien-thoai', async function (req, res) {
+    var { userPhoneNumber } = req.body;
+    const user = req.currentUser;
+
+    await User.update({
+        user_NumberPhone: userPhoneNumber,
+    }, {
+        where: { user_ID: user.user_ID, }
+    });
+
+    res.redirect('back');
+});
+
+// [GET] /user/thong-tin-ca-nhan/cap-nhat/mat-khau
+router.post('/thong-tin-ca-nhan/cap-nhat/mat-khau', async function (req, res) {
+    const user = req.currentUser;
+    var { userPassword } = req.body;
+    const hash_pass = await bcrypt.hash(userPassword, saltRounds);
+    await User.update({
+        user_Password: hash_pass,
+    }, {
+        where: { user_ID: user.user_ID, },
+    });
+
+    res.redirect('back');
+});
+
+// [GET] /user/thong-tin-ca-nhan/cap-nhat/dia-chi
+router.post('/thong-tin-ca-nhan/cap-nhat/dia-chi', async function (req, res) {
+    const user = req.currentUser;
+    var { userAddress } = req.body;
+    await User.update({
+        user_Address: userAddress,
+    }, {
+        where: { user_ID: user.user_ID, },
+    });
+
+    res.redirect('back');
+});
+
+// [GET] /user/thong-tin-ca-nhan/cap-nhat/ten
+router.post('/thong-tin-ca-nhan/cap-nhat/ten', async function (req, res) {
+    const user = req.currentUser;
+    var { userName } = req.body;
+    await User.update({
+        user_Name: userName,
+    }, {
+        where: { user_ID: user.user_ID, },
+    });
+
+    res.redirect('back');
+});
+
+// ĐẶT VÉ
 
 // [GET] /user/mua-ve/id
 router.get('/mua-ve/:id', async function (req, res) {
@@ -81,6 +163,40 @@ router.get('/mua-ve/:id', async function (req, res) {
 });
 
 
+
+// [GET] /user/thong-tin-ve/id
+// router.get('/thong-tin-ve/:id', async function (req, res) {
+//     const bookingID = req.params.id;
+//     const booking = await Booking.findOne({
+//         where: { booking_ID: bookingID },
+//         include: [
+//             { model: Showtime, include: [{ model: Film }, { model: Cinema, include: [{ model: Cineplex }] }] },
+//         ],
+//     })
+
+
+
+//     var showtimeDate = Date.now() //format_date();
+//     // var bookingDate = format_date(booking.booking_Date);
+
+//     // res.render('users/info_booking', { booking, showtimeDate, bookingDate });
+//     // const time = format.format_time(booking.Showtime.showtime_Begin);
+//     // res.send({ booking });
+//     // res.send({  })
+//     function format_date(originalDate) {
+//         var day = new Date(originalDate);
+//         var day_result = "";
+//         day_result += addZero(day.getDate());
+//         day_result += "/";
+//         day_result += addZero(day.getMonth() + 1);
+//         day_result += "/";
+//         day_result += day.getFullYear();
+
+//         return day_result;
+//     }
+//     res.send({ showtimeDate });
+// });
+
 // [POST] /user/mua-ve/thong-tin-ve/id
 router.post('/mua-ve/thong-tin-ve/:id', async function (req, res) {
     const showtimeID = Number(req.params.id);
@@ -107,7 +223,6 @@ router.post('/mua-ve/thong-tin-ve/:id', async function (req, res) {
         return number;
     }
 
-    // /* Định dạng ngày/tháng/năm */
     function format_date(originalDate) {
         var day = new Date(originalDate);
         var day_result = "";
@@ -146,6 +261,15 @@ router.post('/mua-ve/thong-tin-ve/:id', async function (req, res) {
     bookingCode += addZero(currentShowtime.showtime_Film);
     bookingCode += addZero(user.user_ID);
     bookingCode += String(Date.now());
+    // B 02 11 31 10 1623539255446
+    var ticketCode = "T";
+    ticketCode += String(Date.now());
+    ticketCode += bookingCode.substring(0, bookingCode.length - 13);
+
+    var allSeatsArray = txtChair.split(', ');
+
+
+    // res.send({ bookingCode, ticketCode, allSeatsArray });
 
     const today = new Date();
     var bookingTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -156,10 +280,21 @@ router.post('/mua-ve/thong-tin-ve/:id', async function (req, res) {
         booking_ID: bookingCode,
         booking_User: user.user_ID,
         booking_Showtime: showtimeID,
+        booking_Seat: txtChair,
         booking_Date: today,
         booking_Time: bookingTime,
         booking_TotalPrice: Number(txtTotalMoney),
     }).then(async function (booking) {
+        for (var i = 0; i < allSeatsArray.length; i++) {
+            ticketCode += String(i + 1);
+            await Ticket.create({
+                ticket_ID: ticketCode,
+                ticket_Booking: bookingCode,
+                ticket_Seat: allSeatsArray[i],
+                ticket_Price: currentShowtime.showtime_Price,
+            });
+        }
+
         const showtimeDate = format_date(currentShowtime.showtime_Date);
 
         console.log("Đã lưu vào DB");
@@ -169,26 +304,13 @@ router.post('/mua-ve/thong-tin-ve/:id', async function (req, res) {
             'Content',
             '<div style="text-align:center">' + bookingCode + '</div>' + '\n<h1>' + xoa_dau(currentShowtime.Film.film_Name) + '</h1>\n' + showtimeDate + '   ' + currentShowtime.showtime_Begin + '\n' + currentShowtime.Cinema.cinema_Name + ' - ' + currentShowtime.Cinema.Cineplex.cineplex_Name + '\nGhế: ' + txtChair + '\nTổng tiền: ' + String(totalPrice) + '\n\nMỘT CHÚT PHIM xin chân thành cảm ơn bạn đã tin tưởng lựa chọn chúng tôi! Chúc bạn có khoảng thời gian xem phim vui vẻ.');
 
-        // var number_phone_user = await User.findOne({
-        //     where: {
-        //         user_ID: user.user_Id,
-        //     }
-        // })
-        // var str_nb_user = new String(number_phone_user.user_NumberPhone);
-        // var nb_user = "84" + str_nb_user.slice(1, str_nb_user.length);
-        // console.log(nb_user);
-        // const sms_from = 'VNCinema';
-        // const sms_to = nb_user;
-        // const sms_content = "Ban da dat ve thanh cong!\nMa ve: " + bookingCode + "\nPhim: " + xoa_dau(currentShowtime.Film.film_Name) + "\nNgay chieu: " + format_date(currentShowtime.showtime_Date) + "\nCum rap/Rap: " + xoa_dau(currentShowtime.Cinema.Cineplex.cineplex_Name) + " / " + xoa_dau(currentShowtime.Cinema.cinema_Name) + "\nLoai ghe: " + xoa_dau(txtChairType) + "\nGhe: " + txtChair + "\nGia ve: " + format_number(txtTotalMoney, 0) + " ₫\nVNCinema Xin Cam On!\n";
 
-        /*nexmo.message.sendSms(sms_from, sms_to, sms_content);*/
-
-
-        res.render('users/booking_info', { currentShowtime, showtimeDate, booking, bookingDate, txtChair, totalPrice });
+        res.render('users/booking_info', { currentShowtime, showtimeDate, booking, bookingDate, totalPrice });
 
     }).catch(console.error);
 
 });
+
 
 
 router.get('/:slug', (req, res) => {

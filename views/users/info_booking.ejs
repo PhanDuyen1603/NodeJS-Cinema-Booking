@@ -39,7 +39,7 @@
             </div>
 
             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
-                <img src="<%= currentShowtime.Film.film_Image %>" alt="Không load được ảnh"
+                <img src="<%= booking.Showtime.Film.film_Image %>" alt="Không load được ảnh"
                     style="object-fit: contain; height: 460px">
             </div>
 
@@ -61,7 +61,7 @@
                     </div>
                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
                         <p style="font-size: 30px; color:#E40002;text-transform: uppercase;">
-                            <%= currentShowtime.Film.film_Name %>
+                            <%= booking.Showtime.Film.film_Name %>
                         </p>
                     </div>
 
@@ -71,7 +71,7 @@
                     </div>
                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
                         <p>
-                            <%= currentShowtime.Cinema.Cineplex.cineplex_Name %>
+                            <%= booking.Showtime.Cinema.Cineplex.cineplex_Name %>
                         </p>
                     </div>
 
@@ -80,7 +80,7 @@
                     </div>
                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
                         <p>
-                            <%= currentShowtime.Cinema.cinema_Name %>
+                            <%= booking.Showtime.Cinema.cinema_Name %>
                         </p>
                     </div>
 
@@ -107,7 +107,7 @@
                     </div>
                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
                         <p>
-                            <%= currentShowtime.showtime_Begin %>
+                            <%= booking.Showtime.showtime_Begin %>
                         </p>
                     </div>
                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
@@ -123,7 +123,7 @@
                         <strong>Tổng tiền : </strong>
                     </div>
                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
-                        <%= totalPrice %>
+                        <%= booking.booking_TotalPrice %>
                     </div>
 
                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3" style="margin-top: 10px;">

@@ -3,7 +3,7 @@ const db = require('./db');
 const Film = require('./Film');
 const Cinema = require('./Cinema');
 
-const Showtime = db.define('ShowTime', {
+const Showtime = db.define('Showtime', {
     showtime_ID: {
         type: Sequelize.INTEGER,
         allowNull: true,

@@ -27,7 +27,7 @@
             <h1 style="text-align: center; color: cornsilk">Thông tin cá nhân</h1>
         </div>
         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
-            <form action="/updateInfo/pagedf" method="POST">
+            <form action="/" method="f">
                 <div style="text-align: right; padding-right: 20%; margin-top: 20px ">
                     <button type="submit" class="btnuser0">Trang chủ</button>
                 </div>
@@ -40,8 +40,10 @@
             <div class="col-md-3">
                 <div class="profile-sidebar">
                     <div class="profile-usertitle">
-                        <div class="profile-usertitle-name"><%= user.dataValues.user_Name %></div>
-                        <div class="profile-usertitle-job">[Nghề nghiệp user]</div>
+                        <div class="profile-usertitle-name">
+                            <%= currentUser.user_Name %>
+                        </div>
+                        <!-- <div class="profile-usertitle-job">[Nghề nghiệp user]</div> -->
                     </div>
                     <div class="profile-usermenu">
                         <ul class="nav">
@@ -74,17 +76,17 @@
             <div class="col-md-9">
                 <div class="profile-content">
                     <div id="infofull" class="tab-pane fade in active" style="z-index: 1">
-                        <% include users/infofull.ejs %>
+                        <% include general %>
                     </div>
                     <div id="infobasic" class="tab-pane fade" style="z-index: 0">
-                        <% include users/infobasic.ejs %>
+                        <% include account %>
                     </div>
                     <div id="infohelp" class="tab-pane fade" style="z-index: 0">
-                        <% include users/infohelp.ejs %>
+                        <% include feedback %>
                     </div>
                     <div id="myModal0" class="modal" style="z-index: 0">
                         <div class="modal-content">
-                            <form action="/updateInfo/name" method="POST">
+                            <form action="/user/thong-tin-ca-nhan/cap-nhat/ten" method="POST">
                                 <div class="row" style="text-align: center">
                                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9 title-info">
                                         <p>Vui lòng cung cấp tên thật</p>
@@ -95,7 +97,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
-                                        <input type='text' name="txtUserName" placeholder="Nhập tên của bạn vào đây"
+                                        <input type='text' name="userName" placeholder="Nhập tên của bạn vào đây"
                                             style="width: 60%">
                                     </div>
                                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
