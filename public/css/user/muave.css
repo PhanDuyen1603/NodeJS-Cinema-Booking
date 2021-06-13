@@ -77,7 +77,8 @@
     height: 22px;
     vertical-align: middle;
     font-size: 7pt;
-    margin: 0 1px;
+    /* margin: 0 1px; */
+    margin-left: 10px;
     padding: 1px 0;
 }
 
@@ -140,10 +141,11 @@
 }
 
 .iconlist {
-    display: inline-block;
-    min-width: 25%;
+    display: flex;
+    min-width: 30%;
     vertical-align: top;
     margin: auto;
+    justify-content:space-evenly;
 }
 
 .icon:before {
@@ -293,7 +295,7 @@
  * ============================================ */
 
 .bottom-content {
-    background-image: url(/public/image/footer_all/bg_footer_muave_1.jpg);
+    /* background-image: url(/public/image/footer_all/bg_footer_muave_1.jpg); */
     /*background-color: #000;*/
     margin-top: -15px;
     font-size: 0;
@@ -351,7 +353,8 @@
 }
 
 .info-wrapper {
-    color: #cccccc;
+    /* color: #cccccc; */
+    color:white;
 }
 
 .info-wrapper td {

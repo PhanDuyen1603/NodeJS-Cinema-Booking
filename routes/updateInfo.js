@@ -6,8 +6,6 @@ const User = require('../models/User.js');
 const Film = require('../models/Film.js');
 const Cineplex = require('../models/Cineplex.js');
 const Cinema = require('../models/Cinema.js');
-const TimeShow = require('../models/TimeShow.js');
-const CinemaTimeShow = require('../models/CinemaTimeShow.js');
 const Ticket = require('../models/Ticket.js');
 
 var formidable = require('formidable');

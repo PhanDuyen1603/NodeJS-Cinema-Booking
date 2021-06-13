@@ -1,6 +1,7 @@
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 const express = require('express');
+
 const db = require('./models/db');
 const cookieSession = require('cookie-session');
 const multer = require('multer');
@@ -34,6 +35,8 @@ const loginRouter = require('./routes/login');
 const signupRouter = require('./routes/signup');
 const updateInfoRouter = require('./routes/updateInfo');
 const adminRouter = require('./routes/admin');
+const userRouter = require('./routes/user');
+
 const homeRouter = require('./routes/home');
 
 
@@ -42,6 +45,8 @@ app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/updateInfo', updateInfoRouter);
 app.use('/admin', adminRouter);
+app.use('/user', userRouter);
+
 app.use('/', homeRouter);
 
 //Connect database 

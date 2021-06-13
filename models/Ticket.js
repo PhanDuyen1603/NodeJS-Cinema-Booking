@@ -1,45 +1,29 @@
 const Sequelize = require('sequelize');
 const db = require('./db.js');
-const cinemaTimeShow = require('./CinemaTimeShow.js');
-const user = require('./User.js');
+const Booking = require('./Booking');
 
-const tiket = db.define('Ticket' ,{
-	ticket_ID :{
-		type : Sequelize.STRING ,
-		allowNull : false ,
-        primaryKey : true ,
+const Ticket = db.define('Ticket', {
+    ticket_ID: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        primaryKey: true,
     },
-    ticket_Num :{
-        type : Sequelize.INTEGER ,
-        allowNull : false ,
-        autoIncrement :true ,
+    ticket_Booking: {
+        type: Sequelize.STRING,
+        allowNull: false,
     },
-    ticket_ChairType :{
-        type : Sequelize.STRING,
-        allowNull : true,
+    ticket_Seat: {
+        type: Sequelize.STRING,
+        allowNull: false,
     },
-    ticket_Chair :{
-        type : Sequelize.STRING,
-        allowNull : true,
+    ticket_Price: {
+        type: Sequelize.FLOAT,
+        allowNull: false,
     },
-    ticket_TotalMoney :{
-        type : Sequelize.INTEGER,
-        allowNull : true,
-    },
-	cinemaTimeShow_ID :{
-        type : Sequelize.INTEGER ,
-        allowNull : true ,
-    },
-    user_ID :{
-        type : Sequelize.INTEGER,
-        allowNull : false,
-    },
-});
-tiket.belongsTo(user,{
-    foreignKey : 'user_ID',
-});
-tiket.belongsTo(cinemaTimeShow,{
-    foreignKey : 'cinemaTimeShow_ID',
 });
 
-module.exports = tiket;
+Ticket.belongsTo(Booking, {
+    foreignKey: 'ticket_Booking',
+});
+
+module.exports = Ticket;

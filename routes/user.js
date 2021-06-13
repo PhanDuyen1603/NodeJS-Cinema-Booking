@@ -2,13 +2,14 @@ const Router = require('express').Router;
 const fs = require('fs');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
-const Film = require('../models/Film.js');
-const User = require('../models/User.js');
-const Cineplex = require('../models/Cineplex.js');
-const Cinema = require('../models/Cinema.js');
-const TimeShow = require('../models/TimeShow.js');
-const CinemaTimeShow = require('../models/CinemaTimeShow.js');
-const Ticket = require('../models/Ticket.js');
+
+const User = require('../models/User');
+const Film = require('../models/Film');
+const Cinema = require('../models/Cinema');
+const Cineplex = require('../models/Cineplex');
+const Showtime = require('../models/Showtime');
+const Booking = require('../models/Booking');
+
 const sendEmail = require('../models/email.js');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -26,164 +27,95 @@ const ensureLoggedIn = require('../middlewares/ensure_logged_in');
 router.use(ensureLoggedIn);
 
 
-router.get('/logout', function (req, res) {
-    if (req.session.user_Id) {
-        delete req.session.user_Id;
-    } else if (req.session.Admin) {
-        delete req.session.Admin;
-    }
-    res.redirect('/');
-});
+// router.get('/logout', function (req, res) {
+//     if (req.session.user_Id) {
+//         delete req.session.user_Id;
+//     } else if (req.session.Admin) {
+//         delete req.session.Admin;
+//     }
+//     res.redirect('/');
+// });
 
 
-router.get('/phim/muave/:id', async function (req, res) {
-    const id_Chosen = Number(req.params.id);
-    const { user_Id } = req.session;
-    if (user_Id) {
-        var user = await User.findOne({
+// [GET] /user/mua-ve/id
+router.get('/mua-ve/:id', async function (req, res) {
+    const showtimeID = Number(req.params.id);
+    const user = req.currentUser;
+
+
+    if (user.user_Email != "admin@gmail.com") {
+        const showtime = await Showtime.findOne({
             where: {
-                user_ID: user_Id
-            },
-        });
-        const cinemaTimeShow = await CinemaTimeShow.findOne({
-            where: {
-                cinemaTimeShow_ID: id_Chosen,
+                showtime_ID: showtimeID,
             },
             include: [
-                {
-                    model: Cinema, include: [
-                        { model: Cineplex },
-                    ]
-                },
+                { model: Cinema, include: [{ model: Cineplex },] },
                 { model: Film },
-                { model: TimeShow },
             ]
         });
-        const ticket = await Ticket.findAll({
+
+        const allBookings = await Booking.findAll({
             where: {
-                cinemaTimeShow_ID: id_Chosen,
+                booking_Showtime: showtimeID,
             },
             include: [
-                { model: CinemaTimeShow }
+                { model: Showtime },
             ],
-            order: [
-                ['ticket_Chair', 'ASC'],
-            ]
         });
-        if (ticket) {
-            var i = 0;
-            var ghe_da_dat = "";
-            while (ticket[i]) {
-                ghe_da_dat = ghe_da_dat + ticket[i].ticket_Chair;
-                ghe_da_dat = ghe_da_dat + ", ";
-                i++;
+
+        var bookedSeats = "";
+        var tickets;
+
+        for (var i = 0; i < allBookings.length; i++) {
+            tickets = await Booking.findAll({ where: { ticket_Booking: allBookings[i].booking_ID } });
+            for (var j = 0; j < tickets.length; j++) {
+                bookedSeats += tickets[j].ticket_Seat + ", ";
             }
-            console.log("Chuỗi ghế đã đặt:")
-            console.log(ghe_da_dat);
-            res.render('users/muave.ejs', { user, cinemaTimeShow, ticket, ghe_da_dat });
-        } else {
-            res.render('users/muave.ejs', { user, cinemaTimeShow, ticket, ghe_da_dat });
         }
+
+        res.render('users/booking', { showtime, bookedSeats });
+        // res.send({ showtime, allBookings, bookedSeats });
     } else {
-        res.render('auth/login');
+        res.redirect('back');
     }
 });
 
-router.post('/phim/muave/:id', async function (req, res) {
-    var { txtUserEmail, txtUserPassword } = req.body;
-    var UserSaiPass = 'abc';
-    const user = await User.findOne({
-        where: {
-            user_Email: txtUserEmail,
-        }
-    });
-    const id_req = String(req.params.id);
-    if (!user) {
-        res.render('auth/login', { UserSaiPass });
-    }
-    else {
-        const match = await bcrypt.compare(txtUserPassword, user.user_Password);
-        if (match) {
-            req.session.user_Id = user.user_ID;
-            res.redirect('/phim/muave/' + id_req);
-        }
-        else {
-            res.render('auth/login', { UserSaiPass });
-        }
-    }
-});
 
-router.get('/phim/muave/comeback/:id', async function (req, res) {
-    const id_req = String(req.params.id);
-    res.redirect('/phim/' + id_req);
-});
+// [POST] /user/mua-ve/thong-tin-ve/id
+router.post('/mua-ve/thong-tin-ve/:id', async function (req, res) {
+    const showtimeID = Number(req.params.id);
+    var { txtChair, txtTotalMoney } = req.body;
+    var user = req.currentUser;
 
-router.post('/phim/muave/thongtinve/:id', async function (req, res) {
-    const id_cinemaTimeShow_req = Number(req.params.id);
-    const user_Chosen = req.session;
-    var { txtChair, txtChairType, txtTotalMoney } = req.body;
-
-    var timeShow_Chosen = await CinemaTimeShow.findOne({
-        where: {
-            cinemaTimeShow_ID: id_cinemaTimeShow_req,
-        },
+    var currentShowtime = await Showtime.findOne({
+        where: { showtime_ID: showtimeID, },
         include: [
             { model: Film },
-            { model: TimeShow },
-            {
-                model: Cinema, include: [
-                    { model: Cineplex },
-                ]
-            },
+            { model: Cinema, include: [{ model: Cineplex },] },
         ],
     })
-    var user = await User.findOne({
-        where: {
-            user_ID: user_Chosen.user_Id,
-        }
-    })
 
-    /* Định dạng tiền */
-    function format_number(num_format) {
-        if (isNaN(num_format)) {
-            return 0;
-        };
-        if (num_format == '') {
-            return 0;
-        };
-        var string_num_format = new String(num_format);
-        var result_df = "";
-        var dem = 0;
-        for (var i = string_num_format.length - 1; i >= 0; i--) {
-            dem++;
-            if (dem % 3 == 0) {
-                result_df = result_df + string_num_format[i];
-                result_df = result_df + ".";
-            } else {
-                result_df = result_df + string_num_format[i];
-            }
+    // FORMAT TIỀN
+    var totalPrice = new Intl.NumberFormat(
+        'ja-JP', { style: 'currency', currency: 'VND' }).format(txtTotalMoney);
+    // res.send(totalPrice);
+    // THÊM SỐ 0 ĐẰNG TRƯỚC SỐ < 10
+    function addZero(number) {
+        if (number < 10) {
+            return "0" + number;
         }
-        var result = "";
-
-        if (string_num_format.length % 3 == 0) {
-            result_df = result_df.slice(0, (result_df.length - 1));
-        }
-        for (var j = result_df.length - 1; j >= 0; j--) {
-            result = result + result_df[j];
-        }
-
-        return result;
+        return number;
     }
 
-    /* Định dạng ngày/tháng/năm */
-    function format_date(day_df) {
-        var day = new Date(day_df);
+    // /* Định dạng ngày/tháng/năm */
+    function format_date(originalDate) {
+        var day = new Date(originalDate);
         var day_result = "";
-        day_result = day_result + day.getDay();
-        day_result = day_result + "/";
-        day_result = day_result + (day.getMonth() + 1);
-        day_result = day_result + "/";
-        day_result = day_result + day.getFullYear();
+        day_result += addZero(day.getDate());
+        day_result += "/";
+        day_result += addZero(day.getMonth() + 1);
+        day_result += "/";
+        day_result += day.getFullYear();
 
         return day_result;
     }
@@ -206,72 +138,57 @@ router.post('/phim/muave/thongtinve/:id', async function (req, res) {
         str = str.replace(/Đ/g, "D");
         return str;
     }
-    var form = new formidable.IncomingForm();
 
-    if (form) {
-        var txtMave = "VNC_";
-        txtMave = txtMave + timeShow_Chosen.dataValues.Cinema.Cineplex.cineplex_Name.slice(0, 1);
-        txtMave = txtMave + timeShow_Chosen.dataValues.Cinema.cinema_Name.slice(0, 1);
-        txtMave = txtMave + timeShow_Chosen.dataValues.Film.film_Name.slice(0, 1);
-        txtMave = txtMave + user_Chosen.user_Id;
-        var ve = await Ticket.max('ticket_Num', {
-            where: {
-                user_ID: user_Chosen.user_Id,
-            },
-        });
+    // Tạo code ngẫu nhiên cho Booking_ID
+    var bookingCode = "B";
+    bookingCode += addZero(currentShowtime.Cinema.Cineplex.cineplex_ID);
+    bookingCode += addZero(currentShowtime.Cinema.cinema_ID);
+    bookingCode += addZero(currentShowtime.showtime_Film);
+    bookingCode += addZero(user.user_ID);
+    bookingCode += String(Date.now());
 
-        if (ve > 0) {
-            var num_of = ve + 1;
-            txtMave = txtMave + num_of;
-        } else {
-            txtMave = txtMave + "1";
-        }
+    const today = new Date();
+    var bookingTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var bookingDate = format_date(today);
+
+    // TẠO ĐẶT CHỖ VÀ GỬI MAIL
+    await Booking.create({
+        booking_ID: bookingCode,
+        booking_User: user.user_ID,
+        booking_Showtime: showtimeID,
+        booking_Date: today,
+        booking_Time: bookingTime,
+        booking_TotalPrice: Number(txtTotalMoney),
+    }).then(async function (booking) {
+        const showtimeDate = format_date(currentShowtime.showtime_Date);
+
+        console.log("Đã lưu vào DB");
+        // req.session.user_Id = user.user_Id;
+        const info = await sendEmail(user.user_Email,
+            'MỘT CHÚT PHIM - [THÔNG TIN ĐẶT VÉ]',
+            'Content',
+            '<div style="text-align:center">' + bookingCode + '</div>' + '\n<h1>' + xoa_dau(currentShowtime.Film.film_Name) + '</h1>\n' + showtimeDate + '   ' + currentShowtime.showtime_Begin + '\n' + currentShowtime.Cinema.cinema_Name + ' - ' + currentShowtime.Cinema.Cineplex.cineplex_Name + '\nGhế: ' + txtChair + '\nTổng tiền: ' + String(totalPrice) + '\n\nMỘT CHÚT PHIM xin chân thành cảm ơn bạn đã tin tưởng lựa chọn chúng tôi! Chúc bạn có khoảng thời gian xem phim vui vẻ.');
+
+        // var number_phone_user = await User.findOne({
+        //     where: {
+        //         user_ID: user.user_Id,
+        //     }
+        // })
+        // var str_nb_user = new String(number_phone_user.user_NumberPhone);
+        // var nb_user = "84" + str_nb_user.slice(1, str_nb_user.length);
+        // console.log(nb_user);
+        // const sms_from = 'VNCinema';
+        // const sms_to = nb_user;
+        // const sms_content = "Ban da dat ve thanh cong!\nMa ve: " + bookingCode + "\nPhim: " + xoa_dau(currentShowtime.Film.film_Name) + "\nNgay chieu: " + format_date(currentShowtime.showtime_Date) + "\nCum rap/Rap: " + xoa_dau(currentShowtime.Cinema.Cineplex.cineplex_Name) + " / " + xoa_dau(currentShowtime.Cinema.cinema_Name) + "\nLoai ghe: " + xoa_dau(txtChairType) + "\nGhe: " + txtChair + "\nGia ve: " + format_number(txtTotalMoney, 0) + " ₫\nVNCinema Xin Cam On!\n";
+
+        /*nexmo.message.sendSms(sms_from, sms_to, sms_content);*/
 
 
-        await Ticket.create({
-            ticket_ID: txtMave,
-            ticket_Chair: txtChair,
-            ticket_ChairType: txtChairType,
-            ticket_TotalMoney: txtTotalMoney,
-            cinemaTimeShow_ID: id_cinemaTimeShow_req,
-            user_ID: user_Chosen.user_Id,
-        }).then(async function () {
-            console.log("Đã lưu vào DB");
-            req.session.user_Id = user_Chosen.user_Id;
-            await sendEmail(user.user_Email, 'Thông tin vé', 'Mã vé: ' + txtMave + '\nPhim: ' + timeShow_Chosen.dataValues.Film.film_Name + '\nXuất chiếu: ' + timeShow_Chosen.dataValues.TimeShow.timeShow_Start + '\nNgày chiếu: ' + format_date(timeShow_Chosen.dataValues.cinemaTimeShow_Date) + '\nCụm rạp/Rạp: ' + timeShow_Chosen.dataValues.Cinema.Cineplex.cineplex_Name + ' / ' + timeShow_Chosen.dataValues.Cinema.cinema_Name + '\nLoại ghế: ' + txtChairType + '\nGhế: ' + txtChair + '\nGiá vé: ' + format_number(txtTotalMoney, 0) + ' ₫\n\nVNCinema xin chân thành cảm ơn bạn đã tin tưởng lựa chọn chúng tôi!');
-            var number_phone_user = await User.findOne({
-                where: {
-                    user_ID: user_Chosen.user_Id,
-                }
-            })
-            var str_nb_user = new String(number_phone_user.dataValues.user_NumberPhone);
-            var nb_user = "84" + str_nb_user.slice(1, str_nb_user.length);
-            console.log(nb_user);
-            const sms_from = 'VNCinema';
-            const sms_to = nb_user;
-            const sms_content = "Ban da dat ve thanh cong!\nMa ve: " + txtMave + "\nPhim: " + xoa_dau(timeShow_Chosen.dataValues.Film.film_Name) + "\nNgay chieu: " + format_date(timeShow_Chosen.dataValues.cinemaTimeShow_Date) + "\nCum rap/Rap: " + xoa_dau(timeShow_Chosen.dataValues.Cinema.Cineplex.cineplex_Name) + " / " + xoa_dau(timeShow_Chosen.dataValues.Cinema.cinema_Name) + "\nLoai ghe: " + xoa_dau(txtChairType) + "\nGhe: " + txtChair + "\nGia ve: " + format_number(txtTotalMoney, 0) + " ₫\nVNCinema Xin Cam On!\n";
+        res.render('users/booking_info', { currentShowtime, showtimeDate, booking, bookingDate, txtChair, totalPrice });
 
-            /*nexmo.message.sendSms(sms_from, sms_to, sms_content);*/
+    }).catch(console.error);
 
-            res.render('users/da_muave.ejs', { timeShow_Chosen, txtChair, txtChairType, txtTotalMoney, txtMave });
-        }).catch(async function (err) {
-            console.log("Lỗi bắt được là:");
-            console.log(err);
-        });
-    }
 });
-
-router.post('/phim/muave/thongtinve/back/:id', async function (req, res) {
-    const req_cinemaTimeShow_ID = Number(req.params.id);
-    var timeShow_Chosen = await CinemaTimeShow.findOne({
-        where: {
-            cinemaTimeShow_ID: req_cinemaTimeShow_ID,
-        }
-    });
-    var film_id = timeShow_Chosen.film_ID;
-    res.redirect('/phim/' + film_id);
-});
-
 
 
 router.get('/:slug', (req, res) => {

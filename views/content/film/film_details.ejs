@@ -163,7 +163,7 @@
                                             <!-- DUYỆT QUA TẤT CẢ SUẤT CHIẾU CỦA PHIM -->
                                             <% for (var i=0; i< showtimesOfFilm.length; i++ ) { %>
                                                 <!-- <div class="content-rap-box"></div> -->
-                                                <a href="/phim/mua-ve/<%= showtimesOfFilm[i].showtime_ID  %>"
+                                                <a href="/user/mua-ve/<%= showtimesOfFilm[i].showtime_ID  %>"
                                                     class="content-rap-box-btn" style="font-size: 20px;width: 150px;"
                                                     id="showtime_begin_main">
                                                     <% var d=new Date(showtimesOfFilm[i].showtime_Date); %>
@@ -235,8 +235,6 @@
                                         <% } %>
             </div>
             <% } %>
-
-                <h3 id="show"></h3>
     </div>
 </div>
 <form action="/phim/<%= currentFilm.film_ID %>" method="POST" type="hidden" id="form_LoadShowtimes"
@@ -246,8 +244,6 @@
 
 
 <script>
-
-    var show = document.getElementById("show");
     var selectedCineplex = document.getElementById("form_control1");
     var title_cineplexName = document.getElementById("cineplexName-title");
     var showtime_begin_main = document.getElementById("showtime_begin_main");
@@ -259,7 +255,6 @@
         var cineplexID = selectedCineplex.value;
 
         if (cineplexID) {
-            show.innerHTML = cineplexID;
             input_cineplexID.value = cineplexID;
             console.log(input_cineplexID.value);
             form_LoadShowtimes.submit();

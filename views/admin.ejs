@@ -52,61 +52,29 @@
                                                         <% if(typeof cinema !=='undefined' ) { %>
                                                             <% include admin/cinema.ejs %>
                                                                 <% } %>
-                                                                    <% if(typeof cinemaID !=='undefined' ) { %>
-                                                                        <% include admin/update/updatecinema.ejs %>
+
+                                                                    <% if(typeof userAll !=='undefined' ) { %>
+                                                                        <% include admin/userAll.ejs %>
                                                                             <% } %>
-                                                                                <% if(typeof userAll !=='undefined' ) {
+                                                                                <% if(typeof userID !=='undefined' ) {
                                                                                     %>
-                                                                                    <% include admin/userAll.ejs %>
+                                                                                    <% include
+                                                                                        admin/update/updateuser.ejs %>
                                                                                         <% } %>
-                                                                                            <% if(typeof userID
+                                                                                            <% if(typeof filmAll
                                                                                                 !=='undefined' ) { %>
                                                                                                 <% include
-                                                                                                    admin/update/updateuser.ejs
-                                                                                                    %>
+                                                                                                    admin/filmAll.ejs %>
                                                                                                     <% } %>
+
                                                                                                         <% if(typeof
-                                                                                                            filmAll
+                                                                                                            cineplex
                                                                                                             !=='undefined'
                                                                                                             ) { %>
                                                                                                             <% include
-                                                                                                                admin/filmAll.ejs
+                                                                                                                admin/cineplex.ejs
                                                                                                                 %>
                                                                                                                 <% } %>
-                                                                                                                    <% if(typeof
-                                                                                                                        filmID
-                                                                                                                        !=='undefined'
-                                                                                                                        )
-                                                                                                                        {
-                                                                                                                        %>
-                                                                                                                        <% include
-                                                                                                                            admin/update/updatefilm.ejs
-                                                                                                                            %>
-                                                                                                                            <% }
-                                                                                                                                %>
-                                                                                                                                <% if(typeof
-                                                                                                                                    cineplex
-                                                                                                                                    !=='undefined'
-                                                                                                                                    )
-                                                                                                                                    {
-                                                                                                                                    %>
-                                                                                                                                    <% include
-                                                                                                                                        admin/cineplex.ejs
-                                                                                                                                        %>
-                                                                                                                                        <% }
-                                                                                                                                            %>
-                                                                                                                                            <% if(typeof
-                                                                                                                                                timeShowCinemaIDcinema
-                                                                                                                                                !=='undefined'
-                                                                                                                                                )
-                                                                                                                                                {
-                                                                                                                                                %>
-                                                                                                                                                <% include
-                                                                                                                                                    admin/cinemaTimeShow/cinemaTimeShowCinema.ejs
-                                                                                                                                                    %>
-                                                                                                                                                    <% }
-                                                                                                                                                        %>
-
 
     </div>
 </body>
