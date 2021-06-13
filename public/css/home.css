@@ -97,10 +97,6 @@
     .radiusSearch {
         border-radius: 20px;
     }
-    
-    .menu_hover li:hover {
-        background-color: coral;
-    }
     /*======================================================================================
                                          Content area
  =======================================================================================*/
@@ -148,26 +144,42 @@
         display: block;
         text-align: center;
         cursor: pointer;
-        text-transform: uppercase;
+        /* text-transform: uppercase; */
         outline: none;
         overflow: hidden;
         position: relative;
-        color: #fff;
-        font-weight: 700;
-        font-size: 14px;
-        background-color: #222;
-        padding: 10px 60px;
+        /* font-weight: 700; */
+        font-size: 19px;
+        background-color: #ccabab !important;
+        padding: 10px 40px;
         margin: 0 auto;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.20);
-        border-radius: 20px;
+        border-radius: 5px;
+    }
+    
+    .carousel-inner {
+        position: relative;
+        height: 448px;
+        overflow: hidden;
+    }
+    
+    .img-center {
+        margin: 0 auto;
+    }
+    
+    button.btns:hover a {
+        color: #4e4a4a;
+    }
+    
+    .col-md-12.col-sm-12.col-xs-12.pull-right {
+        margin-top: 50px;
     }
     
     .btns span {
         position: relative;
         z-index: 1;
+        color: #5a5252;
     }
-    
-    .btns:after {
+    /* .btns:after {
         content: "";
         position: absolute;
         left: 0;
@@ -179,7 +191,7 @@
         transition: all .5s ease-in-out;
         -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
         transform: translateX(-98%) translateY(-25%) rotate(45deg);
-    }
+    } */
     
     .btns:hover {
         color: black;
