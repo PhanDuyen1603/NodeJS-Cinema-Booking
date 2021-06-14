@@ -2,10 +2,16 @@
     <% for (var i=0; i < nowShowingFilms.length; i++ ) { %>
         <div class="col-md-3 col-sm-3 movie-item">
             <div class="article-movie-home">
-                <a href="/phim/<%= nowShowingFilms[i].film_ID %>">
+                <a href="/phim/<%= nowShowingFilms[i].film_ID %>" class="product-image">
                     <img id="img-film-indexContent" src="<%= nowShowingFilms[i].film_Image %>" alt="Không load được ảnh"
-                        width="216" height="324">
+                    style="height: 260px;
+                    width: 185px;"
+                    >
+                    
                 </a>
+                <div class="movie-technology">
+                </div>
+
             </div>
 
             <a href="/phim/<%= nowShowingFilms[i].film_ID %>">

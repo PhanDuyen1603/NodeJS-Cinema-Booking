@@ -149,11 +149,11 @@ ul.nav.nav-pills.flex-column.mb-auto>li>i {
 
 .btn_create {
     float: left;
-    border: 1px solid #B31B1A;
+    border: 1px solid #1e1e2d;
     padding: 10px 20px;
     margin: 15px;
     /* margin-top: 10px; */
-    background-color: #B31B1A;
+    background-color: #1e1e2d;
     border-radius: 20px;
     text-decoration: none;
     color: white;

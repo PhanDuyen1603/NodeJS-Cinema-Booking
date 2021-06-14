@@ -79,11 +79,17 @@ h3.marginMap,
 
 ul.nav.nav-tabs.movie-home>li>a {
     font-size: 18px;
-    font-weight: 500;
+    font-weight: 600;
+    color: #333;
 }
 
 .navbar-header ul>li>a {
     font-size: 19px;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #777;
+    font-weight: bold;
 }
 
 .header-top {
@@ -116,15 +122,14 @@ ul.nav.nav-tabs.movie-home>li>a {
     text-align: center;
 }
 
-#img-film-indexContent {
-    width: 72%;
-    height: 72%;
-    object-fit: contain;
-}
-
 .title-movie {
     text-decoration: none;
     object-fit: contain;
+    margin-bottom: 30px;
+}
+
+.col-md-3.col-sm-3.movie-item {
+    margin-bottom: 20px;
 }
 
 .title-movie h4 {
@@ -134,6 +139,19 @@ ul.nav.nav-tabs.movie-home>li>a {
     width: 100%;
     text-overflow: ellipsis;
     overflow: hidden;
+    color: #333 !important;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.movie-technology {
+    position: absolute;
+    bottom: 39px;
+    margin-left: 31px;
+    width: 185px;
+    height: 27px;
+    text-align: center;
+    background: url(../image/bg-movie-technology.png)repeat-x scroll center center transparent;
 }
 
 a:hover {
@@ -170,6 +188,13 @@ a:hover {
 
 .img-center {
     margin: 0 auto;
+}
+
+img#img-film-indexContent {
+    height: 260px;
+    width: 185px;
+    border: 6px solid #000000;
+    display: inline-table;
 }
 
 button.btns:hover a {

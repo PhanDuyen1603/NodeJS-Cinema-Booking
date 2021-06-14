@@ -39,8 +39,7 @@
             </div>
 
             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
-                <img src="<%= booking.Showtime.Film.film_Image %>" alt="Không load được ảnh"
-                    style="object-fit: contain; height: 460px">
+                <img src="<%= booking.Showtime.Film.film_Image %>" alt="Không load được ảnh" style="object-fit: contain; height: 460px">
             </div>
 
             <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7">
@@ -115,7 +114,8 @@
                     </div>
                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
                         <p>
-                            <%= bookingDate %> - <%= booking.booking_Time %>
+                            <%= bookingDate %> -
+                                <%= booking.booking_Time %>
                         </p>
                     </div>
 
@@ -146,7 +146,6 @@
 
 
     <script>
-
         function onReady() {
             var qrcode = new QRCode("id_qrcode", {
                 text: "<%= booking.booking_ID %>",
@@ -159,7 +158,15 @@
         }
 
 
-        $j('.profile-content .price_UI').html(formatCurrency($j("#price_Total").attr('value'), { "pattern": "%s\u00a0\u20ab", "precision": 0, "requiredPrecision": 0, "decimalSymbol": ",", "groupSymbol": ".", "groupLength": 3, "integerRequired": 1 }));
+        $j('.profile-content .price_UI').html(formatCurrency($j("#price_Total").attr('value'), {
+            "pattern": "%s\u00a0\u20ab",
+            "precision": 0,
+            "requiredPrecision": 0,
+            "decimalSymbol": ",",
+            "groupSymbol": ".",
+            "groupLength": 3,
+            "integerRequired": 1
+        }));
     </script>
 
 </body>
