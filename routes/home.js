@@ -218,14 +218,13 @@ router.get('/phim/:id', async function (req, res) {
 		limit: 4,
 	});
 
-
+	// LẤY TẤT CẢ SUẤT CHIẾU CỦA PHIM
 	const showtimesOfFilm = await Showtime.findAll({
 		where: {
 			showtime_Film: id,
 		},
 		order: [
-			['showtime_Cinema', 'ASC'],
-			['showtime_Film', 'ASC'],
+			['showtime_Date', 'ASC'],
 		],
 		include: [
 			{ model: Cinema, include: [{ model: Cineplex }] },

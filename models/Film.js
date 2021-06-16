@@ -13,7 +13,7 @@ const Film = db.define('Film', {
         allowNull: false,
     },
     film_DatePublic: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: true,
     },
     film_Image: {
@@ -34,6 +34,10 @@ const Film = db.define('Film', {
     },
     film_Content: {
         type: Sequelize.TEXT,
+        allowNull: true,
+    },
+    film_Trailer: {
+        type: Sequelize.STRING,
         allowNull: true,
     },
 });

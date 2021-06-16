@@ -1,118 +1,127 @@
-<div class="container">
-    <div id="table">
-        <% if( cineplex ) { %>
-            <% if(cineplex.length!=0){ %>
-                <table>
-                    <tr>
-                        <th>STT</th>
-                        <th>Tên </th>
-                        <th>Địa chỉ </th>
-                        <th>Thao tác</th>
-                    </tr>
-                    <% for(let i=0 ;i < cineplex.length ; i++) { %>
-                        <tr>
-                            <td>
-                                <%= i+1 %>
-                            </td>
-                            <td>
-                                <%= cineplex[i].cineplex_Name %>
-                            </td>
-                            <td>
-                                <%= cineplex[i].cineplex_Address %>
-                            </td>
-                            <td>
-                                <b id="btn_update_cineplex_<%= cineplex[i].cineplex_ID %>">
-                                    <i class="fas fa-edit"></i>
-                                </b>
-                                &nbsp;&nbsp;
-                                <a href="/admin/cineplex/delete/<%= cineplex[i].cineplex_ID %>"
-                                    onclick="return confirmAction()">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <% } %>
-                </table>
-                <% }else{ %>
-                    <h1>Hiện tại hệ thống Một Chút Film chưa có cụm rạp nào</h1>
-                    <% } %>
-                        <% } %>
+<% if(typeof(crud_error) !='undefined' ) { %>
+    <div id="crud_error" value="<%= crud_error %>" hidden>
     </div>
-</div>
+    <% } %>
 
-<div>
-    <% for(let i=0 ;i < cineplex.length ; i++) { %>
-        <script>
-            $(document).ready(function () {
-                $("#btn_update_cineplex_main_<%= cineplex[i].cineplex_ID %>").hide();
-                $("#btn_update_cineplex_<%= cineplex[i].cineplex_ID %>").click(function () {
-                    $("#btn_update_cineplex_main_<%= cineplex[i].cineplex_ID %>").show();
-                });
-                $("#btn_close_cineplex_1_<%= cineplex[i].cineplex_ID %>").click(function () {
-                    $("#btn_update_cineplex_main_<%= cineplex[i].cineplex_ID %>").hide();
-                });
-                $("#btn_close_cineplex_<%= cineplex[i].cineplex_ID %>").click(function () {
-                    $("#btn_update_cineplex_main_<%= cineplex[i].cineplex_ID %>").hide();
-                });
+        <a style="width:auto" class="btn_create" id="btn_create_cineplex">Thêm cụm rạp</a>
+        <h1 style="text-align: center; font-weight: 600;">DANH SÁCH CỤM RẠP</h1>
+        <div class="container">
+            <div id="table">
+                <% if( cineplex ) { %>
+                    <% if(cineplex.length!=0){ %>
+                        <table>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên </th>
+                                <th>Địa chỉ </th>
+                                <th>Thao tác</th>
+                            </tr>
+                            <% for(let i=0 ;i < cineplex.length ; i++) { %>
+                                <tr>
+                                    <td>
+                                        <%= i+1 %>
+                                    </td>
+                                    <td>
+                                        <%= cineplex[i].cineplex_Name %>
+                                    </td>
+                                    <td>
+                                        <%= cineplex[i].cineplex_Address %>
+                                    </td>
+                                    <td>
+                                        <b id="btn_update_cineplex_<%= cineplex[i].cineplex_ID %>">
+                                            <i class="fas fa-edit"></i>
+                                        </b>
+                                        &nbsp;&nbsp;
+                                        <a href="/admin/cineplex/delete/<%= cineplex[i].cineplex_ID %>"
+                                            onclick="return confirmAction()">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <% } %>
+                        </table>
+                        <% }else{ %>
+                            <h1>Hiện tại hệ thống Một Chút Film chưa có cụm rạp nào</h1>
+                            <% } %>
+                                <% } %>
+            </div>
+        </div>
 
-            });
-        </script>
-        <% } %>
-</div>
-<div>
-    <% for(let i=0 ;i < cineplex.length ; i++) { %>
-        <div id="btn_update_cineplex_main_<%= cineplex[i].cineplex_ID %>" class="modal">
-            <span class="close" title="Close Modal" id="btn_close_cineplex_<%= cineplex[i].cineplex_ID %>">
+        <div>
+            <% for(let i=0 ;i < cineplex.length ; i++) { %>
+                <script>
+                    $(document).ready(function () {
+                        $("#btn_update_cineplex_main_<%= cineplex[i].cineplex_ID %>").hide();
+                        $("#btn_update_cineplex_<%= cineplex[i].cineplex_ID %>").click(function () {
+                            $("#btn_update_cineplex_main_<%= cineplex[i].cineplex_ID %>").show();
+                        });
+                        $("#btn_close_cineplex_1_<%= cineplex[i].cineplex_ID %>").click(function () {
+                            $("#btn_update_cineplex_main_<%= cineplex[i].cineplex_ID %>").hide();
+                        });
+                        $("#btn_close_cineplex_<%= cineplex[i].cineplex_ID %>").click(function () {
+                            $("#btn_update_cineplex_main_<%= cineplex[i].cineplex_ID %>").hide();
+                        });
+
+                    });
+                </script>
+                <% } %>
+        </div>
+        <div>
+            <% for(let i=0 ;i < cineplex.length ; i++) { %>
+                <div id="btn_update_cineplex_main_<%= cineplex[i].cineplex_ID %>" class="modal">
+                    <span class="close" title="Close Modal" id="btn_close_cineplex_<%= cineplex[i].cineplex_ID %>">
+                        &times;
+                    </span>
+
+                    <!-- FORM CẬP NHẬT -->
+
+                    <form class="modal-content animate" action="/admin/cineplex/update/<%=cineplex[i].cineplex_ID %>"
+                        method="POST" id="btn_update_cineplex">
+
+                        <div class="container">
+                            <label> Tên cụm rạp:</label>
+                            <input type="text" value="<%= cineplex[i].cineplex_Name %>" name="cineplexName" />
+                            <label> Địa chỉ :</label>
+                            <input type="text" value="<%= cineplex[i].cineplex_Address %>" name="cineplexAddress" />
+                            <button type="submit" value="Cập nhật">
+                                Cập nhật
+                            </button>
+                        </div>
+                        <div class="container">
+                            <button type="button" class="cancelbtn"
+                                id="btn_close_cineplex_1_<%= cineplex[i].cineplex_ID %>">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <% } %>
+        </div>
+
+        <div id="create_cineplex" class="modal">
+            <span class="close" title="Close Modal" id="btn_close_cineplex_create">
                 &times;
             </span>
 
-            <!-- FORM CẬP NHẬT -->
-
-            <form class="modal-content animate" action="/admin/cineplex/update/<%=cineplex[i].cineplex_ID %>"
-                method="POST" id="btn_update_cineplex">
-
+            <!-- FORM THÊM CỤM RẠP -->
+            <form action="/admin/cineplex/create" method="POST" class="modal-content animate">
                 <div class="container">
-                    <label> Tên cụm rạp:</label>
-                    <input type="text" value="<%= cineplex[i].cineplex_Name %>" name="cineplexName" />
-                    <label> Địa chỉ :</label>
-                    <input type="text" value="<%= cineplex[i].cineplex_Address %>" name="cineplexAddress" />
-                    <button type="submit" value="Cập nhật">
-                        Cập nhật
+                    <label>Tên cụm rạp:</label>
+                    <input type="text" placeholder="Tên cụm rạp" id="cineplex_Name" name="cineplexName"
+                        required /><br />
+                    <label> Địa Chỉ :</label>
+                    <input type="text" placeholder="Địa chỉ cụm rạp" id="cineplex_Address" name="cineplexAddress"
+                        required /><br />
+                    <button type="submit" value="Thêm vào danh sách cụm rạp">
+                        THÊM
                     </button>
                 </div>
-                <div class="container">
-                    <button type="button" class="cancelbtn" id="btn_close_cineplex_1_<%= cineplex[i].cineplex_ID %>">
-                        Cancel
-                    </button>
-                </div>
+
             </form>
         </div>
-        <% } %>
-</div>
-
-
-
-
-<a style="width:auto" class="btn_create" id="btn_create_cineplex">
-    Thêm cụm rạp
-</a>
-<div id="create_cineplex" class="modal">
-    <span class="close" title="Close Modal" id="btn_close_cineplex_create">
-        &times;
-    </span>
-
-    <!-- FORM THÊM CỤM RẠP -->
-    <form action="/admin/cineplex/create" method="POST" class="modal-content animate">
-        <div class="container">
-            <label>Tên cụm rạp:</label>
-            <input type="text" placeholder="Tên cụm rạp" id="cineplex_Name" name="cineplexName" required /><br />
-            <label> Địa Chỉ :</label>
-            <input type="text" placeholder="Địa chỉ cụm rạp" id="cineplex_Address" name="cineplexAddress"
-                required /><br />
-            <button type="submit" value="Thêm vào danh sách cụm rạp">
-                THÊM
-            </button>
-        </div>
-
-    </form>
-</div>
+        <script>
+            var crud_error = document.getElementById("crud_error").getAttribute('value');
+            if (crud_error) {
+                alert(crud_error);
+            }
+        </script>

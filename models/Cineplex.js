@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('./db');
 
-const cineplex = db.define('Cineplex', {
+const Cineplex = db.define('Cineplex', {
     cineplex_ID: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -18,4 +18,4 @@ const cineplex = db.define('Cineplex', {
     }
 });
 
-module.exports = cineplex;
+module.exports = Cineplex;

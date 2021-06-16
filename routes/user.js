@@ -124,7 +124,6 @@ router.get('/mua-ve/:id', async function (req, res) {
     const showtimeID = Number(req.params.id);
     const user = req.currentUser;
 
-
     if (user.user_Email != "admin@gmail.com") {
         const showtime = await Showtime.findOne({
             where: {
@@ -136,25 +135,18 @@ router.get('/mua-ve/:id', async function (req, res) {
             ]
         });
 
+        //LẤY TẤT CẢ GHẾ ĐÃ ĐẶT CỦA SUẤT CHIẾU NÀY 
         const allBookings = await Booking.findAll({
             where: {
                 booking_Showtime: showtimeID,
             },
-            include: [
-                { model: Showtime },
-            ],
         });
-
         var bookedSeats = "";
-        var tickets;
-
-        for (var i = 0; i < allBookings.length; i++) {
-            tickets = await Booking.findAll({ where: { ticket_Booking: allBookings[i].booking_ID } });
-            for (var j = 0; j < tickets.length; j++) {
-                bookedSeats += tickets[j].ticket_Seat + ", ";
+        if (allBookings) {
+            for (var i = 0; i < allBookings.length; i++) {
+                bookedSeats += allBookings[i].booking_Seat + ", ";
             }
         }
-
         res.render('users/booking', { showtime, bookedSeats });
         // res.send({ showtime, allBookings, bookedSeats });
     } else {

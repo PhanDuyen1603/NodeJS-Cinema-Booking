@@ -10,6 +10,7 @@ const Cinema = require('../models/Cinema');
 const Cineplex = require('../models/Cineplex');
 const Film = require('../models/Film');
 const Showtime = require('../models/Showtime')
+const Booking = require('../models/Booking');
 
 //UPLOAD FILE
 const { promisify } = require('util');
@@ -270,79 +271,146 @@ router.get('/film', async function (req, res) {
     res.render('admin', { filmAll });
 });
 
+router.get('/film/create', async function (req, res) {
+    res.redirect('/admin/film');
+});
+
 // [POST] /admin/film/create
 router.post('/film/create', upload.single('filmImage'), async function (req, res) {
-    var { filmName, filmPublicDate, filmTime, filmContent, filmPublic } = req.body;
-    var path = './public/image/uploads/film/' + String(Date.now()) + '-' + req.file.originalname;
-    var filmImage = path.substr(1, path.length);
+    var { filmName, filmPublicDate, filmTime, filmContent, filmPublic, filmTrailer } = req.body;
 
-    //Move file into path
-    await rename(req.file.path, path);
+    const found = await Film.findOne({ where: { film_Name: filmName } });
+    if (found) {
+        const filmAll = await Film.findAll({
+            order: [
+                ['film_ID', 'DESC']
+            ]
+        });
+        var crud_error = "THÊM PHIM THẤT BẠI! \nPHIM ĐƯỢC THÊM ĐÃ CÓ TRONG DANH SÁCH";
+        res.render('admin', { filmAll, crud_error });
+    } else {
+        var path = './public/image/uploads/film/' + String(Date.now()) + '-' + req.file.originalname;
+        var filmImage = path.substr(1, path.length);
+        // //Move file into path
+        await rename(req.file.path, path);
 
-    await Film.create({
-        film_Name: filmName,
-        film_DatePublic: filmPublicDate,
-        film_Time: filmTime,
-        film_Content: filmContent,
-        film_Image: filmImage,
-        film_Public: filmPublic,
-    });
+        const maxID = await Film.max('film_ID');
 
-    res.redirect('back');
+        if (maxID) {
+            await Film.create({
+                film_ID: maxID + 1,
+                film_Name: filmName,
+                film_DatePublic: filmPublicDate,
+                film_Time: filmTime,
+                film_Content: filmContent,
+                film_Image: filmImage,
+                film_Public: filmPublic,
+                film_Trailer: filmTrailer,
+                film_ViewCount: 0,
+            }).then(res.redirect('/admin/film')).catch(console.error);
+        } else {
+            await Film.create({
+                film_Name: filmName,
+                film_DatePublic: filmPublicDate,
+                film_Time: filmTime,
+                film_Content: filmContent,
+                film_Image: filmImage,
+                film_Public: filmPublic,
+                film_Trailer: filmTrailer,
+                film_ViewCount: 0,
+            }).then(res.redirect('/admin/film')).catch(console.error);
+        }
+
+    }
 });
 
 // [POST] /admin/film/update/:id
 router.post('/film/update/:id', upload.single('filmImage'), async function (req, res) {
     //Update ảnh film --> xoá ảnh cũ, thêm ảnh mới
     const id = Number(req.params.id);
-    var { filmName, filmPublicDate, filmTime, filmContent, filmPublic } = req.body;
+    var { filmName, filmPublicDate, filmTime, filmContent, filmPublic, filmTrailer } = req.body;
 
     const updatedFilm = await Film.findByPk(id);
+    //NẾU CÓ CẬP NHẬT TÊN PHIM
+    if (updatedFilm.film_Name != filmName) {
+        const found = await Film.findOne({ where: { film_Name: filmName } });
+        if (found) {
+            const filmAll = await Film.findAll({
+                order: [
+                    ['film_ID', 'DESC']
+                ]
+            });
+            var crud_error = "CẬP NHẬT PHIM THẤT BẠI! \nTÊN PHIM ĐƯỢC CẬP NHẬT ĐÃ CÓ TRONG DANH SÁCH";
+            res.render('admin', { filmAll, crud_error });
+        } else {
+            if (req.file) {
+                var path = './public/image/uploads/film/' + String(Date.now()) + '-' + req.file.originalname;
+                var filmImage = path.substr(1, path.length);
 
-    if (filmPublicDate) {
-        updatedFilm.film_DatePublic = filmPublicDate;
-    }
-    if (req.file) {
-        var path = './public/image/uploads/film/' + String(Date.now()) + '-' + req.file.originalname;
-        var filmImage = path.substr(1, path.length);
+                // Xoá ảnh cũ
+                fs.unlink(path, () => {
+                    console.log(`successfully deleted ${path}`);
+                });
+                // THêm ảnh mới
+                await rename(req.file.path, path);
+            }
+            updatedFilm.film_Image = filmImage;
+            updatedFilm.film_Name = filmName;
+            updatedFilm.film_DatePublic = filmPublicDate;
+            updatedFilm.film_Time = filmTime;
+            updatedFilm.film_Content = filmContent;
+            updatedFilm.film_Public = filmPublic;
+            updatedFilm.film_Trailer = filmTrailer;
+            await updatedFilm.save().then(res.redirect('/admin/film')).catch(console.error);
 
-        // Xoá ảnh cũ
-        fs.unlink(path, () => {
-            console.log(`successfully deleted ${path}`);
-        });
-        // THêm ảnh mới
-        await rename(req.file.path, path);
+        }
+        //nếu không cập nhật tên phim --> cap nhat thứ khác
+    } else { // NẾU KHÔNG CẬP NHẬT TÊN --> CẬP NHẬT THỨ KHÁC
+        if (req.file) {
+            var path = './public/image/uploads/film/' + String(Date.now()) + '-' + req.file.originalname;
+            var filmImage = path.substr(1, path.length);
 
+            // Xoá ảnh cũ
+            fs.unlink(path, () => {
+                console.log(`successfully deleted ${path}`);
+            });
+            // THêm ảnh mới
+            await rename(req.file.path, path);
+        }
         updatedFilm.film_Image = filmImage;
+        updatedFilm.film_DatePublic = filmPublicDate;
+        updatedFilm.film_Time = filmTime;
+        updatedFilm.film_Content = filmContent;
+        updatedFilm.film_Public = filmPublic;
+        updatedFilm.film_Trailer = filmTrailer;
+        await updatedFilm.save().then(res.redirect('/admin/film')).catch(console.error);
     }
-
-    updatedFilm.film_Name = filmName;
-    updatedFilm.film_Time = filmTime;
-    updatedFilm.film_Content = filmContent;
-    updatedFilm.film_Public = filmPublic;
-
-    await updatedFilm.save();
-
-    res.redirect('back');
 });
 
 // [GET] /admin/film/delete/:id
 router.get('/film/delete/:id', async function (req, res) {
     const id = Number(req.params.id);
+    const showtimes = await Showtime.findAll({ where: { showtime_Film: id } });
+    if (showtimes.length > 0) {
+        const filmAll = await Film.findAll({
+            order: [
+                ['film_ID', 'DESC']
+            ]
+        });
+        var crud_error = "XOÁ PHIM THẤT BẠI! \nPHIM ĐANG ĐƯỢC CÔNG CHIẾU! HÃY CẨN THẬN";
+        res.render('admin', { filmAll, crud_error });
+    } else {
+        const deletedFilm = await Film.findByPk(id);
 
-    //Xoá ảnh từ folder khi xoá film
-    const deletedFilm = await Film.findByPk(id);
-    const fileNameWithPath = '.' + deletedFilm.film_Image;
-    fs.unlink(fileNameWithPath, () => {
-        console.log(`successfully deleted ${fileNameWithPath}`);
-    });
-    await Film.destroy({
-        where: {
-            film_ID: id,
-        },
-    });
+        //Xoá ảnh từ folder khi xoá film
+        const fileNameWithPath = '.' + deletedFilm.film_Image;
+        fs.unlink(fileNameWithPath, () => {
+            console.log(`successfully deleted ${fileNameWithPath}`);
+        });
+        await Film.destroy({ where: { film_ID: id, }, });
+        res.redirect('/admin/film')
+    }
 
-    res.redirect('back');
 });
 
 
@@ -359,37 +427,78 @@ router.get('/cinema', async function (req, res) {
             ['cinema_ID', 'DESC'],
         ],
     });
-    const allCineplexAddresses = await Cineplex.findAll({
-    });
+    const allCineplexes = await Cineplex.findAll({});
+    res.render('admin', { cinema, allCineplexes });
+});
 
-    res.render('admin', { cinema, allCineplexAddresses });
+router.get('/cinema/create', async function (req, res) {
+    res.redirect('/admin/cinema');
 });
 
 // [POST] /admin/cinema/create
 router.post('/cinema/create', async function (req, res) {
     var { cinemaName, cinemaType, cinemaLength, cinemaWidth, cineplexID } = req.body;
+    /// Trùng tên, trùng cụm rạp
+    const found = await Cinema.findOne({ where: { cinema_Name: cinemaName, CineplexCineplexID: cineplexID } });
+    if (found) {
+        const cinema = await Cinema.findAll({
+            include: [{
+                model: Cineplex,
+            }],
+            order: [
+                ['cinema_ID', 'DESC'],
+            ],
+        });
+        const allCineplexes = await Cineplex.findAll({});
+        var crud_error = "THÊM RẠP PHIM THẤT BẠI! \nRẠP PHIM ĐÃ TỒN TẠI!!";
+        res.render('admin', { cinema, allCineplexes, crud_error });
+    } else {
+        var maxID = await Cinema.max('cinema_ID');
+        if (maxID) {
+            await Cinema.create({
+                cinema_ID: maxID + 1,
+                cinema_Name: cinemaName,
+                cinema_Type: cinemaType,
+                cinema_Length: cinemaLength,
+                cinema_Width: cinemaWidth,
+                CineplexCineplexID: cineplexID,
+            }).then(res.redirect('/admin/cinema')).catch(console.error);
+        } else {
+            await Cinema.create({
+                cinema_Name: cinemaName,
+                cinema_Type: cinemaType,
+                cinema_Length: cinemaLength,
+                cinema_Width: cinemaWidth,
+                CineplexCineplexID: cineplexID,
+            }).then(res.redirect('/admin/cinema')).catch(console.error);
+        }
+    }
 
-    await Cinema.create({
-        cinema_Name: cinemaName,
-        cinema_Type: cinemaType,
-        cinema_Length: cinemaLength,
-        cinema_Width: cinemaWidth,
-
-        CineplexCineplexID: cineplexID,
-    });
-
-    res.redirect('back');
 });
 
 // [GET] /admin/cinema/delete/id
 router.get('/cinema/delete/:id', async function (req, res) {
     const id = Number(req.params.id);
-    await Cinema.destroy({
-        where: {
-            cinema_ID: id,
-        }
-    });
-    res.redirect('back');
+    const showtimes = await Showtime.findAll({ where: { showtime_Cinema: id } });
+
+    if (showtimes.length > 0) {
+        const cinema = await Cinema.findAll({
+            include: [{
+                model: Cineplex,
+            }],
+            order: [
+                ['cinema_ID', 'DESC'],
+            ],
+        });
+        const allCineplexes = await Cineplex.findAll();
+        var crud_error = "KHÔNG THỂ XOÁ RẠP NÀY !! \nRẠP ĐANG TRONG QUÁ TRÌNH HOẠT ĐỘNG\nHÃY CẨN THẬN!";
+        res.render('admin', { cinema, allCineplexes, crud_error });
+    } else {
+        await Cinema.destroy({
+            where: { cinema_ID: id, }
+        }).then(res.redirect('/admin/cinema'))
+            .catch(console.error);
+    }
 });
 
 //[POST] /admin/cinema/update/id
@@ -398,21 +507,55 @@ router.post('/cinema/update/:id', async function (req, res) {
 
     var { cinemaName, cinemaType, cinemaLength, cinemaWidth, cineplexID } = req.body;
 
-    await Cinema.update({
-        cinema_Name: cinemaName,
-        cinema_Type: cinemaType,
-        cinema_Length: cinemaLength,
-        cinema_Width: cinemaWidth,
+    const updatedCinema = await Cinema.findByPk(id);
+    if (updatedCinema.cinema_Name != cinemaName || updatedCinema.CineplexCineplexID != cineplexID) {
+        const found = await Cinema.findOne({ where: { cinema_Name: cinemaName, CineplexCineplexID: cineplexID } });
 
-        CineplexCineplexID: cineplexID,
-    },
-        {
-            where: {
-                cinema_ID: id,
+        if (found) {
+            const cinema = await Cinema.findAll({
+                include: [{
+                    model: Cineplex,
+                }],
+                order: [
+                    ['cinema_ID', 'DESC'],
+                ],
+            });
+            const allCineplexes = await Cineplex.findAll({});
+            var crud_error = "CẬP NHẬT THẤT BẠI!! \nRẠP PHIM CÓ TÊN ĐƯỢC CẬP NHẬT ĐÃ TỒN TẠI";
+            res.render('admin', { cinema, allCineplexes, crud_error });
+        } else {
+            await Cinema.update({
+                cinema_Name: cinemaName,
+                cinema_Type: cinemaType,
+                cinema_Length: cinemaLength,
+                cinema_Width: cinemaWidth,
+
+                CineplexCineplexID: cineplexID,
             },
-        });
+                {
+                    where: {
+                        cinema_ID: id,
+                    },
+                }).then(res.redirect('/admin/cinema')).catch(console.error);
+        }
+    } else {
+        await Cinema.update({
+            cinema_Type: cinemaType,
+            cinema_Length: cinemaLength,
+            cinema_Width: cinemaWidth,
 
-    res.redirect('back');
+            CineplexCineplexID: cineplexID,
+        },
+            {
+                where: {
+                    cinema_ID: id,
+                },
+            }).then(res.redirect('/admin/cinema')).catch(console.error);
+    }
+
+
+
+
 });
 
 
@@ -431,8 +574,8 @@ router.get('/user/delete/:id', async function (req, res) {
         where: {
             user_ID: id,
         }
-    });
-    res.redirect('back');
+    }).then(res.redirect('back')).catch(console.error);
+
 });
 
 
@@ -468,42 +611,97 @@ router.get('/cineplex', async function (req, res) {
 
 });
 
+// [GET] /admin/cineplex/create
+router.get('/cineplex/create', async function (req, res) {
+    res.redirect('/admin/cineplex');
+});
+
+
 // [POST] /admin/cineplex/create
 router.post('/cineplex/create', async function (req, res) {
     var { cineplexName, cineplexAddress } = req.body;
-    await Cineplex.create({
-        cineplex_Name: cineplexName,
-        cineplex_Address: cineplexAddress,
-    });
-    res.redirect('back');
+    var found = await Cineplex.findOne({ where: { cineplex_Name: cineplexName } });
+    if (found) {
+        const cineplex = await Cineplex.findAll({
+            order: [
+                ['cineplex_ID', 'DESC'],
+            ]
+        });
+        var crud_error = "CỤM RẠP ĐÃ TỒN TẠI !!";
+        res.render('admin', { cineplex, crud_error });
+    } else {
+        var maxID = await Cineplex.max('cineplex_ID');
+        if (maxID) {
+            await Cineplex.create({
+                cineplex_ID: maxID + 1,
+                cineplex_Name: cineplexName,
+                cineplex_Address: cineplexAddress,
+            }).then(res.redirect('/admin/cineplex')).catch(console.error);
+        } else {
+            await Cineplex.create({
+                cineplex_Name: cineplexName,
+                cineplex_Address: cineplexAddress,
+            }).then(res.redirect('/admin/cineplex')).catch(console.error);
+        }
+
+    }
 });
+
 
 // [GET] /admin/cineplex/delete/:id
 router.get('/cineplex/delete/:id', async function (req, res) {
     const id = Number(req.params.id);
-    await Cineplex.destroy({
-        where: {
-            cineplex_ID: id,
-        }
-    });
-
-
-    res.redirect('back');
+    const cinemas = await Cinema.findAll({ where: { CineplexCineplexID: id } });
+    if (cinemas.length > 0) {
+        const cineplex = await Cineplex.findAll({
+            order: [
+                ['cineplex_ID', 'DESC'],
+            ]
+        });
+        var crud_error = "KHÔNG THỂ XOÁ CỤM RẠP NÀY !! \nCỤM RẠP ĐANG TRONG QUÁ TRÌNH HOẠT ĐỘNG\nHÃY CẨN THẬN!";
+        res.render('admin', { cineplex, crud_error });
+    } else {
+        await Cineplex.destroy({
+            where: {
+                cineplex_ID: id,
+            }
+        }).then(res.redirect('/admin/cineplex')).catch(console.error);
+    }
 });
 
 // [POST] /admin/cineplex/update/:id
 router.post('/cineplex/update/:id', async function (req, res) {
     const id = Number(req.params.id);
     var { cineplexName, cineplexAddress } = req.body;
-    await Cineplex.update({
-        cineplex_Name: cineplexName,
-        cineplex_Address: cineplexAddress,
-    }, {
-        where: {
-            cineplex_ID: id,
+
+    // update name -> kiem tra trung -> neu trung, neu ko
+    const updatedCineplex = await Cineplex.findByPk(id);
+
+    if (updatedCineplex.cineplex_Name != cineplexName) {
+        const found = await Cineplex.findOne({ where: { cineplex_Name: cineplexName } });
+        if (found) {
+            const cineplex = await Cineplex.findAll({
+                order: [
+                    ['cineplex_ID', 'DESC'],
+                ]
+            });
+            var crud_error = "KHÔNG THỂ CẬP NHẬT !! \nTÊN CỤM RẠP CẬP NHẬT ĐÃ TỒN TẠI";
+            res.render('admin', { cineplex, crud_error });
+        } else {
+            await Cineplex.update({
+                cineplex_Name: cineplexName,
+                cineplex_Address: cineplexAddress,
+            }, {
+                where: {
+                    cineplex_ID: id,
+                }
+            }).then(res.redirect('/admin/cineplex')).catch(console.error);
         }
-    });
-    res.redirect('back');
+    } else {
+        await Cineplex.update({ cineplex_Address: cineplexAddress }, { where: { cineplex_ID: id } });
+        res.redirect('/admin/cineplex');
+    }
+
 });
 
 
@@ -515,8 +713,10 @@ router.get('/showtime', async function (req, res) {
     const showtime = await Showtime.findAll({
         include: [
             { model: Cinema, include: [{ model: Cineplex }] },
-            { model: Film }
-        ]
+            { model: Film },
+
+        ],
+        order: [['showtime_ID', 'DESC']],
     });
 
     const allCinemas = await Cinema.findAll({
@@ -529,65 +729,127 @@ router.get('/showtime', async function (req, res) {
     res.render('admin', { showtime, allCinemas, allFilms });
 });
 
+// [GET] /admin/showtime/create
+router.get('/showtime/create', async function (req, res) {
+    res.redirect('/admin/showtime')
+});
+
 // [POST] /admin/showtime/create
 router.post('/showtime/create', async function (req, res) {
     //Chưa kiểm tra các điều kiện khi thêm
     const { cinemaID, filmID, showtimeDate, beginTime, showtimePrice } = req.body;
+    const found = await Showtime.findOne({ where: { showtime_Cinema: cinemaID, showtime_Film: filmID, showtime_Date: showtimeDate, showtime_Begin: beginTime } });
+    if (found) {
+        const showtime = await Showtime.findAll({
+            include: [
+                { model: Cinema, include: [{ model: Cineplex }] },
+                { model: Film },
 
-    await Showtime.create({
-        showtime_Date: showtimeDate,
-        showtime_Begin: beginTime,
-        showtime_Price: showtimePrice,
-        showtime_Film: filmID,
-        showtime_Cinema: cinemaID,
-    });
+            ],
+            order: [['showtime_ID', 'DESC']],
+        });
 
-    console.log(cinemaID, filmID, showtimeDate, beginTime, showtimePrice);
-    res.redirect('back');
+        const allCinemas = await Cinema.findAll({
+            include: [{
+                model: Cineplex,
+            }],
+        });
+        const allFilms = await Film.findAll();
+        var crud_error = "THÊM SUẤT CHIẾU THẤT BẠI! \nSUẤT CHIẾU ĐÃ TỒN TẠI";
+        res.render('admin', { showtime, allCinemas, allFilms, crud_error });
+    } else {
+        var endHour, endMinute;
+        // xử lý THÊM THỜI GIAN KẾT THÚC
+        const showtimeFilm = await Film.findByPk(filmID);
+        const runningTime = showtimeFilm.film_Time;
+        // 09:30
+        endHour = Number(String(beginTime).substr(0, 2)) + parseInt(runningTime / 60);
+        endMinute = Number(String(beginTime).substr(3, 2)) + parseInt(runningTime % 60);
+
+        //12:00
+        if (endMinute >= 60) {
+            endHour++;
+            endMinute = endMinute - 60;
+        }
+        if (endHour >= 24) {
+            endHour = endHour - 24;
+        }
+
+        function addZero(number) {
+            if (number < 10) {
+                return "0" + number;
+            }
+            return number;
+        }
+
+        endHour = addZero(endHour);
+        endMinute = addZero(endMinute);
+        const endTime = `${endHour}:${endMinute}:00`;
+
+        var maxID = await Showtime.max('showtime_ID');
+        if (maxID) {
+            await Showtime.create({
+                showtime_ID: maxID + 1,
+                showtime_Date: showtimeDate,
+                showtime_Begin: beginTime,
+                showtime_End: endTime,
+                showtime_Price: showtimePrice,
+                showtime_Film: filmID,
+                showtime_Cinema: cinemaID,
+            }).then(res.redirect('/admin/showtime')).catch(console.error)
+        } else {
+            await Showtime.create({
+                showtime_Date: showtimeDate,
+                showtime_Begin: beginTime,
+                showtime_End: endTime,
+                showtime_Price: showtimePrice,
+                showtime_Film: filmID,
+                showtime_Cinema: cinemaID,
+            }).then(res.redirect('/admin/showtime')).catch(console.error)
+        }
+    }
 });
 
 // [GET] /admin/showtime/delete/id
 router.get('/showtime/delete/:id', async function (req, res) {
     const id = Number(req.params.id);
-    await Showtime.destroy({ where: { showtime_ID: id } });
-    res.redirect('back');
+    const bookings = await Booking.findAll();
+    if (bookings.length > 0) {
+        const showtime = await Showtime.findAll({
+            include: [
+                { model: Cinema, include: [{ model: Cineplex }] },
+                { model: Film },
+
+            ],
+            order: [['showtime_ID', 'DESC']],
+        });
+
+        const allCinemas = await Cinema.findAll({
+            include: [{
+                model: Cineplex,
+            }],
+        });
+        const allFilms = await Film.findAll();
+        var crud_error = "XOÁ SUẤT CHIẾU THẤT BẠI! \nSUẤT CHIẾU HIỆN ĐANG TRONG THỜi GIAN CHUẨN BỊ CHIẾU \nHÃY CẨN THẬN";
+        res.render('admin', { showtime, allCinemas, allFilms, crud_error });
+    } else {
+
+    } await Showtime.destroy({ where: { showtime_ID: id } }).then(res.redirect('/admin/showtime')).catch(console.error);
+
 });
 
 // [POST] /admin/showtime/update/id
 router.post('/showtime/update/:id', async function (req, res) {
     const id = Number(req.params.id);
-    const { cinemaID, filmID, showtimeDate, beginTime, showtimePrice } = req.body;
-
-    // const updatedShowtime = await Showtime.findByPk(id);
-    if (showtimeDate) {
-        await Showtime.update({ showtime_Date: showtimeDate, }, { where: { showtime_ID: id } })
-    }
-    if (beginTime) {
-        Showtime.update({ showtime_Begin: beginTime, }, { where: { showtime_ID: id } })
-    }
+    const { cinemaID, filmID, showtimeDate, beginTime, showtimePrice } = req.body
 
     Showtime.update({
-        showtime_Price: showtimePrice,
         showtime_Film: filmID,
         showtime_Cinema: cinemaID,
-    }, { where: { showtime_ID: id } });
-
-    // if (showtimeDate) {
-    //     updatedShowtime.showtime_Date = showtimeDate;
-    // }
-
-    // if (beginTime) {
-    //     updatedShowtime.showtime_Begin = beginTime;
-    // }
-
-    // updatedShowtime.showtime_Price = showtimePrice;
-    // updatedShowtime.showtime_Film = filmID;
-    // updatedShowtime.showtime_Cinema = cinemaID;
-
-    // await updatedShowtime.save();
-
-
-    res.redirect('back');
+        showtime_Date: showtimeDate,
+        showtime_Begin: beginTime,
+        showtime_Price: showtimePrice,
+    }, { where: { showtime_ID: id } }).then(res.redirect('back')).catch(console.error);
 });
 
 
@@ -595,6 +857,8 @@ router.post('/showtime/update/:id', async function (req, res) {
 // [GET] /admin/showtime/film/id
 router.get('/showtime/film/:id', async function (req, res) {
     const filmID = Number(req.params.id);
+
+    const currentFilm = await Film.findByPk(filmID);
     // showtime by film
     const showtimesByFilm = await Showtime.findAll(
         {
@@ -604,7 +868,7 @@ router.get('/showtime/film/:id', async function (req, res) {
 
             ],
             where: { showtime_Film: filmID },
-            order: [['showtime_Date', 'ASC']],
+            order: [['showtime_ID', 'DESC']],
         },
     );
 
@@ -615,7 +879,7 @@ router.get('/showtime/film/:id', async function (req, res) {
     });
     const allFilms = await Film.findAll();
 
-    res.render('admin', { showtimesByFilm, allCinemas, allFilms });
+    res.render('admin', { showtimesByFilm, allCinemas, allFilms, currentFilm });
 });
 
 
@@ -623,6 +887,7 @@ router.get('/showtime/film/:id', async function (req, res) {
 // [GET] /admin/showtime/cinema/id
 router.get('/showtime/cinema/:id', async function (req, res) {
     const cinemaID = Number(req.params.id);
+    const currentCinema = await Cinema.findOne({ where: { cinema_ID: cinemaID }, include: [{ model: Cineplex }] });
     // showtime by cinema
     const showtimesByCinema = await Showtime.findAll(
         {
@@ -632,6 +897,7 @@ router.get('/showtime/cinema/:id', async function (req, res) {
 
             ],
             where: { showtime_Cinema: cinemaID },
+            order: [['showtime_ID', 'DESC']],
         },
     );
     const allCinemas = await Cinema.findAll({
@@ -641,11 +907,7 @@ router.get('/showtime/cinema/:id', async function (req, res) {
     });
     const allFilms = await Film.findAll();
 
-    res.render('admin', { showtimesByCinema, allCinemas, allFilms });
-    // console.log(
-    //     showtimesByCinema
-    // )
-    // res.render('admin', showtimesByCinema);
+    res.render('admin', { showtimesByCinema, allCinemas, allFilms, currentCinema });
 });
 
 

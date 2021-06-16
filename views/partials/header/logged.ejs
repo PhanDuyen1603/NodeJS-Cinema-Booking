@@ -2,12 +2,17 @@
 
 <div class="header-top">
     <p>
-        <a class="btn btn-info" href="/user/thong-tin-ca-nhan">
-            Xin chào:
-            <% if(currentUser){ %>
-                <%= currentUser.user_Name %>
+        <% if(currentUser){ %>
+            <% if(currentUser.user_Name !="Admin" ){ %>
+                <a class="btn btn-info" href="/user/thong-tin-ca-nhan">
+                    Xin chào:<%= currentUser.user_Name %>
+                </a>
+                <% }else{%>
+                    <a class="btn btn-info" href="/admin">
+                        Xin chào:<%= currentUser.user_Name %>
+                    </a>
                     <% } %>
-        </a>
-        <a class="btn btn-danger" href="/logout">Đăng xuất</a>
+                        <% } %>
+                            <a class="btn btn-danger" href="/logout">Đăng xuất</a>
     </p>
 </div>

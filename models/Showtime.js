@@ -26,6 +26,10 @@ const Showtime = db.define('Showtime', {
         type: Sequelize.TIME,
         allowNull: false,
     },
+    showtime_End: {
+        type: Sequelize.STRING,
+        allowNull: true,
+    },
     showtime_Price: {
         type: Sequelize.FLOAT,
         allowNull: false,
@@ -37,9 +41,17 @@ const Showtime = db.define('Showtime', {
 Showtime.belongsTo(Film, {
     foreignKey: 'showtime_Film',
 });
+Film.hasMany(Showtime, {
+    onDelete: 'cascade',
+    hooks: true
+});
 
 Showtime.belongsTo(Cinema, {
     foreignKey: 'showtime_Cinema'
+});
+Cinema.hasMany(Showtime, {
+    onDelete: 'cascade',
+    hooks: true
 });
 
 module.exports = Showtime;

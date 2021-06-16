@@ -1,159 +1,172 @@
-<div class="container">
-    <div id="table">
-        <% if(cinema) { %>
-            <% if(cinema.length!=0){ %>
-                <table>
-                    <tr>
-                        <th>Tên rạp </th>
-                        <th>Kiểu rạp </th>
-                        <th>Kích thước</th>
-                        <th>Cụm rạp</th>
-                        <th>Địa chỉ </th>
-                        <th>Thao tác</th>
-                    </tr>
-                    <tr>
-                        <% for(let i=0 ;i < cinema.length ; i++) { %>
-                            <td><a href="/admin/showtime/cinema/<%= cinema[i].cinema_ID %>">
-                                    <%= cinema[i].cinema_Name %>
-                                </a></td>
-                            <td>
-                                <%= cinema[i].cinema_Type %>
-                            </td>
-                            <td>
-                                <%= cinema[i].cinema_Length + ' x ' %>
-                                    <%= cinema[i].cinema_Width %>
-                            </td>
-                            <td>
-                                <%= cinema[i].Cineplex.cineplex_Name %>
-                            </td>
-                            <td>
-                                <%= cinema[i].Cineplex.cineplex_Address %>
-                            </td>
-                            <td><b id="btn_update_cinema_<%= cinema[i].cinema_ID %>">
-                                    <i class="fas fa-edit"></i>
-                                </b>&nbsp;&nbsp;
-                                <a href="/admin/cinema/delete/<%= cinema[i].cinema_ID %>"
-                                    onclick="return confirmAction()">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            </td>
-                    </tr>
-                    <% } %>
-                </table>
-                <% }else{ %>
-                    <h1>Hiện tại hệ thống Một Chút Film chưa có rạp nào</h1>
-                    <% } %>
-                        <% } %>
-                            <a id="btn_create_cinema" class="btn_create">Thêm rạp</a>
-    </div>
-</div>
-<div>
-    <% for(let i=0 ; i < cinema.length ; i++ ) { %>
-        <div id="btn_update_cinema_main_<%= cinema[i].cinema_ID %>" class="modal">
-            <span class="close" id="btn_close_cinema_<%= cinema[i].cinema_ID %>">
-                &times;
-            </span>
-
-            <!-- FORM CẬP NHẬT -->
-            <form class="modal-content animate" action="/admin/cinema/update/<%= cinema[i].cinema_ID %>" method="POST"
-                id="btn_update_cinema">
-
-                <div class="container">
-                    <label> Tên rạp: </label> <input type="text" name="cinemaName" id="txtCinemaName"
-                        value="<%= cinema[i].cinema_Name %>" required />
-
-                    <label> Kiểu rạp: </label>
-                    <select name="cinemaType" id="txtCinemaType">
-                        <option value="2D">2D</option>
-                        <option value="3D">3D</option>
-                    </select>
-
-                    <label>Số ghế ngồi ngang của rạp:</label> <input type="number" name="cinemaLength"
-                        id="txtCinemaLength" value="<%= cinema[i].cinema_Length %>" required />
-
-                    <label>Số ghế ngồi dọc của rạp: </label><input type="number" name="cinemaWidth" id="txtCinemaWidth"
-                        value="<%= cinema[i].cinema_Width %>" required />
-
-                    <label>Cụm rạp:</label>
-                    <select name="cineplexID" id="txtCineplexName">
-                        <option value="none" selected disabled hidden>
-                            Thay đổi cụm rạp
-                        </option>
-                        <% for(let i=0 ; i < allCineplexAddresses.length ;i++ ) { %>
-                            <option value="<%= allCineplexAddresses[i].cineplex_ID %>">
-                                <%= allCineplexAddresses[i].cineplex_Name %>
-                            </option>
+<% if(typeof(crud_error) !='undefined' ) { %>
+    <div id="crud_error" value="<%= crud_error %>" hidden></div>
+    <% } %>
+        <a id="btn_create_cinema" class="btn_create">Thêm rạp</a>
+        <h1 style="text-align: center; font-weight: 600;">DANH SÁCH RẠP</h1>
+        <div class="container">
+            <div id="table">
+                <% if(cinema) { %>
+                    <% if(cinema.length!=0){ %>
+                        <table>
+                            <tr>
+                                <th>Tên rạp </th>
+                                <th>Kiểu rạp </th>
+                                <th>Kích thước</th>
+                                <th>Cụm rạp</th>
+                                <th>Địa chỉ </th>
+                                <th>Thao tác</th>
+                            </tr>
+                            <tr>
+                                <% for(let i=0 ;i < cinema.length ; i++) { %>
+                                    <td><a href="/admin/showtime/cinema/<%= cinema[i].cinema_ID %>">
+                                            <%= cinema[i].cinema_Name %>
+                                        </a></td>
+                                    <td>
+                                        <%= cinema[i].cinema_Type %>
+                                    </td>
+                                    <td>
+                                        <%= cinema[i].cinema_Length + ' x ' %>
+                                            <%= cinema[i].cinema_Width %>
+                                    </td>
+                                    <td>
+                                        <%= cinema[i].Cineplex.cineplex_Name %>
+                                    </td>
+                                    <td>
+                                        <%= cinema[i].Cineplex.cineplex_Address %>
+                                    </td>
+                                    <td><b id="btn_update_cinema_<%= cinema[i].cinema_ID %>">
+                                            <i class="fas fa-edit"></i>
+                                        </b>&nbsp;&nbsp;
+                                        <a href="/admin/cinema/delete/<%= cinema[i].cinema_ID %>"
+                                            onclick="return confirmAction()">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                            </tr>
                             <% } %>
-                    </select>
-
-                    <button type="submit" value="Cập nhật rạp phim" class="insertbtn">
-                        CẬP NHẬT
-                    </button>
-                </div>
-                <div class="container">
-                    <button type="button" class="cancelbtn" id="btn_close_cinema_1_<%= cinema[i].cinema_ID %>">
-                        HUỶ
-                    </button>
-                </div>
-            </form>
-        </div>
-        <% } %>
-</div>
-<div>
-    <% for(let i=0 ; i < cinema.length ;i++ ) { %>
-        <script>
-            $(document).ready(function () {
-                $("#btn_update_cinema_main_<%= cinema[i].cinema_ID %> ").hide();
-                $("#btn_update_cinema_<%= cinema[i].cinema_ID %> ").click(function () {
-                    $("#btn_update_cinema_main_<%= cinema[i].cinema_ID %>").show();
-                });
-                $("#btn_close_cinema_1_<%= cinema[i].cinema_ID %>").click(function () {
-                    $("#btn_update_cinema_main_<%= cinema[i].cinema_ID %>").hide();
-                });
-                $("#btn_close_cinema_<%= cinema[i].cinema_ID %>").click(function () {
-                    $("#btn_update_cinema_main_<%= cinema[i].cinema_ID %>").hide();
-                });
-            });
-        </script>
-        <% } %>
-            <div id="create_cinema" class="modal">
-                <span class="close" title="Close Modal" id="btn_close_cinema_create">
-                    &times;
-                </span>
-
-                <!-- FORM THÊM RẠP -->
-                <form action="/admin/cinema/create" method="POST" class="modal-content animate">
-                    <div class="container">
-
-                        <label>Tên rạp:</label>
-                        <input type="text" placeholder="Tên rạp" id="cinema_Name_create" name="cinemaName"
-                            required /><br />
-
-                        <label> Kiểu rạp :</label>
-                        <select name="cinemaType" id="cinemaType">
-                            <option value="2D">2D</option>
-                            <option value="3D">3D</option>
-                        </select><br />
-
-                        <label>Số chỗ ngồi theo chiều dọc :</label>
-                        <input type="number" placeholder="0" id="cinema_Length_create" name="cinemaLength"
-                            required /><br />
-
-                        <label>Số chỗ ngồi theo chiều dài :</label>
-                        <input type="number" placeholder="0" id="cinema_Width_create" name="cinemaWidth"
-                            required /><br />
-
-                        <select name="cineplexID">
-                            <% for(let i=0;i < allCineplexAddresses.length ;i++ ) { %>
-                                <option value="<%= allCineplexAddresses[i].cineplex_ID %>">
-                                    <%= allCineplexAddresses[i].cineplex_Name %>
-                                </option>
+                        </table>
+                        <% }else{ %>
+                            <h1>Hiện tại hệ thống Một Chút Film chưa có rạp nào</h1>
+                            <% } %>
                                 <% } %>
-                        </select>
-                        <button type="submit" value="Thêm vào Film">
-                            THÊM
-                        </button>
-                    </div>
-                </form>
+
             </div>
-</div>
+        </div>
+        <div>
+            <% for(let i=0 ; i < cinema.length ; i++ ) { %>
+                <div id="btn_update_cinema_main_<%= cinema[i].cinema_ID %>" class="modal">
+                    <span class="close" id="btn_close_cinema_<%= cinema[i].cinema_ID %>">
+                        &times;
+                    </span>
+
+                    <!-- FORM CẬP NHẬT -->
+                    <form class="modal-content animate" action="/admin/cinema/update/<%= cinema[i].cinema_ID %>"
+                        method="POST" id="btn_update_cinema">
+
+                        <div class="container">
+                            <label> Tên rạp: </label> <input type="text" name="cinemaName" id="txtCinemaName"
+                                value="<%= cinema[i].cinema_Name %>" required />
+
+                            <label> Kiểu rạp: </label>
+                            <select name="cinemaType" id="txtCinemaType">
+                                <% if(cinema[i].cinema_Type=="2D" ){ %>
+                                    <option value="2D" selected>2D</option>
+                                    <option value="3D">3D</option>
+                                    <% }else{%>
+                                        <option value="3D" selected>3D</option>
+                                        <option value="2D">2D</option>
+                                        <% }%>
+                            </select>
+
+                            <label>Số ghế ngồi ngang của rạp:</label> <input type="number" name="cinemaLength"
+                                id="txtCinemaLength" value="<%= cinema[i].cinema_Length %>" required />
+
+                            <label>Số ghế ngồi dọc của rạp: </label><input type="number" name="cinemaWidth"
+                                id="txtCinemaWidth" value="<%= cinema[i].cinema_Width %>" required />
+
+                            <label>Cụm rạp:</label>
+                            <select name="cineplexID" id="txtCineplexName">
+                                <option value=" <%= cinema[i].Cineplex.cineplex_ID %>" selected>
+                                    <%= cinema[i].Cineplex.cineplex_Name %>
+                                </option>
+                                <% for(let i=0 ; i < allCineplexes.length ;i++ ) { %>
+                                    <% if(allCineplexes[i].cineplex_ID!=cinema[i].Cineplex.cineplex_ID){ %>
+                                        <option value="<%= allCineplexes[i].cineplex_ID %>">
+                                            <%= allCineplexes[i].cineplex_Name %>
+                                        </option>
+                                        <% }} %>
+                            </select>
+
+                            <button type="submit" value="Cập nhật rạp phim" class="insertbtn">
+                                CẬP NHẬT
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+                <% } %>
+        </div>
+        <div>
+            <% for(let i=0 ; i < cinema.length ;i++ ) { %>
+                <script>
+                    $(document).ready(function () {
+                        $("#btn_update_cinema_main_<%= cinema[i].cinema_ID %> ").hide();
+                        $("#btn_update_cinema_<%= cinema[i].cinema_ID %> ").click(function () {
+                            $("#btn_update_cinema_main_<%= cinema[i].cinema_ID %>").show();
+                        });
+                        $("#btn_close_cinema_1_<%= cinema[i].cinema_ID %>").click(function () {
+                            $("#btn_update_cinema_main_<%= cinema[i].cinema_ID %>").hide();
+                        });
+                        $("#btn_close_cinema_<%= cinema[i].cinema_ID %>").click(function () {
+                            $("#btn_update_cinema_main_<%= cinema[i].cinema_ID %>").hide();
+                        });
+                    });
+                </script>
+                <% } %>
+                    <div id="create_cinema" class="modal">
+                        <span class="close" title="Close Modal" id="btn_close_cinema_create">
+                            &times;
+                        </span>
+
+                        <!-- FORM THÊM RẠP -->
+                        <form action="/admin/cinema/create" method="POST" class="modal-content animate">
+                            <div class="container">
+
+                                <label>Tên rạp:</label>
+                                <input type="text" placeholder="Tên rạp" id="cinema_Name_create" name="cinemaName"
+                                    required /><br />
+
+                                <label> Kiểu rạp :</label>
+                                <select name="cinemaType" id="cinemaType">
+                                    <option value="2D">2D</option>
+                                    <option value="3D">3D</option>
+                                </select><br />
+
+                                <label>Số chỗ ngồi theo chiều dọc :</label>
+                                <input type="number" placeholder="0" id="cinema_Length_create" name="cinemaLength"
+                                    required /><br />
+
+                                <label>Số chỗ ngồi theo chiều dài :</label>
+                                <input type="number" placeholder="0" id="cinema_Width_create" name="cinemaWidth"
+                                    required /><br />
+
+                                <select name="cineplexID">
+                                    <% for(let i=0;i < allCineplexes.length ;i++ ) { %>
+                                        <option value="<%= allCineplexes[i].cineplex_ID %>">
+                                            <%= allCineplexes[i].cineplex_Name %>
+                                        </option>
+                                        <% } %>
+                                </select>
+                                <button type="submit" value="Thêm vào Film">
+                                    THÊM
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+        </div>
+        <script>
+            var crud_error = document.getElementById("crud_error").getAttribute('value');
+            if (crud_error) {
+                alert(crud_error);
+            }
+        </script>

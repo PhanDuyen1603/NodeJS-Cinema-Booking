@@ -93,22 +93,24 @@
                     <%= currentFilm.film_Time %> phút
                 </p>
                 <p><strong>Ngày khởi chiếu: </strong>
-                    <% var d=new Date(currentFilm.film_DatePublic); %>
-                        <%= d.getDate(); %>
-                            /
-                            <%= d.getMonth()+1; %>
+                    <% var d=new Date(currentFilm.film_DatePublic);var date,month; %>
+                        <% if(d.getDate() <10){ date='0' + d.getDate() }else{ date=d.getDate() } %>
+                            <%= date; %>
                                 /
-                                <%= d.getFullYear(); %>
+                                <% if(d.getMonth() + 1 <10){ month='0' + Number(d.getMonth() + 1) }else{
+                                    month=d.getMonth() + 1 } %>
+                                    <%= month %>
+                                        /
+                                        <%= d.getFullYear(); %>
                 </p>
-                <br />
                 <p><strong>Nội dung: </strong>
                     <%= currentFilm.film_Content %>
                 </p>
                 <br />
             </div>
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                <% var day_now=new Date();%>
-                    <% if (currentFilm.film_DatePublic < day_now) { %>
+                <% var day_now=new Date(); var publicDate=new Date(currentFilm.film_DatePublic); %>
+                    <% if (publicDate < day_now) { %>
                         <!--Hiển thị form-control cho cụm rạp-->
                         <form action="" method="POST" class="form-fix">
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">

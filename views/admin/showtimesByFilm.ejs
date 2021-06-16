@@ -39,15 +39,9 @@
                                             <%= d.getFullYear(); %>
                             </td>
                             <td>
-                                <% var begin=String(showtimesByFilm[i].showtime_Begin).substr(0,5); var
-                                    end=String(showtimesByFilm[i].showtime_End).substr(0,5); var
-                                    beginHour=parseInt(begin.substr(0,2)); var beginMinute=parseInt(begin.substr(3,2));
-                                    var filmHour=parseInt(showtimesByFilm[i].Film.film_Time / 60); var
-                                    filmMinute=parseInt(showtimesByFilm[i].Film.film_Time % 60); var endHour=beginHour +
-                                    filmHour; var endMinute=beginMinute + filmMinute; %>
-
+                                <% var begin=showtimesByFilm[i].showtime_Begin.substr(0,5) %>
                                     <%= begin %> -
-                                        <%= endHour %>:<%= endMinute %>
+                                        <%= showtimesByFilm[i].showtime_End.substr(0,5) %>
                             </td>
                             <td>
                                 <%= showtimesByFilm[i].showtime_Price %>
@@ -102,11 +96,15 @@
 
             <label>Phim:</label>
             <select name="filmID">
+                <option value="<%= currentFilm.film_ID %>" selected>
+                    <%= currentFilm.film_Name %>
+                </option>
                 <% for(let i=0;i< allFilms.length ; i++){ %>
-                    <option value="<%= allFilms[i].film_ID %>">
-                        <%= allFilms[i].film_Name %>
-                    </option>
-                    <% } %>
+                    <% if(allFilms[i].film_ID !=currentFilm.film_ID) { %>
+                        <option value="<%= allFilms[i].film_ID %>">
+                            <%= allFilms[i].film_Name %>
+                        </option>
+                        <% }} %>
             </select>
 
             <label> Giá vé: </label>
@@ -152,8 +150,7 @@
                 <input type="date" placeholder="Ngày chiếu" id="cinemaTimeShow_Date" name="showtimeDate"><br>
 
                 <label style="margin-right: 86.29px;"> Thời gian bắt đầu: </label>
-                <input style="max-width: 113.15px;max-height: 28.4px;" type="text"
-                    value="<%= beginHour%>:<%= beginMinute%> " disabled> <br>
+                <input style="max-width: 113.15px;max-height: 28.4px;" type="text" value="<%= begin %> " disabled> <br>
                 <label style="margin-right: 20px;"> Thay đổi thời gian bắt đầu: </label>
                 <input type="time" name="beginTime"> <br><br>
 
