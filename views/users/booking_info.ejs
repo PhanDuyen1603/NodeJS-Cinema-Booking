@@ -28,7 +28,11 @@
         </div>
         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
             <div style="text-align: right; padding-right: 20%; margin-top: 20px ">
-                <a href="/" type="submit" class="btnuser0">Trở về trang chủ</a>
+                <% if(typeof(backToUser)=='undefined' ){ %>
+                    <a href="/"><button class="btnuser0">Trang chủ</button></a>
+                    <% }else{ %>
+                        <a href="/user/thong-tin-ca-nhan"><button class="btnuser0">Trở về</button></a>
+                        <% }%>
             </div>
         </div>
     </div>
@@ -57,7 +61,7 @@
                     </div>
 
                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
-                        <!-- <strong>Tên phim:</strong> -->
+                        <!-- <span>Tên phim:</span> -->
                     </div>
                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
                         <p style="font-size: 30px; color:#E40002;text-transform: uppercase;">
@@ -67,67 +71,82 @@
 
 
                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
-                        <strong>Cụm rạp : </strong>
+                        <span>Cụm rạp : </span>
                     </div>
                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
                         <p>
-                            <%= currentShowtime.Cinema.Cineplex.cineplex_Name %>
+                            <b>
+                                <%= currentShowtime.Cinema.Cineplex.cineplex_Name %>
+                            </b>
                         </p>
                     </div>
 
                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
-                        <strong>Rạp chiếu : </strong>
+                        <span>Rạp chiếu : </span>
                     </div>
                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
                         <p>
-                            <%= currentShowtime.Cinema.cinema_Name %>
+                            <b>
+                                <%= currentShowtime.Cinema.cinema_Name %>
+                            </b>
                         </p>
                     </div>
 
                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
-                        <strong>Ghế : </strong>
+                        <span>Ghế : </span>
                     </div>
                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
                         <p>
-                            <%= booking.booking_Seat %>
+                            <b>
+                                <%= booking.booking_Seat %>
+                            </b>
                         </p>
                     </div>
 
                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
-                        <strong>Ngày chiếu : </strong>
+                        <span>Ngày chiếu : </span>
                     </div>
                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
                         <p>
-                            <%= showtimeDate %>
+                            <b>
+                                <%= showtimeDate %>
+                            </b>
                         </p>
                     </div>
 
                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
-                        <strong>Giờ chiếu : </strong>
+                        <span>Giờ chiếu : </span>
                     </div>
                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
                         <p>
-                            <%= currentShowtime.showtime_Begin %>
+                            <b>
+                                <%= currentShowtime.showtime_Begin.substr(0,5) %> - <%=
+                                        currentShowtime.showtime_End.substr(0,5) %>
+                            </b>
                         </p>
                     </div>
                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
-                        <strong>Ngày đặt chỗ: </strong>
+                        <span>Ngày đặt chỗ: </span>
                     </div>
                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
                         <p>
-                            <%= bookingDate %> - <%= booking.booking_Time %>
+                            <b>
+                                <%= bookingDate %> - <%= booking.booking_Time %>
+                            </b>
                         </p>
                     </div>
 
                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
-                        <strong>Tổng tiền : </strong>
+                        <span>Tổng tiền : </span>
                     </div>
                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
-                        <%= totalPrice %>
+                        <b>
+                            <%= totalPrice %>
+                        </b>
                     </div>
 
                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3" style="margin-top: 10px;">
-                        <strong>Lưu ý :</strong>
+                        <span>Lưu ý :</span>
                     </div>
                     <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9" style="margin-top: 10px;">
                         <p><i>Thông tin đặt chỗ cũng đã được gửi về mail và số điện thoại mà bạn đã đăng ký. Vui lòng

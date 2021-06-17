@@ -1,4 +1,4 @@
-<div class="content-area">
+<div class="content-area user-general">
     <div class="row">
         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
             <div class="title-info">Email / Tên tài khoản : </div>
@@ -64,16 +64,17 @@
         </form>
 
         <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
-            <input type='text' class="radiusInfo" placeholder="<%= totalMoneyOfUser %>&nbsp;₫" disabled>
+            <input style="border: none; font-weight: bold;" type='text' class="radiusInfo"
+                placeholder="<%= totalMoneyOfUser %>&nbsp;₫" disabled>
 
         </div>
         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
-            <button id="xem_chi_tiet" type="submit" class="btnuser">Xem chi tiết</button>
+            <button id="xem_chi_tiet" type="submit" class="btnuser">Xem lịch sử</button>
         </div>
 
 
         <!--Password lần 2-->
-        <form action="/user/thong-tin-ca-nhan/cap-nhat/mat-khau" method="POST">
+        <form action=" /user/thong-tin-ca-nhan/cap-nhat/mat-khau" method="POST">
             <div id="myModal1" class="modal">
                 <div class="modal-content">
                     <div class="row" style="text-align: center">
@@ -110,9 +111,10 @@
                             <th style="width: 10%">Ảnh phim </th>
                             <th style="width: 10%">Ngày chiếu</th>
                             <th style="width: 21%">Cụm rạp / Rạp</th>
-                            <th style="width: 15%">Suất chiếu</th>
+                            <th style="width: 8%">Suất chiếu</th>
                             <th style="width: 8%">Ghế</th>
                             <th style="width: 8%">Tổng tiền</th>
+                            <th style="width: 7%">Review</th>
                         </tr>
                     </table>
                 </div>
@@ -124,7 +126,7 @@
                             <td style="width: 3%">
                                 <%= i+1 %>
                             </td>
-                            <td style="width: 25%">
+                            <td style="width: 25%" class="title-movie">
                                 <%= allBookings[i].Showtime.Film.film_Name %>
                             </td>
                             <td style="width: 10%">
@@ -142,15 +144,21 @@
                                 <%= allBookings[i].Showtime.Cinema.Cineplex.cineplex_Name %> / <%=
                                         allBookings[i].Showtime.Cinema.cinema_Name %>
                             </td>
-                            <td style="width: 15%">
+                            <td style="width: 8%">
                                 <%= allBookings[i].Showtime.showtime_Begin %>
+                                    <%= allBookings[i].Showtime.showtime_End %>
                             </td>
+
                             <td style="width: 8%">
                                 <%= allBookings[i].booking_Seat %>
                             </td>
                             <td style="width: 8%" id="money_ve" class="moneyve"
                                 value="<%= allBookings[i].booking_TotalPrice %>">
                                 &nbsp;₫</td>
+                            <td style="width: 7%">
+                                <a href="/user/thong-tin-ve/<%= allBookings[i].booking_ID%>">
+                                    <button class="btnuser0 btn-review-ticket">Xem</button></a>
+                            </td>
                         </tr>
                         <% } %>
                 </table>

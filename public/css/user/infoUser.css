@@ -184,13 +184,20 @@ a:link {
     padding: 2px 12px;
     font-size: 14px;
     border-radius: 4px;
-    color: #000000;
+    /* color: #000000; */
     width: 150px;
     height: 40px;
     border-radius: 20px;
     background-color: white;
     font-weight: bold;
     font-size: 15px;
+}
+
+.btnuser0.btn-review-ticket{
+    color:white !important;
+    background-color: rgb(231, 122, 103);
+    width: 100px;
+    
 }
 
 .btnuser0:hover {

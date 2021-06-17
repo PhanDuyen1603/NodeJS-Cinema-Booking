@@ -154,40 +154,49 @@ router.get('/mua-ve/:id', async function (req, res) {
     }
 });
 
+// USER XEM LẠI VÉ ĐÃ ĐẶT
+// [GET] / user / thong - tin - ve / id
+router.get('/thong-tin-ve/:id', async function (req, res) {
+    const id = req.params.id;
+    const booking = await Booking.findByPk(id);
+    const currentShowtime = await Showtime.findOne({
+        where: { showtime_ID: booking.booking_Showtime, },
+        include: [
+            { model: Film },
+            { model: Cinema, include: [{ model: Cineplex },] },
+        ],
+    })
+
+    function addZero(number) {
+        if (number < 10) {
+            return "0" + number;
+        }
+        return number;
+    }
+
+    function format_date(originalDate) {
+        var day = new Date(originalDate);
+        var day_result = "";
+        day_result += addZero(day.getDate());
+        day_result += "/";
+        day_result += addZero(day.getMonth() + 1);
+        day_result += "/";
+        day_result += day.getFullYear();
+
+        return day_result;
+    }
+
+    const showtimeDate = format_date(currentShowtime.showtime_Date);
+    const bookingDate = format_date(booking.booking_Date);
+    const backToUser = 'abc';
+
+    var totalPrice = new Intl.NumberFormat(
+        'ja-JP', { style: 'currency', currency: 'VND' }).format(booking.booking_TotalPrice);
+    res.render('users/booking_info', { currentShowtime, showtimeDate, booking, bookingDate, totalPrice, backToUser });
+
+});
 
 
-// [GET] /user/thong-tin-ve/id
-// router.get('/thong-tin-ve/:id', async function (req, res) {
-//     const bookingID = req.params.id;
-//     const booking = await Booking.findOne({
-//         where: { booking_ID: bookingID },
-//         include: [
-//             { model: Showtime, include: [{ model: Film }, { model: Cinema, include: [{ model: Cineplex }] }] },
-//         ],
-//     })
-
-
-
-//     var showtimeDate = Date.now() //format_date();
-//     // var bookingDate = format_date(booking.booking_Date);
-
-//     // res.render('users/info_booking', { booking, showtimeDate, bookingDate });
-//     // const time = format.format_time(booking.Showtime.showtime_Begin);
-//     // res.send({ booking });
-//     // res.send({  })
-//     function format_date(originalDate) {
-//         var day = new Date(originalDate);
-//         var day_result = "";
-//         day_result += addZero(day.getDate());
-//         day_result += "/";
-//         day_result += addZero(day.getMonth() + 1);
-//         day_result += "/";
-//         day_result += day.getFullYear();
-
-//         return day_result;
-//     }
-//     res.send({ showtimeDate });
-// });
 
 // [POST] /user/mua-ve/thong-tin-ve/id
 router.post('/mua-ve/thong-tin-ve/:id', async function (req, res) {
@@ -228,23 +237,23 @@ router.post('/mua-ve/thong-tin-ve/:id', async function (req, res) {
     }
 
     /* Xóa dấu tiếng việt */
-    function xoa_dau(str) {
-        str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
-        str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
-        str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
-        str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
-        str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
-        str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
-        str = str.replace(/đ/g, "d");
-        str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
-        str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
-        str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
-        str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
-        str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
-        str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
-        str = str.replace(/Đ/g, "D");
-        return str;
-    }
+    // function xoa_dau(str) {
+    //     str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+    //     str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+    //     str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+    //     str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+    //     str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+    //     str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+    //     str = str.replace(/đ/g, "d");
+    //     str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
+    //     str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
+    //     str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
+    //     str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
+    //     str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
+    //     str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
+    //     str = str.replace(/Đ/g, "D");
+    //     return str;
+    // }
 
     // Tạo code ngẫu nhiên cho Booking_ID
     var bookingCode = "B";
@@ -294,7 +303,7 @@ router.post('/mua-ve/thong-tin-ve/:id', async function (req, res) {
         const info = await sendEmail(user.user_Email,
             'MỘT CHÚT PHIM - [THÔNG TIN ĐẶT VÉ]',
             'Content',
-            '<div style="text-align:center">' + bookingCode + '</div>' + '\n<h1>' + xoa_dau(currentShowtime.Film.film_Name) + '</h1>\n' + showtimeDate + '   ' + currentShowtime.showtime_Begin + '\n' + currentShowtime.Cinema.cinema_Name + ' - ' + currentShowtime.Cinema.Cineplex.cineplex_Name + '\nGhế: ' + txtChair + '\nTổng tiền: ' + String(totalPrice) + '\n\nMỘT CHÚT PHIM xin chân thành cảm ơn bạn đã tin tưởng lựa chọn chúng tôi! Chúc bạn có khoảng thời gian xem phim vui vẻ.');
+            '<div style="text-align:center">' + bookingCode + '</div>' + '\n<h1>' + currentShowtime.Film.film_Name + '</h1>\n' + showtimeDate + '   ' + currentShowtime.showtime_Begin + '\n' + currentShowtime.Cinema.cinema_Name + ' - ' + currentShowtime.Cinema.Cineplex.cineplex_Name + '\nGhế: ' + txtChair + '\nTổng tiền: ' + String(totalPrice) + '\n\nMỘT CHÚT PHIM xin chân thành cảm ơn bạn đã tin tưởng lựa chọn chúng tôi! Chúc bạn có khoảng thời gian xem phim vui vẻ.');
 
 
         res.render('users/booking_info', { currentShowtime, showtimeDate, booking, bookingDate, totalPrice });
