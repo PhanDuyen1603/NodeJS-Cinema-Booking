@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>MỘT CHÚT FILM - ADMIN</title>
+    <title>Admin web đặt vé phim</title>
     <script src="/public/js/yesOrNo_Admin.js"></script>
     <script src="/public/js/jquery/jquery-3.4.1.min.js"></script>
     <script src="/public/js/jquery/adminjq.js"></script>
@@ -10,72 +10,99 @@
     <link href="/public/css/admin/tableAdmin.css" rel="stylesheet" />
     <link href="/public/css/admin/all.css" rel="stylesheet" />
     <link href="/public/css/admin/w3.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <!-- MỚI THÊM FONT AWESOME 04/06/2021 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
 </head>
 
 <body>
-    <div id="header_admin">
+    <div class="d-flex">
+        <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 265px">
+            <a href="/" class="
+            d-flex
+            align-items-center
+            mb-3 mb-md-0
+            me-md-auto
+            text-white text-decoration-none
+          ">
+                <div class="logo logo--medium">
+                    <a href="/ " class="router-link-active"><img src="/public/image/Logo-Dien-03.png " alt="Một Chút Phim Accounts " class="logo-image" style="width: 150px; margin-top: 30px;" /></a>
+                </div>
+            </a>
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li>
+                    <i class="fas fa-user-shield me-2"></i>
+                    <a href="/admin" id="logo" class="active">Admin</a>
+                </li>
+                <li>
+                    <i> <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="0" y="0" width="24" height="24"></rect>
+                            <path d="M2.56066017,10.6819805 L4.68198052,8.56066017 C5.26776695,7.97487373 6.21751442,7.97487373 6.80330086,8.56066017 L8.9246212,10.6819805 C9.51040764,11.267767 9.51040764,12.2175144 8.9246212,12.8033009 L6.80330086,14.9246212 C6.21751442,15.5104076 5.26776695,15.5104076 4.68198052,14.9246212 L2.56066017,12.8033009 C1.97487373,12.2175144 1.97487373,11.267767 2.56066017,10.6819805 Z M14.5606602,10.6819805 L16.6819805,8.56066017 C17.267767,7.97487373 18.2175144,7.97487373 18.8033009,8.56066017 L20.9246212,10.6819805 C21.5104076,11.267767 21.5104076,12.2175144 20.9246212,12.8033009 L18.8033009,14.9246212 C18.2175144,15.5104076 17.267767,15.5104076 16.6819805,14.9246212 L14.5606602,12.8033009 C13.9748737,12.2175144 13.9748737,11.267767 14.5606602,10.6819805 Z" fill="#000000" opacity="0.3"></path>
+                            <path d="M8.56066017,16.6819805 L10.6819805,14.5606602 C11.267767,13.9748737 12.2175144,13.9748737 12.8033009,14.5606602 L14.9246212,16.6819805 C15.5104076,17.267767 15.5104076,18.2175144 14.9246212,18.8033009 L12.8033009,20.9246212 C12.2175144,21.5104076 11.267767,21.5104076 10.6819805,20.9246212 L8.56066017,18.8033009 C7.97487373,18.2175144 7.97487373,17.267767 8.56066017,16.6819805 Z M8.56066017,4.68198052 L10.6819805,2.56066017 C11.267767,1.97487373 12.2175144,1.97487373 12.8033009,2.56066017 L14.9246212,4.68198052 C15.5104076,5.26776695 15.5104076,6.21751442 14.9246212,6.80330086 L12.8033009,8.9246212 C12.2175144,9.51040764 11.267767,9.51040764 10.6819805,8.9246212 L8.56066017,6.80330086 C7.97487373,6.21751442 7.97487373,5.26776695 8.56066017,4.68198052 Z" fill="#000000"></path>
+                        </g>
+                    </svg></i>
+                    <a href="/admin/showtime">Quản lý xuất chiếu</a>
+                </li>
+                <li>
+                    <i class="fas fa-tasks me-2"></i>
+                    <a href="/admin/film">Quản lý phim</a>
+                </li>
+                <li>
+                    <i class="fas fa-tasks me-2"></i>
+                    <a href="/admin/cinema">Quản lý rạp</a>
+                </li>
+                <li>
+                    <i class="fas fa-tasks me-2"></i>
+                    <a href="/admin/cineplex">Quản lý cụm rạp</a>
+                </li>
+                <li>
+                    <i class="fas fa-user me-2"></i>
+                    <a href="/admin/user">Quản lý người dùng</a>
+                </li>
+                <li>
+                    <a href="/admin/logout">Sign out</a>
+                </li>
+            </ul>
+        </div>
 
-        <ul style="display: flex; justify-content: space-between;">
-            <li> <a href="/"> <img src="/public/image/Logo-Dien-03.png" width="100px" alt="Một Chút Phim">
-                </a></li>
-            <li><a href="/admin" id="logo">ADMIN</a></li>
-            <li><a href="/admin/showtime">QUẢN LÝ SUẤT CHIẾU</a></li>
-            <li><a href="/admin/film">QUẢN LÝ PHIM</a></li>
-            <li><a href="/admin/cinema">QUẢN LÝ RẠP</a></li>
-            <li><a href="/admin/cineplex">QUẢN LÝ CỤM RẠP</a></li>
-            <li><a href="/admin/user">QUẢN LÝ NGƯỜI DÙNG</a></li>
-            <li style="float: right"><a href="/admin/logout" id="logout">
-                    Đăng xuất
-                </a></li>
-        </ul>
-    </div>
-    <div id="content_admin">
-        <% if(typeof thuocTinhFilm !=='undefined' && typeof thuocTinhCumRap !=='undefined' ) { %>
-            <% include admin/BangDoanhThu.ejs %>
-                <% } %>
-                    <% if(typeof showtime !=='undefined' ) { %>
-                        <% include admin/showtime %>
-                            <% } %>
-                                <% if(typeof showtimesByFilm !=='undefined' ) { %>
-                                    <% include admin/showtimesByFilm %>
-                                        <% } %>
-                                            <% if(typeof showtimesByCinema !=='undefined' ) { %>
-                                                <% include admin/showtimesByCinema %>
-                                                    <% } %>
-                                                        <% if(typeof cinema !=='undefined' ) { %>
-                                                            <% include admin/cinema.ejs %>
-                                                                <% } %>
-
-                                                                    <% if(typeof userAll !=='undefined' ) { %>
-                                                                        <% include admin/userAll.ejs %>
-                                                                            <% } %>
-                                                                                <% if(typeof userID !=='undefined' ) {
-                                                                                    %>
-                                                                                    <% include
-                                                                                        admin/update/updateuser.ejs %>
-                                                                                        <% } %>
-                                                                                            <% if(typeof filmAll
-                                                                                                !=='undefined' ) { %>
-                                                                                                <% include
-                                                                                                    admin/filmAll.ejs %>
-                                                                                                    <% } %>
-
-                                                                                                        <% if(typeof
-                                                                                                            cineplex
-                                                                                                            !=='undefined'
-                                                                                                            ) { %>
-                                                                                                            <% include
-                                                                                                                admin/cineplex.ejs
-                                                                                                                %>
-                                                                                                                <% } %>
-
+        <div style="width: 1060px; float: left; right: 20px; margin-left: 280px;">
+            <% if(typeof thuocTinhFilm !=='undefined' && typeof thuocTinhCumRap
+        !=='undefined' ) { %>
+                <% include admin/BangDoanhThu.ejs %>
+                    <% } %>
+                        <%
+        if(typeof showtime !=='undefined' ) { %>
+                            <% include admin/showtime %>
+                                <%
+        } %>
+                                    <% if(typeof showtimesByFilm !=='undefined' ) { %>
+                                        <% include
+        admin/showtimesByFilm %>
+                                            <% } %>
+                                                <% if(typeof showtimesByCinema
+        !=='undefined' ) { %>
+                                                    <% include admin/showtimesByCinema %>
+                                                        <% } %>
+                                                            <%
+        if(typeof cinema !=='undefined' ) { %>
+                                                                <% include admin/cinema.ejs %>
+                                                                    <%
+        } %>
+                                                                        <% if(typeof userAll !=='undefined' ) { %>
+                                                                            <% include
+        admin/userAll.ejs %>
+                                                                                <% } %>
+                                                                                    <% if(typeof filmAll !=='undefined' ) { %>
+                                                                                        <% include admin/filmAll.ejs %>
+                                                                                            <% } %>
+                                                                                                <% if(typeof cineplex
+        !=='undefined' ) { %>
+                                                                                                    <% include admin/cineplex.ejs %>
+                                                                                                        <% } %>
+        </div>
     </div>
     <script>
 

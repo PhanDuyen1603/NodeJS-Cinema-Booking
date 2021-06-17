@@ -1,7 +1,7 @@
 <script>
-    jQuery(document).ready(function ($) {
+    jQuery(document).ready(function($) {
 
-        $(".btnrating").on('click', (function (e) {
+        $(".btnrating").on('click', (function(e) {
 
             var previous_value = $("#selected_rating").val();
 
@@ -30,8 +30,7 @@
         <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
             <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
                 <div>
-                    <img id="img-film-indexContent" src="<%= currentFilm.film_Image %>" alt="Không load được ảnh"
-                        width="220px" height="360px">
+                    <img id="img-film-indexContent" src="<%= currentFilm.film_Image %>" alt="Không load được ảnh" width="220px" height="360px">
                 </div>
             </div>
             <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7">
@@ -59,8 +58,7 @@
                                     <span class="selected-rating">0</span><small>/10</small>
                                 </h2>
                                 <% for(var i=1; i<=10; i++) { %>
-                                    <button type="button" class="btnrating btn btn-default btn-lg" data-attr="<%= i%>"
-                                        id="rating-star-<%= i%>" style="text-align: center; padding-left: 10px">
+                                    <button type="button" class="btnrating btn btn-default btn-lg" data-attr="<%= i%>" id="rating-star-<%= i%>" style="text-align: center; padding-left: 10px">
                                         <i class="fa fa-star" aria-hidden="true" id="star"
                                             style="width: 20px; height: 20px;"></i>
                                     </button>
@@ -74,13 +72,13 @@
                         var modal = document.getElementById("myModal");
                         var btn = document.getElementById("myBtn");
                         var span = document.getElementsByClassName("close")[0];
-                        btn.onclick = function () {
+                        btn.onclick = function() {
                             modal.style.display = "block";
                         }
-                        span.onclick = function () {
+                        span.onclick = function() {
                             modal.style.display = "none";
                         }
-                        window.onclick = function (event) {
+                        window.onclick = function(event) {
                             if (event.target == modal) {
                                 modal.style.display = "none";
                             }
@@ -145,8 +143,7 @@
                         <% if (typeof(showtimesOfFilm) !='undefined' ) { %>
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                 <% if (showtimesOfFilm.length==0) { %>
-                                    <h4
-                                        style="text-align: center; color: red; text-transform: uppercase; font-weight: bold">
+                                    <h4 style="text-align: center; color: red; text-transform: uppercase; font-weight: bold">
                                         Hiện tại chưa có suất chiếu nào cho phim này!!!
                                     </h4>
                                     <% } else { %>
@@ -165,9 +162,7 @@
                                             <!-- DUYỆT QUA TẤT CẢ SUẤT CHIẾU CỦA PHIM -->
                                             <% for (var i=0; i< showtimesOfFilm.length; i++ ) { %>
                                                 <!-- <div class="content-rap-box"></div> -->
-                                                <a href="/user/mua-ve/<%= showtimesOfFilm[i].showtime_ID  %>"
-                                                    class="content-rap-box-btn" style="font-size: 20px;width: 150px;"
-                                                    id="showtime_begin_main">
+                                                <a href="/user/mua-ve/<%= showtimesOfFilm[i].showtime_ID  %>" class="content-rap-box-btn" style="font-size: 20px;width: 150px;" id="showtime_begin_main">
                                                     <% var d=new Date(showtimesOfFilm[i].showtime_Date); %>
                                                         <% if(d.getDate()<10){ %>
                                                             <%= '0' + String(d.getDate()) %>
@@ -194,10 +189,8 @@
                             </div>
                             <% } %>
                                 <% } else { %>
-                                    <h3
-                                        style="text-align: center; color: red; text-transform: uppercase; font-weight: bold">
-                                        Phim chưa được
-                                        công chiếu, hiện tại không thể đặc vé!</h3>
+                                    <h3 style="text-align: center; color: red; text-transform: uppercase; font-weight: bold">
+                                        Phim chưa được công chiếu, hiện tại không thể đặt vé!</h3>
                                     <% } %>
             </div>
 
@@ -208,7 +201,7 @@
             <div style="text-align: center;" class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 title-movie">
 
                 <% if(otherNowShowingFilms.length>0 ) { %>
-                    <h4 style="text-transform: uppercase">PHIM ĐANG CHIẾU</h4>
+                    <h4 style="text-transform: uppercase; margin-bottom: 20px;">PHIM ĐANG CHIẾU</h4>
 
                     <% for(var i=0; i < otherNowShowingFilms.length;i++){ %>
 
@@ -227,8 +220,7 @@
                                 <h4 style="text-transform: uppercase">EVENT</h4>
                                 <% for(var i=0; i < 4;i++){ %>
                                     <a href="">
-                                        <img src="/public/image/banner.png" alt="Event công chiếu phim" width="150px"
-                                            height="190px">
+                                        <img src="/public/image/banner.png" alt="Event công chiếu phim" width="150px" height="190px">
                                         <div class="title-movie">
 
                                         </div>
@@ -239,8 +231,7 @@
             <% } %>
     </div>
 </div>
-<form action="/phim/<%= currentFilm.film_ID %>" method="POST" type="hidden" id="form_LoadShowtimes"
-    name="form_LoadShowtimes">
+<form action="/phim/<%= currentFilm.film_ID %>" method="POST" type="hidden" id="form_LoadShowtimes" name="form_LoadShowtimes">
     <input type="hidden" name="cineplexID" value="" id="input_cineplexID">
 </form>
 
@@ -252,7 +243,7 @@
     var form_LoadShowtimes = document.forms['form_LoadShowtimes'];
     var input_cineplexID = document.getElementById("input_cineplexID");
 
-    selectedCineplex.onchange = function () {
+    selectedCineplex.onchange = function() {
         var selectedCineplexName = selectedCineplex.options[selectedCineplex.selectedIndex].text;
         var cineplexID = selectedCineplex.value;
 
