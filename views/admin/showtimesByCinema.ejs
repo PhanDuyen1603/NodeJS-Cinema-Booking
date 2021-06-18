@@ -89,11 +89,16 @@
             <label>Rạp:</label>
             <select name="cinemaID">
                 <% for(let i=0;i< allCinemas.length ; i++){ %>
-                    <option value="<%= allCinemas[i].cinema_ID %>">
-                        <%= allCinemas[i].cinema_Name + ' ' %> -
-                            <%= allCinemas[i].Cineplex.cineplex_Name %>
+                    <option value="<%= currentCinema.cinema_ID %>">
+                        <%= currentCinema.cinema_Name + ' ' %> -
+                            <%= currentCinema.Cineplex.cineplex_Name %>
                     </option>
-                    <% } %>
+                    <option value="<%= allCinemas[i].cinema_ID %>">
+                        <% if(allCinemas[i].cinema_ID !=currentCinema.cinema_ID) { %>
+                            <%= allCinemas[i].cinema_Name + ' ' %> -
+                                <%= allCinemas[i].Cineplex.cineplex_Name %>
+                    </option>
+                    <% }} %>
             </select>
 
             <label> Ngày chiếu:</label>

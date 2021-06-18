@@ -69,7 +69,7 @@ h3.marginMap,
 }
 
 .menu_hover li:hover {
-    background-color: #ccabab !important;
+    /* background-color: #ccabab !important; */
 }
 
 .navbar-header {
@@ -117,6 +117,7 @@ ul.nav.nav-tabs.movie-home>li>a {
     margin: 0px 0px 20px 0px;
 }
 
+
 #design-row-film-index {
     margin-top: 20px;
     text-align: center;
@@ -126,6 +127,7 @@ ul.nav.nav-tabs.movie-home>li>a {
     text-decoration: none;
     object-fit: contain;
     margin-bottom: 30px;
+    text-transform: uppercase;
 }
 
 .col-md-3.col-sm-3.movie-item {
@@ -141,7 +143,6 @@ ul.nav.nav-tabs.movie-home>li>a {
     overflow: hidden;
     color: #333 !important;
     font-weight: bold;
-    text-transform: uppercase;
 }
 
 .movie-technology {
@@ -180,9 +181,10 @@ a:hover {
     border-radius: 5px;
 }
 
+
 .carousel-inner {
     position: relative;
-    height: 448px;
+    height: 510px;
     overflow: hidden;
 }
 
@@ -191,10 +193,11 @@ a:hover {
 }
 
 img#img-film-indexContent {
-    height: 260px;
-    width: 185px;
+    height: 500px;
+    width: 350px;
     border: 6px solid #000000;
-    display: inline-table;
+    /* display: inline-table; */
+    
 }
 
 button.btns:hover a {
@@ -249,22 +252,22 @@ button.btns:hover a {
 }
 
 .content-rap-bg {
+    
     width: 300px;
     height: 34px;
     line-height: 34px;
-    border-left: 5px solid black;
-    background-color: #87b5ff;
-    padding-top: 7px;
-    padding-right: 20px;
-    padding-bottom: 7px;
-    padding-left: 20px;
-    margin-top: 15px;
+    border-left: 3px solid black;
+    background-color: #aa5454;
+  padding: 7px 10px;
+    margin: auto;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 .content-rap-bg-fix {
     font-family: 'Source Serif Pro';
-    font-size: 20px;
-    margin: 0px;
+    font-size: 16px;
+    margin: auto;
     color: white;
 }
 
@@ -704,4 +707,20 @@ ul {
     margin-left: 20%;
     margin-right: 10%;
     margin-bottom: 40px;
+}
+
+/* TÚ */
+hr{
+    border: 1px solid;
+}
+/* .title_section {
+    margin-top:30px;
+} */
+.btn.btn-rate{
+    background-color: #F26B38;
+    color: white;
+    border-radius: 0;
+    margin-left: 10px;
+    border:none;
+    font-size: 15px;
 }

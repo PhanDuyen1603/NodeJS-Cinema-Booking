@@ -1,217 +1,232 @@
-<div class="container">
-    <div id="table">
-        <% if(filmAll) { %>
-            <% if(filmAll.length!=0){ %>
-                <table>
-                    <tr>
-                        <th>STT</th>
-                        <th>Tên phim </th>
-                        <th>Ảnh phim </th>
-                        <th>Thời lượng (phút)</th>
-                        <th>Ngày công chiếu</th>
-                        <th>Trạng thái</th>
-                        <th>Lượt ghé thăm</th>
-                        <th>Thao tác</th>
-                    </tr>
-                    <% for (let i=0;i < filmAll.length ; i++ ) { %>
-                        <tr>
-                            <td>
-                                <%= i+1 %>
-                            </td>
-                            <td>
-                                <a href="/admin/showtime/film/<%= filmAll[i].film_ID %>">
-                                    <%= filmAll[i].film_Name %>
-                                </a>
-                            </td>
-
-                            <td>
-                                <img src="<%= filmAll[i].film_Image %>" alt=" Poster film" />
-                            </td>
-                            <td>
-                                <%= filmAll[i].film_Time %>
-                            </td>
-                            <td>
-                                <% var d=new Date(filmAll[i].film_DatePublic); %>
-                                    <% if(d.getDate()<10){ %>
-                                        <%= '0' + String(d.getDate()) %>
-                                            <% }else{ %>
-                                                <%= d.getDate() %>
-                                                    <% }; %>
-                                                        /
-                                                        <% if(d.getMonth()<10){ %>
-                                                            <%= '0' + String(d.getMonth()+1) %>
-                                                                <% }else{ %>
-                                                                    <%= d.getMonth() %>
-                                                                        <% }; %>
-                                                                            /
-                                                                            <%= d.getFullYear(); %>
-                            </td>
-                            <td>
-                                <% if(filmAll[i].film_Public==true){ %>
-                                    Công chiếu
-                                    <% }else{ %>
-                                        <b> Không công chiếu</b>
-                                        <% }%>
-                            </td>
-                            <td>
-                                <%= filmAll[i].film_ViewCount %>
-                            </td>
-                            <td style="cursor:pointer">
-                                <a id="btn_update_film_<%= filmAll[i].film_ID %>">
-                                    <i class="fas fa-edit"></i>
-                                </a> &nbsp;
-
-                                <a href="/admin/film/delete/<%= filmAll[i].film_ID %>" onclick="return confirmAction()">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-
-                            </td>
-                        </tr>
-                        <% } %>
-                </table>
-                <% }else{ %>
-                    <h1>Hiện tại hệ thống Một Chút Film chưa có Film nào</h1>
-                    <% } %>
-                        <% } %>
-    </div>
-</div>
-
-<a style="width:auto" class="btn_create" id="btn_create_film">
-    Thêm phim
-</a>
-
-
-<% for (let i=0;i < filmAll.length ; i++ ) { %>
-    <div id="btn_update_film_main_<%= filmAll[i].film_ID %>" class="modal">
-        <span class="close" title="Close Modal" id="btn_close_film_<%= filmAll[i].film_ID %>">
-            &times;
-        </span>
-
-        <!-- FORM CẬP NHẬT -->
-        <form action="/admin/film/update/<%= filmAll[i].film_ID %>" method="POST" class="modal-content animate"
-            enctype="multipart/form-data">
-            <div class="container">
-
-                <input type="hidden" value="<%= filmAll[i].film_ID %>" name="filmId">
-
-                <label> Tên phim:</label>
-                <input type="text" value="<%= filmAll[i].film_Name %>" name="filmName" required>
-
-                <label> Thời lượng phim:</label>
-                <input type="number" value="<%= filmAll[i].film_Time %>" name="filmTime" required>
-
-                <label> Ngày công chiếu:</label>
-                <input type="text"
-                    value="<% var d=new Date(filmAll[i].film_DatePublic);%><%= d.getDate(); %>/<%= d.getMonth() + 1; %>/<%= d.getFullYear();%>"
-                    readonly>
-                <label> Chọn ngày mới:</label>
-                <input type="date" name="filmPublicDate" />
-                <br>
-
-                <label> Trạng thái:</label>
-                <select name="filmPublic">
-                    <% if(filmAll[i].film_Public==true){ %>
-                        <option value="true" selected>
-                            Công chiếu
-                        </option>
-                        <option value="false">
-                            Không công chiếu
-                        </option>
-                        <% }else{%>
-                            <option value="true">
-                                Công chiếu
-                            </option>
-                            <option value="false" selected>
-                                Không công chiếu
-                            </option>
-                            <% }%>
-                </select><br>
-
-                <img src="<%= filmAll[i].film_Image %>" />
-                <br><br>
-                <label> Chọn ảnh mới:</label>
-                <input type='file' value="<%= filmAll[i].film_Image %>" id="film_Image" name="filmImage">
-
-                <label> Nội dung phim:</label><br>
-                <textarea name="filmContent" rows="5" placeholder="Nội dung phim" style="width:100%;margin-top: 10px; "
-                    required><%= filmAll[i].film_Content %>
-                </textarea><br>
-                <button type="submit" value="Cập nhật phim" class="insertbtn">
-                    CẬP NHẬT
-                </button>
-            </div>
-        </form>
-
-    </div>
+<% if(typeof(crud_error) !='undefined' ) { %>
+    <div id="crud_error" value="<%= crud_error %>" hidden></div>
     <% } %>
+        <a style="width:auto" class="btn_create" id="btn_create_film">Thêm phim</a>
+        <h1 style="text-align: center;  font-weight: 600">DANH SÁCH PHIM</h1>
+        <div class="container">
+            <div id="table">
+                <% if(filmAll) { %>
+                    <% if(filmAll.length!=0){ %>
+                        <table>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên phim </th>
+                                <th>Ảnh phim </th>
+                                <th>Thời lượng (phút)</th>
+                                <th>Ngày công chiếu</th>
+                                <th>Trạng thái</th>
+                                <th>Lượt ghé thăm</th>
+                                <th>Thao tác</th>
+                            </tr>
+                            <% for (let i=0;i < filmAll.length ; i++ ) { %>
+                                <tr>
+                                    <td>
+                                        <%= i+1 %>
+                                    </td>
+                                    <td>
+                                        <a href="/admin/showtime/film/<%= filmAll[i].film_ID %>">
+                                            <%= filmAll[i].film_Name %>
+                                        </a>
+                                    </td>
 
+                                    <td>
+                                        <img src="<%= filmAll[i].film_Image %>" alt=" Poster film" />
+                                    </td>
+                                    <td>
+                                        <%= filmAll[i].film_Time %>
+                                    </td>
+                                    <td>
+                                        <% var d=new Date(filmAll[i].film_DatePublic); %>
+                                            <% if(d.getDate()<10){ %>
+                                                <%= '0' + String(d.getDate()) %>
+                                                    <% }else{ %>
+                                                        <%= d.getDate() %>
+                                                            <% }; %>
+                                                                /
+                                                                <% if(d.getMonth()<10){ %>
+                                                                    <%= '0' + String(d.getMonth()+1) %>
+                                                                        <% }else{ %>
+                                                                            <%= d.getMonth() %>
+                                                                                <% }; %>
+                                                                                    /
+                                                                                    <%= d.getFullYear(); %>
+                                    </td>
+                                    <td>
+                                        <% if(filmAll[i].film_Public==true){ %>
+                                            Công chiếu
+                                            <% }else{ %>
+                                                <b> Không công chiếu</b>
+                                                <% }%>
+                                    </td>
+                                    <td>
+                                        <%= filmAll[i].film_ViewCount %>
+                                    </td>
+                                    <td style="cursor:pointer">
+                                        <a id="btn_update_film_<%= filmAll[i].film_ID %>">
+                                            <i class="fas fa-edit"></i>
+                                        </a> &nbsp;
 
-        <div id="create_film" class="modal">
-            <span class="close" title="Close Modal" id="btn_close_film_create">
-                &times;
-            </span>
+                                        <a href="/admin/film/delete/<%= filmAll[i].film_ID %>"
+                                            onclick="return confirmAction()">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
 
-            <!-- FORM THÊM PHIM -->
-            <form action="/admin/film/create" method="POST" class="modal-content animate" enctype="multipart/form-data">
-
-                <div class="container">
-
-                    <label>Tên phim: </label>
-                    <input type="text" placeholder="Tên phim" id="film_Name" name="filmName" required />
-                    <br />
-
-                    <label>Ảnh film: </label>
-                    <input type="file" id="film_Image" name="filmImage" required />
-
-                    <br />
-                    <label>Ngày công chiếu: </label>
-                    <input type="date" name="filmPublicDate" id="txtFilmPublicDate" required />
-                    <br />
-
-                    <label>Thời lượng: </label>
-                    <input placeholder="Số phút" type="number" id="film_Time" name="filmTime" required>
-                    <br />
-
-                    <label>Trạng thái: </label>
-                    <select name="filmPublic">
-                        <option value="true" selected>
-                            Công chiếu
-                        </option>
-                        <option value="false">
-                            Không công chiếu
-                        </option>
-                    </select><br>
-
-                    <label> Nội dung phim:</label><br>
-                    <textarea name="filmContent" rows="5" cols="full" placeholder="Nội dung phim"
-                        style="width:100%;margin-top: 10px; " required></textarea><br>
-
-                    <button type="submit" value="Thêm vào danh sách phim">
-                        THÊM
-                    </button>
-
-                </div>
-
-            </form>
+                                    </td>
+                                </tr>
+                                <% } %>
+                        </table>
+                        <% }else{ %>
+                            <h1>Hiện tại hệ thống Một Chút Film chưa có Film nào</h1>
+                            <% } %>
+                                <% } %>
+            </div>
         </div>
 
 
+
+
         <% for (let i=0;i < filmAll.length ; i++ ) { %>
-            <script>
-                $(document).ready(function () {
-                    $("#btn_update_film_main_<%= filmAll[i].film_ID %>").hide();
+            <div id="btn_update_film_main_<%= filmAll[i].film_ID %>" class="modal">
+                <span class="close" title="Close Modal" id="btn_close_film_<%= filmAll[i].film_ID %>">
+                    &times;
+                </span>
 
-                    $("#btn_update_film_<%= filmAll[i].film_ID %>").click(function () {
-                        $("#btn_update_film_main_<%= filmAll[i].film_ID %>").show();
-                    });
+                <!-- FORM CẬP NHẬT -->
+                <form action="/admin/film/update/<%= filmAll[i].film_ID %>" method="POST" class="modal-content animate"
+                    enctype="multipart/form-data">
+                    <div class="container">
 
-                    $("#btn_close_film_1_<%= filmAll[i].film_ID %>").click(function () {
-                        $("#btn_update_film_main_<%= filmAll[i].film_ID %>").hide();
-                    });
-                    $("#btn_close_film_<%= filmAll[i].film_ID %>").click(function () {
-                        $("#btn_update_film_main_<%= filmAll[i].film_ID %>").hide();
-                    });
+                        <input type="hidden" value="<%= filmAll[i].film_ID %>" name="filmId">
 
-                });
-            </script>
+                        <label> Tên phim:</label>
+                        <input type="text" value="<%= filmAll[i].film_Name %>" name="filmName" required>
+
+                        <label> Thời lượng phim:</label>
+                        <input type="number" value="<%= filmAll[i].film_Time %>" name="filmTime" required>
+
+                        <label> Ngày công chiếu:</label>
+                        <input value="<%= filmAll[i].film_DatePublic %>" type="date" name="filmPublicDate" />
+                        <br>
+
+                        <label> Trailer:</label>
+                        <input value="<%= filmAll[i].film_Trailer %>" type="text" name="filmTrailer" />
+                        <br>
+
+                        <label> Trạng thái:</label>
+                        <select name="filmPublic">
+                            <% if(filmAll[i].film_Public==true){ %>
+                                <option value="true" selected>
+                                    Công chiếu
+                                </option>
+                                <option value="false">
+                                    Không công chiếu
+                                </option>
+                                <% }else{%>
+                                    <option value="true">
+                                        Công chiếu
+                                    </option>
+                                    <option value="false" selected>
+                                        Không công chiếu
+                                    </option>
+                                    <% }%>
+                        </select><br>
+
+                        <img style="width: 400px;height: 600px;" src="<%= filmAll[i].film_Image %>" />
+                        <br><br>
+                        <label> Chọn ảnh mới:</label>
+                        <input type='file' value="<%= filmAll[i].film_Image %>" id="film_Image" name="filmImage">
+
+                        <label> Nội dung phim:</label><br>
+                        <textarea name="filmContent" rows="5" placeholder="Nội dung phim"
+                            style="width:100%;margin-top: 10px; " required><%= filmAll[i].film_Content %>
+                </textarea><br>
+                        <button type="submit" value="Cập nhật phim" class="insertbtn">
+                            CẬP NHẬT
+                        </button>
+                    </div>
+                </form>
+
+            </div>
             <% } %>
+
+
+                <div id="create_film" class="modal">
+                    <span class="close" title="Close Modal" id="btn_close_film_create">
+                        &times;
+                    </span>
+
+                    <!-- FORM THÊM PHIM -->
+                    <form action="/admin/film/create" method="POST" class="modal-content animate"
+                        enctype="multipart/form-data">
+
+                        <div class="container">
+
+                            <label>Tên phim: </label>
+                            <input type="text" placeholder="Tên phim" id="film_Name" name="filmName" required />
+                            <br />
+
+                            <label>Ảnh film: </label>
+                            <input type="file" id="film_Image" name="filmImage" required />
+
+                            <label> Trailer:</label>
+                            <input type="text" name="filmTrailer" required>
+
+                            <br />
+                            <label>Ngày công chiếu: </label>
+                            <input type="date" name="filmPublicDate" required />
+                            <br />
+
+                            <label>Thời lượng: </label>
+                            <input placeholder="Số phút" type="number" id="film_Time" name="filmTime" required>
+                            <br />
+
+                            <label>Trạng thái: </label>
+                            <select name="filmPublic">
+                                <option value="true" selected>
+                                    Công chiếu
+                                </option>
+                                <option value="false">
+                                    Không công chiếu
+                                </option>
+                            </select><br>
+
+                            <label> Nội dung phim:</label><br>
+                            <textarea name="filmContent" rows="5" cols="full" placeholder="Nội dung phim"
+                                style="width:100%;margin-top: 10px; " required></textarea><br>
+
+                            <button type="submit" value="Thêm vào danh sách phim">
+                                THÊM
+                            </button>
+
+                        </div>
+
+                    </form>
+                </div>
+
+
+                <% for (let i=0;i < filmAll.length ; i++ ) { %>
+                    <script>
+                        $(document).ready(function () {
+                            $("#btn_update_film_main_<%= filmAll[i].film_ID %>").hide();
+
+                            $("#btn_update_film_<%= filmAll[i].film_ID %>").click(function () {
+                                $("#btn_update_film_main_<%= filmAll[i].film_ID %>").show();
+                            });
+
+                            $("#btn_close_film_1_<%= filmAll[i].film_ID %>").click(function () {
+                                $("#btn_update_film_main_<%= filmAll[i].film_ID %>").hide();
+                            });
+                            $("#btn_close_film_<%= filmAll[i].film_ID %>").click(function () {
+                                $("#btn_update_film_main_<%= filmAll[i].film_ID %>").hide();
+                            });
+
+                        });
+                    </script>
+                    <% } %>
+
+                        <script>
+                            var crud_error = document.getElementById("crud_error").getAttribute('value');
+                            if (crud_error) {
+                                alert(crud_error);
+                            }
+                        </script>

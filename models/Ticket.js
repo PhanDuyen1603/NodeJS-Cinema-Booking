@@ -25,5 +25,8 @@ const Ticket = db.define('Ticket', {
 Ticket.belongsTo(Booking, {
     foreignKey: 'ticket_Booking',
 });
-
+Booking.hasMany(Ticket, {
+    onDelete: 'cascade',
+    hooks: true
+});
 module.exports = Ticket;

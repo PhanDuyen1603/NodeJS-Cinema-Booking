@@ -286,11 +286,10 @@
 <script>
     /* Xử lý chuỗi các ghế đã chọn */
     var bookedSeatString = $j("#bookedSeats").attr('value');
-    var newBookSeatStr = bookedSeatString.slice(0, bookedSeatString.length - 2);
     var bookedSeatArray = [];
-
     //MẢNG CHỨA CÁC GHẾ
-    bookedSeatArray = newBookSeatStr.split(", ");
+    bookedSeatArray = bookedSeatString.split(", ");
+    console.log(bookedSeatArray);
 
     /* Set ghế đã đặt*/
     var cinemaLength = $j("#cinemaLength").attr('value');
@@ -302,49 +301,33 @@
 
     // DÃY CHỮ CÁI HÀNG DỌC
     var cinemaLengthLetters = chairLetterCode.slice(0, cinemaLength);
+
+
     for (var i in cinemaLengthLetters) {
         // i=0: chair = A
-        var chair = cinemaLengthLetters[i];
+        for (var z = 1; z <= Number(cinemaLength); z++) {
+            var seat = cinemaLengthLetters[i];  //seat = A,B,C,...
+            seat = seat + String(z); // seat: A = A + 1
 
-        for (var z = 1; z <= cinemaWidth; z++) {
-            // Ex: chair: A = A + 1 = A1
-            chair = chair + String(z);
-
-            for (var k = 0; k < bookedSeatArray.length; k++) {
-                if (chair == bookedSeatArray[k]) {
-                    // DUYỆT VÀ XỬ LÝ TỪNG GHẾ XỬ LÝ GHẾ
-                    // GHẾ ĐẶT RỒI -> DISABLE, CHƯA ĐẶT -> ACTIVE
-
-                    var chairCode = bookedSeatArray[k];
-                    $j("#" + chairCode).removeClass('active');
-                    $j("#" + chairCode).addClass('seat-disable');
-                    $j("#" + chairCode).addClass('disable');
+            bookedSeatArray.forEach(bookedSeat => {
+                if (seat == bookedSeat) {
+                    $j("#" + seat).removeClass('active');
+                    $j("#" + seat).addClass('seat-disable');
+                    $j("#" + seat).addClass('disable');
 
                     //Thêm các thuộc tính cho mỗi ghế
-                    $j("#" + chairCode).attr('onclick', "");
-                    $j("#" + chairCode).attr('loc', "");
-                    $j("#" + chairCode).attr('price', "");
-
-
-                    if (i < cinemaLengthLetters.length / 2) {
-                        $j("#" + chairCode).removeClass('seat-standard');
-                    } else {
-                        $j("#" + chairCode).removeClass('seat-vipprime');
-                    }
-
-                    console.log("Đã set được ghế: " + bookedSeatArray[k]);
+                    $j("#" + seat).attr('onclick', "");
+                    $j("#" + seat).attr('loc', "");
+                    $j("#" + seat).attr('price', "");
                 }
-            }
+            });
 
-            // chair = A
-            // chair = cinemaLengthLetters[i];
         }
     }
 
     var ticketPrice = seatLimit = conprice = 0;
 
     function selected(obj) {
-
         /* Hiệu ứng chọn ghế (checked) + số lượng ghế tối đa*/
 
         //NẾU CHƯA CHECK

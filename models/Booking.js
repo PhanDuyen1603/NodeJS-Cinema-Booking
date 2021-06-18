@@ -42,8 +42,19 @@ const Booking = db.define('Booking', {
 Booking.belongsTo(User, {
     foreignKey: 'booking_User',
 });
+User.hasMany(Booking,
+    {
+        onDelete: 'cascade',
+        hooks: true
+    });
+
 Booking.belongsTo(Showtime, {
     foreignKey: 'booking_Showtime',
 });
+Showtime.hasMany(Booking,
+    {
+        onDelete: 'cascade',
+        hooks: true
+    });
 
 module.exports = Booking;

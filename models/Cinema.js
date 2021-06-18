@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
 const db = require('./db');
-const cineplex = require('./Cineplex');
+const Cineplex = require('./Cineplex');
 
-const cinema = db.define('Cinema', {
+const Cinema = db.define('Cinema', {
 	cinema_ID: {
 		type: Sequelize.INTEGER,
 		primaryKey: true,
@@ -28,5 +28,9 @@ const cinema = db.define('Cinema', {
 
 });
 
-cinema.belongsTo(cineplex);
-module.exports = cinema;
+Cinema.belongsTo(Cineplex);
+Cineplex.hasMany(Cinema, {
+	onDelete: 'cascade',
+	hooks: true
+});
+module.exports = Cinema;
