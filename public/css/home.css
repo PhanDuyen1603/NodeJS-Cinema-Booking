@@ -123,6 +123,7 @@
             object-fit: contain;
             margin-bottom: 30px;
             text-transform: uppercase;
+            width: 185px;
         }
         
         .col-md-3.col-sm-3.movie-item {
@@ -264,7 +265,6 @@
         .movie-technology {
             position: absolute;
             bottom: 59px;
-            margin-left: 31px;
             width: 185px;
             height: 27px;
             text-align: center;
@@ -361,7 +361,24 @@
         }
         
         .cycle-carousel-wrap {
-            left: 176px !important;
+            position: relative !important;
+        }
+        
+        ul.feature_slide_show {
+            padding-left: 0px;
+        }
+        
+        ul.slide_home_event.thnhvincgv {
+            padding-left: 0px;
+        }
+        
+        .cycle-carousel-wrap {
+            text-align: center;
+        }
+        
+        .article-movie-home {
+            width: 185px;
+            height: 260px;
         }
         
         .home-title h2 {
