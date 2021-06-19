@@ -86,7 +86,7 @@
         }
         
         .navbar-default .navbar-nav>li>a {
-            color: #777;
+            color: black;
             font-weight: bold;
         }
         
@@ -123,6 +123,7 @@
             object-fit: contain;
             margin-bottom: 30px;
             text-transform: uppercase;
+            width: 185px;
         }
         
         .col-md-3.col-sm-3.movie-item {
@@ -145,7 +146,7 @@
         
         .film-lists .feature_film_content h3 {
             color: #fff;
-            font-size: 15px;
+            font-size: 18px;
             font-weight: 600;
             margin: 10px 0;
             overflow: hidden;
@@ -264,7 +265,6 @@
         .movie-technology {
             position: absolute;
             bottom: 59px;
-            margin-left: 31px;
             width: 185px;
             height: 27px;
             text-align: center;
@@ -361,7 +361,24 @@
         }
         
         .cycle-carousel-wrap {
-            left: 176px !important;
+            position: relative !important;
+        }
+        
+        ul.feature_slide_show {
+            padding-left: 0px;
+        }
+        
+        ul.slide_home_event.thnhvincgv {
+            padding-left: 0px;
+        }
+        
+        .cycle-carousel-wrap {
+            text-align: center;
+        }
+        
+        .article-movie-home {
+            width: 185px;
+            height: 260px;
         }
         
         .home-title h2 {
@@ -523,9 +540,10 @@
         .btn-primary:hover,
         .btn-primary:active:hover,
         .btn-primary:active {
-            color: #777;
+            color:black;
             background-color: #ffff;
             border-color: #ffff;
+            outline: none;
         }
         
         .btn-primary {
@@ -533,6 +551,7 @@
             font-weight: 600;
             background-color: #dfc7c1;
             border-color: #ffff;
+            outline: none;
         }
         
         .content-rap-box-btn:hover {
