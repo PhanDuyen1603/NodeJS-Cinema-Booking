@@ -16,9 +16,11 @@
                             <div class="col-md-3 col-sm-3 movie-item">
                                 <div class="article-movie-home">
                                     <a href="/phim/<%= searchNameFilm.searchNameFilmPublic[i].dataValues.film_ID %>">
-                                        <img src="<%= searchNameFilm.searchNameFilmPublic[i].dataValues.film_Image %>"
-                                            alt="Không load được ảnh" width="216" height="324">
+                                        <img id="img-film-indexContent film-form" src="<%= searchNameFilm.searchNameFilmPublic[i].dataValues.film_Image %>"
+                                            alt="Không load được ảnh" width="185" height="260">
                                     </a>
+                                    <div class="movie-technology">
+                </div>
                                 </div>
                                 <a href="/phim/<%= searchNameFilm.searchNameFilmPublic[i].dataValues.film_ID %>">
                                     <div class="title-movie">
@@ -38,7 +40,7 @@
                                 <div class="article-movie-home">
                                     <a href="/phim/<%= searchNameFilm.searchNameFilmNoPublic[i].dataValues.film_ID %>">
                                         <img src="<%= searchNameFilm.searchNameFilmNoPublic[i].dataValues.film_Image %>"
-                                            alt="Không load được ảnh" width="216" height="324">
+                                            alt="Không load được ảnh" width="185px" height="260px">
                                     </a>
                                 </div>
                                 <a href="/phim/<%= searchNameFilm.searchNameFilmNoPublic[i].dataValues.film_ID %>">

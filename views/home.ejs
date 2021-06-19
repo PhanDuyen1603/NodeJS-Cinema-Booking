@@ -10,13 +10,10 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/public/css/home.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,300;0,400;0,700;1,300;1,600&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,300;0,400;0,700;1,300;1,600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 
 </head>
 
@@ -42,30 +39,34 @@
 
     </header>
 
-    <main>
+    <% if (typeof homeMovieSelection !=='undefined' ) { %>
+        <% include partials/homeMovieSelection %>
+            <% } %>
 
-        <% if (typeof support !=='undefined' ) { %>
-            <!-- HỖ TRỢ-->
-            <% include content/support %>
-                <% }if (typeof intro !=='undefined' ) { %>
-                    <!-- GIỚi THIỆU -->
-                    <% include content/intro %>
-                        <% } if (typeof film !=='undefined' ){ %>
-                            <!-- SHOW FILM -->
-                            <% include content/showFilms %>
-                                <% } if (typeof currentFilm !=='undefined' ) { %>
-                                    <% include content/film/film_details %>
-                                        <% } if (typeof searchNameFilm !=='undefined' ) { %>
-                                            <% include content/searchNameFilm %>
-                                                <% } if (typeof filmChieu !=='undefined' ) { %>
-                                                    <% include content/showFilms %>
-                                                        <% } %>
+                <main>
 
-    </main>
+                    <% if (typeof support !=='undefined' ) { %>
+                        <!-- HỖ TRỢ-->
+                        <% include content/support %>
+                            <% }if (typeof intro !=='undefined' ) { %>
+                                <!-- GIỚi THIỆU -->
+                                <% include content/intro %>
+                                    <% } if (typeof film !=='undefined' ){ %>
+                                        <!-- SHOW FILM -->
+                                        <% include content/showFilms %>
+                                            <% } if (typeof currentFilm !=='undefined' ) { %>
+                                                <% include content/film/film_details %>
+                                                    <% } if (typeof searchNameFilm !=='undefined' ) { %>
+                                                        <% include content/searchNameFilm %>
+                                                            <% } if (typeof filmChieu !=='undefined' ) { %>
+                                                                <% include content/showFilms %>
+                                                                    <% } %>
 
-    <footer>
-        <% include partials/footer %>
-    </footer>
+                </main>
+
+                <footer>
+                    <% include partials/footer %>
+                </footer>
 </body>
 
 </html>
