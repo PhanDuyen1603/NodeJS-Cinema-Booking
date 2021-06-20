@@ -194,7 +194,7 @@ router.get('/logout', function (req, res) {
     res.redirect('/');
 });
 
-
+// [GET] /phim/id
 router.get('/phim/:id', async function (req, res) {
     const id = Number(req.params.id);
     var dateNow = Date.now();
@@ -314,6 +314,11 @@ router.post('/phim/:id', async function (req, res) {
     res.render('home', { currentFilm, cinema, cineplex, otherNowShowingFilms, showtimesOfFilm, currentCineplex });
 });
 
+// [GET] /he-thong-rap
+router.get('/he-thong-rap', async function (req, res) {
+    const cineplexSystem =
+        res.render('content/cineplex');
+});
 
 router.get('/:slug', (req, res) => {
     res.render('404NotFound');
