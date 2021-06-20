@@ -21,7 +21,7 @@
         
         a.login-btn,
         a.register-btn {
-            color: #777;
+            color: #555;
             font-size: 15px;
             font-weight: 600;
             margin-right: 40px;
@@ -86,7 +86,7 @@
         }
         
         .navbar-default .navbar-nav>li>a {
-            color: black;
+            color: #555;
             font-weight: bold;
         }
         
@@ -125,6 +125,7 @@
             text-transform: uppercase;
             width: 185px;
         }
+        
         
         .col-md-3.col-sm-3.movie-item {
             margin-bottom: 20px;

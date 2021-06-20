@@ -202,6 +202,7 @@ router.get('/thong-tin-ve/:id', async function (req, res) {
 router.post('/mua-ve/thong-tin-ve/:id', async function (req, res) {
     const showtimeID = Number(req.params.id);
     var { txtChair, txtTotalMoney } = req.body;
+
     var user = req.currentUser;
 
     var currentShowtime = await Showtime.findOne({
@@ -215,7 +216,7 @@ router.post('/mua-ve/thong-tin-ve/:id', async function (req, res) {
     // FORMAT TIỀN
     var totalPrice = new Intl.NumberFormat(
         'ja-JP', { style: 'currency', currency: 'VND' }).format(txtTotalMoney);
-    // res.send(totalPrice);
+
     // THÊM SỐ 0 ĐẰNG TRƯỚC SỐ < 10
     function addZero(number) {
         if (number < 10) {
@@ -255,22 +256,23 @@ router.post('/mua-ve/thong-tin-ve/:id', async function (req, res) {
     //     return str;
     // }
 
-    // Tạo code ngẫu nhiên cho Booking_ID
+    // TẠO CODE ID NGẪU NHIÊN CHO BOOKING,TICKET
     var bookingCode = "B";
     bookingCode += addZero(currentShowtime.Cinema.Cineplex.cineplex_ID);
     bookingCode += addZero(currentShowtime.Cinema.cinema_ID);
     bookingCode += addZero(currentShowtime.showtime_Film);
     bookingCode += addZero(user.user_ID);
     bookingCode += String(Date.now());
-    // B 02 11 31 10 1623539255446
     var ticketCode = "T";
     ticketCode += String(Date.now());
     ticketCode += bookingCode.substring(0, bookingCode.length - 13);
 
     var allSeatsArray = txtChair.split(', ');
+    var filmView = allSeatsArray.length;
+    const currentFilm = await Film.findOne({ where: { film_ID: currentShowtime.showtime_Film } });
+    currentFilm.film_ViewCount += filmView;
+    await currentFilm.save();
 
-
-    // res.send({ bookingCode, ticketCode, allSeatsArray });
 
     const today = new Date();
     var bookingTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -295,16 +297,13 @@ router.post('/mua-ve/thong-tin-ve/:id', async function (req, res) {
                 ticket_Price: currentShowtime.showtime_Price,
             });
         }
-
         const showtimeDate = format_date(currentShowtime.showtime_Date);
 
         console.log("Đã lưu vào DB");
-        // req.session.user_Id = user.user_Id;
         const info = await sendEmail(user.user_Email,
             'MỘT CHÚT PHIM - [THÔNG TIN ĐẶT VÉ]',
             'Content',
             '<div style="text-align:center">' + bookingCode + '</div>' + '\n<h1>' + currentShowtime.Film.film_Name + '</h1>\n' + showtimeDate + '   ' + currentShowtime.showtime_Begin + '\n' + currentShowtime.Cinema.cinema_Name + ' - ' + currentShowtime.Cinema.Cineplex.cineplex_Name + '\nGhế: ' + txtChair + '\nTổng tiền: ' + String(totalPrice) + '\n\nMỘT CHÚT PHIM xin chân thành cảm ơn bạn đã tin tưởng lựa chọn chúng tôi! Chúc bạn có khoảng thời gian xem phim vui vẻ.');
-
 
         res.render('users/booking_info', { currentShowtime, showtimeDate, booking, bookingDate, totalPrice });
 

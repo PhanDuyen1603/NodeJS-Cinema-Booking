@@ -24,10 +24,6 @@ const Film = db.define('Film', {
         type: Sequelize.INTEGER,
         allowNull: true,
     },
-    film_ViewCount: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
-    },
     film_Public: {
         type: Sequelize.BOOLEAN,
         defaultValue: true,
@@ -39,6 +35,14 @@ const Film = db.define('Film', {
     film_Trailer: {
         type: Sequelize.STRING,
         allowNull: true,
+    },
+    film_VisitCount: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+    },
+    film_ViewCount: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
     },
 });
 
