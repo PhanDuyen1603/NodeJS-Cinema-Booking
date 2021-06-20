@@ -13,8 +13,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <!-- MỚI THÊM FONT AWESOME 04/06/2021 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -28,7 +29,9 @@
             text-white text-decoration-none
           ">
                 <div class="logo logo--medium">
-                    <a href="/ " class="router-link-active"><img src="/public/image/Logo-Dien-03.png " alt="Một Chút Phim Accounts " class="logo-image" style="width: 150px; margin-top: 30px;" /></a>
+                    <a href="/ " class="router-link-active"><img src="/public/image/Logo-Dien-03.png "
+                            alt="Một Chút Phim Accounts " class="logo-image"
+                            style="width: 150px; margin-top: 30px;" /></a>
                 </div>
             </a>
             <ul class="nav nav-pills flex-column mb-auto navbar-nav">
@@ -63,39 +66,35 @@
             </ul>
         </div>
 
-        <div style="width: 1060px; float: left; right: 20px; margin-left: 280px;">
-            <% if(typeof thuocTinhFilm !=='undefined' && typeof thuocTinhCumRap
-        !=='undefined' ) { %>
-                <% include admin/BangDoanhThu.ejs %>
+        <div style="width: 1222px; float: left; right: 20px; margin-left: 280px;">
+            <% if(typeof filmStatistic !=='undefined' && typeof cineplexStatistic !=='undefined' ) { %>
+                <% include admin/stats %>
                     <% } %>
-                        <%
-        if(typeof showtime !=='undefined' ) { %>
+                        <% if(typeof showtime !=='undefined' ) { %>
                             <% include admin/showtime %>
-                                <%
-        } %>
+                                <% } %>
                                     <% if(typeof showtimesByFilm !=='undefined' ) { %>
-                                        <% include
-        admin/showtimesByFilm %>
+                                        <% include admin/showtimesByFilm %>
                                             <% } %>
-                                                <% if(typeof showtimesByCinema
-        !=='undefined' ) { %>
+                                                <% if(typeof showtimesByCinema !=='undefined' ) { %>
                                                     <% include admin/showtimesByCinema %>
                                                         <% } %>
-                                                            <%
-        if(typeof cinema !=='undefined' ) { %>
+                                                            <% if(typeof cinema !=='undefined' ) { %>
                                                                 <% include admin/cinema.ejs %>
-                                                                    <%
-        } %>
+                                                                    <% } %>
                                                                         <% if(typeof userAll !=='undefined' ) { %>
-                                                                            <% include
-        admin/userAll.ejs %>
+                                                                            <% include admin/userAll.ejs %>
                                                                                 <% } %>
-                                                                                    <% if(typeof filmAll !=='undefined' ) { %>
+                                                                                    <% if(typeof filmAll !=='undefined'
+                                                                                        ) { %>
                                                                                         <% include admin/filmAll.ejs %>
                                                                                             <% } %>
                                                                                                 <% if(typeof cineplex
-        !=='undefined' ) { %>
-                                                                                                    <% include admin/cineplex.ejs %>
+                                                                                                    !=='undefined' ) {
+                                                                                                    %>
+                                                                                                    <% include
+                                                                                                        admin/cineplex.ejs
+                                                                                                        %>
                                                                                                         <% } %>
         </div>
     </div>

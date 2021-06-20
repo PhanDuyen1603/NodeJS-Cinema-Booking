@@ -1,13 +1,14 @@
 <!-- table show tất cả suất chiếu của film -->
-<div class="container">
-    <% if(showtimesByCinema) { %>
-        <% if(showtimesByCinema.length!=0){ %>
-            <h1 style="text-align: center;color: #d42020; margin-bottom: 20px;">
-                Rạp <%= showtimesByCinema[0].Cinema.cinema_Name %>
-                    <br>
-                    <%= showtimesByCinema[0].Cinema.Cineplex.cineplex_Name %>
+<a id="btn_create_showtime" class="btn_create">Thêm suất chiếu</a>
 
-            </h1>
+<% if(showtimesByCinema) { %>
+    <% if(showtimesByCinema.length!=0){ %>
+        <h1 style="text-align: center;color: #d42020; margin-bottom: 20px;">
+            Rạp <%= showtimesByCinema[0].Cinema.cinema_Name %>
+                <br>
+                <%= showtimesByCinema[0].Cinema.Cineplex.cineplex_Name %>
+        </h1>
+        <div class="container">
             <div id="table">
                 <table>
                     <tr>
@@ -68,146 +69,149 @@
 
             </div>
             <% }else{ %>
+                <br>
+                <br>
                 <h1>Hiện tại rạp này chưa có suất chiếu nào</h1>
                 <% } %>
                     <% } %>
-</div>
-
-<a id="btn_create_showtime" class="btn_create">Thêm suất chiếu</a>
-
-
-<div id="create_showtime" class="modal">
-    <!-- Modal thêm -->
-    <span class="close" title="Close Modal" id="btn_close_showtime_create">
-        &times;
-    </span>
-
-    <!-- FORM THÊM SUẤT CHIẾU -->
-    <form action="/admin/showtime/create" method="POST" class="modal-content animate">
-        <div class="container">
-
-            <label>Rạp:</label>
-            <select name="cinemaID">
-                <% for(let i=0;i< allCinemas.length ; i++){ %>
-                    <option value="<%= currentCinema.cinema_ID %>">
-                        <%= currentCinema.cinema_Name + ' ' %> -
-                            <%= currentCinema.Cineplex.cineplex_Name %>
-                    </option>
-                    <option value="<%= allCinemas[i].cinema_ID %>">
-                        <% if(allCinemas[i].cinema_ID !=currentCinema.cinema_ID) { %>
-                            <%= allCinemas[i].cinema_Name + ' ' %> -
-                                <%= allCinemas[i].Cineplex.cineplex_Name %>
-                    </option>
-                    <% }} %>
-            </select>
-
-            <label> Ngày chiếu:</label>
-            <input type="date" placeholder="Ngày chiếu" id="cinemaTimeShow_Date" name="showtimeDate" required /><br />
-
-            <label> Thời gian bắt đầu: </label>
-            <input type="time" name="beginTime" required> <br>
-
-
-            <label>Phim:</label>
-            <select name="filmID">
-                <% for(let i=0;i< allFilms.length ; i++){ %>
-                    <option value="<%= allFilms[i].film_ID %>">
-                        <%= allFilms[i].film_Name %>
-                    </option>
-                    <% } %>
-            </select>
-
-            <label> Giá vé: </label>
-            <input type="number" name="showtimePrice" required> <br>
-
-            <button type="submit" value="Thêm vào Film">
-                THÊM
-            </button>
         </div>
-    </form>
-
-</div>
-
-<% for (let i=0;i < showtimesByCinema.length ; i++ ) { %>
-    <div id="btn_update_showtime_main_<%= showtimesByCinema[i].showtime_ID %>" class="modal">
-        <span class="close" title="Close Modal" id="btn_close_showtime_<%= showtimesByCinema[i].showtime_ID %>">
-            &times;
-        </span>
-
-        <!-- FORM CẬP NHẬT -->
-        <form action="/admin/showtime/update/<%= showtimesByCinema[i].showtime_ID %>" method="POST"
-            class="modal-content animate">
-            <div class="container">
-
-                <label>Rạp:</label>
-                <select name="cinemaID">
-                    <option value="none" selected disabled hidden>
-                        Thay đổi rạp
-                    </option>
-                    <% for(let i=0;i< allCinemas.length ; i++){ %>
-                        <option value="<%= allCinemas[i].cinema_ID %>">
-                            <%= allCinemas[i].cinema_Name + ' ' %> -
-                                <%= allCinemas[i].Cineplex.cineplex_Name %>
-                        </option>
-                        <% } %>
-                </select>
-
-                <label> Ngày chiếu:</label>
-                <input type="text" value="<%= showtimesByCinema[i].showtime_Date %>" id="cinemaTimeShow_Date" readonly
-                    disabled /><br />
-
-                <label> Thay đổi ngày chiếu:</label>
-                <input type="date" placeholder="Ngày chiếu" id="cinemaTimeShow_Date" name="showtimeDate"><br>
-
-                <label style="margin-right: 86.29px;"> Thời gian bắt đầu: </label>
-                <input style="max-width: 113.15px;max-height: 28.4px;" type="text"
-                    value="<%= beginHour%>:<%= beginMinute%> " disabled> <br>
-                <label style="margin-right: 20px;"> Thay đổi thời gian bắt đầu: </label>
-                <input type="time" name="beginTime"> <br><br>
 
 
-                <label>Phim:</label>
-                <select name="filmID">
-                    <option value="none" selected disabled hidden>
-                        Thay đổi phim
-                    </option>
-                    <% for(let i=0;i< allFilms.length ; i++){ %>
-                        <option value="<%= allFilms[i].film_ID %>">
-                            <%= allFilms[i].film_Name %>
-                        </option>
-                        <% } %>
-                </select>
 
-                <label> Giá vé: </label>
-                <input type="number" value="<%= showtimesByCinema[i].showtime_Price %>" name="showtimePrice" required>
-                <br>
+        <div id="create_showtime" class="modal">
+            <!-- Modal thêm -->
+            <span class="close" title="Close Modal" id="btn_close_showtime_create">
+                &times;
+            </span>
 
-                <button type="submit" value="Cập nhật suất chiếu" class="insertbtn">
-                    CẬP NHẬT
-                </button>
-            </div>
+            <!-- FORM THÊM SUẤT CHIẾU -->
+            <form action="/admin/showtime/create" method="POST" class="modal-content animate">
+                <div class="container">
 
-        </form>
+                    <label>Rạp:</label>
+                    <select name="cinemaID">
+                        <% for(let i=0;i< allCinemas.length ; i++){ %>
+                            <option value="<%= currentCinema.cinema_ID %>">
+                                <%= currentCinema.cinema_Name + ' ' %> -
+                                    <%= currentCinema.Cineplex.cineplex_Name %>
+                            </option>
+                            <option value="<%= allCinemas[i].cinema_ID %>">
+                                <% if(allCinemas[i].cinema_ID !=currentCinema.cinema_ID) { %>
+                                    <%= allCinemas[i].cinema_Name + ' ' %> -
+                                        <%= allCinemas[i].Cineplex.cineplex_Name %>
+                            </option>
+                            <% }} %>
+                    </select>
 
-    </div>
-    <% } %>
+                    <label> Ngày chiếu:</label>
+                    <input type="date" placeholder="Ngày chiếu" id="cinemaTimeShow_Date" name="showtimeDate"
+                        required /><br />
 
+                    <label> Thời gian bắt đầu: </label>
+                    <input type="time" name="beginTime" required> <br>
+
+
+                    <label>Phim:</label>
+                    <select name="filmID">
+                        <% for(let i=0;i< allFilms.length ; i++){ %>
+                            <option value="<%= allFilms[i].film_ID %>">
+                                <%= allFilms[i].film_Name %>
+                            </option>
+                            <% } %>
+                    </select>
+
+                    <label> Giá vé: </label>
+                    <input type="number" name="showtimePrice" required> <br>
+
+                    <button type="submit" value="Thêm vào Film">
+                        THÊM
+                    </button>
+                </div>
+            </form>
+
+        </div>
 
         <% for (let i=0;i < showtimesByCinema.length ; i++ ) { %>
-            <script>
-                $(document).ready(function () {
-                    $("#btn_update_showtime_main_<%= showtimesByCinema[i].showtime_ID %>").hide();
+            <div id="btn_update_showtime_main_<%= showtimesByCinema[i].showtime_ID %>" class="modal">
+                <span class="close" title="Close Modal" id="btn_close_showtime_<%= showtimesByCinema[i].showtime_ID %>">
+                    &times;
+                </span>
 
-                    $("#btn_update_showtime_<%= showtimesByCinema[i].showtime_ID %>").click(function () {
-                        $("#btn_update_showtime_main_<%= showtimesByCinema[i].showtime_ID %>").show();
-                    });
+                <!-- FORM CẬP NHẬT -->
+                <form action="/admin/showtime/update/<%= showtimesByCinema[i].showtime_ID %>" method="POST"
+                    class="modal-content animate">
+                    <div class="container">
 
-                    $("#btn_close_showtime_1_<%= showtimesByCinema[i].showtime_ID %>").click(function () {
-                        $("#btn_update_showtime_main_<%= showtimesByCinema[i].showtime_ID %>").hide();
-                    });
-                    $("#btn_close_showtime_<%= showtimesByCinema[i].showtime_ID %>").click(function () {
-                        $("#btn_update_showtime_main_<%= showtimesByCinema[i].showtime_ID %>").hide();
-                    });
-                });
-            </script>
+                        <label>Rạp:</label>
+                        <select name="cinemaID">
+                            <option value="none" selected disabled hidden>
+                                Thay đổi rạp
+                            </option>
+                            <% for(let i=0;i< allCinemas.length ; i++){ %>
+                                <option value="<%= allCinemas[i].cinema_ID %>">
+                                    <%= allCinemas[i].cinema_Name + ' ' %> -
+                                        <%= allCinemas[i].Cineplex.cineplex_Name %>
+                                </option>
+                                <% } %>
+                        </select>
+
+                        <label> Ngày chiếu:</label>
+                        <input type="text" value="<%= showtimesByCinema[i].showtime_Date %>" id="cinemaTimeShow_Date"
+                            readonly disabled /><br />
+
+                        <label> Thay đổi ngày chiếu:</label>
+                        <input type="date" placeholder="Ngày chiếu" id="cinemaTimeShow_Date" name="showtimeDate"><br>
+
+                        <label style="margin-right: 86.29px;"> Thời gian bắt đầu: </label>
+                        <input style="max-width: 113.15px;max-height: 28.4px;" type="text"
+                            value="<%= beginHour%>:<%= beginMinute%> " disabled> <br>
+                        <label style="margin-right: 20px;"> Thay đổi thời gian bắt đầu: </label>
+                        <input type="time" name="beginTime"> <br><br>
+
+
+                        <label>Phim:</label>
+                        <select name="filmID">
+                            <option value="none" selected disabled hidden>
+                                Thay đổi phim
+                            </option>
+                            <% for(let i=0;i< allFilms.length ; i++){ %>
+                                <option value="<%= allFilms[i].film_ID %>">
+                                    <%= allFilms[i].film_Name %>
+                                </option>
+                                <% } %>
+                        </select>
+
+                        <label> Giá vé: </label>
+                        <input type="number" value="<%= showtimesByCinema[i].showtime_Price %>" name="showtimePrice"
+                            required>
+                        <br>
+
+                        <button type="submit" value="Cập nhật suất chiếu" class="insertbtn">
+                            CẬP NHẬT
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
             <% } %>
+
+
+                <% for (let i=0;i < showtimesByCinema.length ; i++ ) { %>
+                    <script>
+                        $(document).ready(function () {
+                            $("#btn_update_showtime_main_<%= showtimesByCinema[i].showtime_ID %>").hide();
+
+                            $("#btn_update_showtime_<%= showtimesByCinema[i].showtime_ID %>").click(function () {
+                                $("#btn_update_showtime_main_<%= showtimesByCinema[i].showtime_ID %>").show();
+                            });
+
+                            $("#btn_close_showtime_1_<%= showtimesByCinema[i].showtime_ID %>").click(function () {
+                                $("#btn_update_showtime_main_<%= showtimesByCinema[i].showtime_ID %>").hide();
+                            });
+                            $("#btn_close_showtime_<%= showtimesByCinema[i].showtime_ID %>").click(function () {
+                                $("#btn_update_showtime_main_<%= showtimesByCinema[i].showtime_ID %>").hide();
+                            });
+                        });
+                    </script>
+                    <% } %>

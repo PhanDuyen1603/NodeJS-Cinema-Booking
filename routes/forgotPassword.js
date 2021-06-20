@@ -46,7 +46,7 @@ router.post('/', async function (req, res) {
 					}
 				});
 
-			const info = await sendEmail(mail, '[MỘT CHÚT FILM] - KHÔI PHỤC MẬT KHẨU', 'content', `Mã xác thực của bạn là: <b>${code}</b>`);
+			const info = await sendEmail(mail, '[MỘT CHÚT FILM] - [KHÔI PHỤC MẬT KHẨU]', 'content', `Mã xác thực của bạn là: <b>${code}</b>`);
 			//Render trang đổi mật khẩu khi nhập mã xác thực
 			res.render('auth/forgotPasswordConfirm', { user_Email: mail });
 		}

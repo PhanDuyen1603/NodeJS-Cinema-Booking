@@ -175,3 +175,48 @@ ul.nav.nav-pills.flex-column.mb-auto>li>a {
 b {
     cursor: pointer;
 }
+
+
+.nav.nav-pills.mb-auto li a{
+    display: inline;
+    text-transform: uppercase;
+}
+
+.nav>li>a:focus, .nav>li>a:hover {
+    text-decoration: none;
+    background: none;
+}
+
+
+/* TÚ */
+/* .nav.nav-pills.flex-column.mb-auto li a{
+    text-transform: uppercase;
+    display: none;
+} */
+
+
+#table tr td a:first-child{
+    color:#c20e11;
+    text-decoration: underline;
+    text-transform: uppercase;
+}
+
+.admin-title{
+    text-align: center;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.btn-statistic{
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #1e1e2d;
+    color: white;
+    border-radius: 30px;
+    border: none;
+}
+
+.btn-statistic:hover{
+    background-color: #E40002;
+
+}

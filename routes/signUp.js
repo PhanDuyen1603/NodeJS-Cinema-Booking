@@ -55,7 +55,7 @@ router.post('/', async function (req, res) {
 				user_Address: "Chưa cập nhật",
 				user_Code: code,
 			}).then(async function (user) {
-				const info = await sendEmail(user_Email, '[MỘT CHÚT FILM] - XÁC THỰC TÀI KHOẢN', 'Content', `Đây là email tự động, vui lòng không gửi mail qua địa chỉ này.\nMã xác nhận của bạn: <b>${code}</b>`);
+				const info = await sendEmail(user_Email, '[MỘT CHÚT FILM] - [XÁC THỰC TÀI KHOẢN]', 'Content', `Đây là email tự động, vui lòng không gửi mail qua địa chỉ này.\nMã xác nhận của bạn: <b>${code}</b>`);
 
 				res.render('auth/signupConfirm', { user_Email });
 

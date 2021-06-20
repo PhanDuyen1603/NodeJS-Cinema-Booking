@@ -27,7 +27,7 @@ const router = new Router();
 // ROUTERS FOR HEADER
 
 // [GET] /
-router.get('/', async function(req, res) {
+router.get('/', async function (req, res) {
     var dateNow = Date.now();
     var filmLimit = 12;
 
@@ -58,9 +58,13 @@ router.get('/', async function(req, res) {
         ],
     });
 
+    //
     const highViewFilms = await Film.findAll({
         where: {
             film_Public: true,
+            film_ViewCount: {
+                [Op.gt]: 0,
+            }
         },
         limit: filmLimit,
         order: [
@@ -75,18 +79,18 @@ router.get('/', async function(req, res) {
 });
 
 // [GET] /gioi-thieu
-router.get('/gioi-thieu', function(req, res) {
+router.get('/gioi-thieu', function (req, res) {
     const intro = true;
     res.render('home', { intro });
 });
 
-router.get('/ho-tro', function(req, res) {
+router.get('/ho-tro', function (req, res) {
     const support = true;
     res.render('home', { support });
 });
 
 // [GET] /phim
-router.get('/phim', async function(req, res) {
+router.get('/phim', async function (req, res) {
     var dateNow = Date.now();
 
     //Phim đang chiếu --> ngày chiếu <= ngày hiện tại && trạng thái: công chiếu
@@ -117,6 +121,9 @@ router.get('/phim', async function(req, res) {
     const highViewFilms = await Film.findAll({
         where: {
             film_Public: true,
+            film_ViewCount: {
+                [Op.gt]: 0,
+            }
         },
         order: [
             ['film_ViewCount', 'DESC'],
@@ -128,7 +135,7 @@ router.get('/phim', async function(req, res) {
     res.render('home', { film, hideSlideHeader });
 });
 
-router.get('/filmSearch', async function(req, res) {
+router.get('/filmSearch', async function (req, res) {
     var dateNow = Date.now();
     const NameFilm = req.query.txtSearch;
     const searchNameFilmPublic = await Film.findAll({
@@ -173,12 +180,12 @@ router.get('/filmSearch', async function(req, res) {
 });
 
 // [GET] /forgotPassword
-router.get('/forgotPassword', function(req, res) {
+router.get('/forgotPassword', function (req, res) {
     res.render('auth/forgotPassword');
 });
 
 // [GET] /logout
-router.get('/logout', function(req, res) {
+router.get('/logout', function (req, res) {
     if (req.session.user_Id) {
         delete req.session.user_Id;
     } else if (req.session.Admin) {
@@ -187,13 +194,13 @@ router.get('/logout', function(req, res) {
     res.redirect('/');
 });
 
-
-router.get('/phim/:id', async function(req, res) {
+// [GET] /phim/id
+router.get('/phim/:id', async function (req, res) {
     const id = Number(req.params.id);
     var dateNow = Date.now();
 
     //TĂNG LƯỢT GHÉ THĂM PHIM
-    await Film.increment({ film_ViewCount: 1 }, { where: { film_ID: id } });
+    await Film.increment({ film_VisitCount: 1 }, { where: { film_ID: id } });
 
     const currentFilm = await Film.findOne({
         where: {
@@ -240,7 +247,7 @@ router.get('/phim/:id', async function(req, res) {
 });
 
 // [POST] /phim/id
-router.post('/phim/:id', async function(req, res) {
+router.post('/phim/:id', async function (req, res) {
     const id = Number(req.params.id);
     var dateNow = Date.now();
     var { cineplexID } = req.body;
@@ -307,6 +314,11 @@ router.post('/phim/:id', async function(req, res) {
     res.render('home', { currentFilm, cinema, cineplex, otherNowShowingFilms, showtimesOfFilm, currentCineplex });
 });
 
+// [GET] /he-thong-rap
+router.get('/he-thong-rap', async function (req, res) {
+    const cineplexSystem =
+        res.render('content/cineplex');
+});
 
 router.get('/:slug', (req, res) => {
     res.render('404NotFound');
