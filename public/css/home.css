@@ -118,6 +118,19 @@
             text-align: center;
         }
         
+        .navbar-default .navbar-nav>.active>a,
+        .navbar-default .navbar-nav>.active>a:focus,
+        .navbar-default .navbar-nav>.active>a:hover,
+        .navbar-nav>.active>a:active {
+            color: #555;
+            background-color: #e7e7e7;
+        }
+        
+        .navbar-nav>.active>a {
+            color: #555;
+            background-color: #e7e7e7;
+        }
+        
         .title-movie {
             text-decoration: none;
             object-fit: contain;
@@ -540,7 +553,7 @@
         .btn-primary:hover,
         .btn-primary:active:hover,
         .btn-primary:active {
-            color:black;
+            color: black;
             background-color: #ffff;
             border-color: #ffff;
             outline: none;

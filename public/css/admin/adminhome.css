@@ -60,7 +60,7 @@ ul.nav.nav-pills.flex-column.mb-auto {
 
 ul.nav.nav-pills.flex-column.mb-auto>li {
     display: block;
-    padding: 13px;
+    padding: 16px;
     text-decoration: none;
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
     padding-left: 40px;
@@ -162,6 +162,10 @@ ul.nav.nav-pills.flex-column.mb-auto>li>i {
 
 .btn_create a {
     font-size: 10px;
+}
+
+ul.nav.nav-pills.flex-column.mb-auto>li>a {
+    text-transform: uppercase;
 }
 
 .btn_create:hover {
