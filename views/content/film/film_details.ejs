@@ -24,7 +24,7 @@
         }));
     });
 </script>
-
+<a href="#cineplexName-title">click here</a>
 <div class="content-area">
     <div class="row">
         <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10">
@@ -179,7 +179,7 @@
                                             </option>
 
                                             <% for (var i=0; i < cineplex.length; i++) { %>
-                                                <option class=" option" value="<%= cineplex[i].cineplex_ID %>">
+                                                <option class="option" value="<%= cineplex[i].cineplex_ID %>">
                                                     <%= cineplex[i].cineplex_Name %>
                                                 </option>
                                                 <% } %>
@@ -194,7 +194,7 @@
                         <!-- LOAD TẤT CẢ SUẤT CHIẾU CỦA RẠP ĐÓ -->
                         <% if (typeof(showtimesOfFilm) !='undefined' ) { %>
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="text-align: center;">
-                                <% if (showtimesOfFilm.length==0) { %>
+                                <% if (showtimesOfFilm==null) { %>
                                     <h4
                                         style="text-align: center; color: red; text-transform: uppercase; font-weight: bold">
                                         Hiện tại chưa có suất chiếu nào cho phim này!!!
@@ -214,29 +214,36 @@
 
                                             <!-- DUYỆT QUA TẤT CẢ SUẤT CHIẾU CỦA PHIM -->
                                             <% for (var i=0; i< showtimesOfFilm.length; i++ ) { %>
-                                                <a href="/user/mua-ve/<%= showtimesOfFilm[i].showtime_ID  %>"
-                                                    class="content-rap-box-btn" style="font-size: 20px;width: 150px;"
-                                                    id="showtime_begin_main">
-                                                    <% var d=new Date(showtimesOfFilm[i].showtime_Date); %>
-                                                        <% if(d.getDate()<10){ %>
-                                                            <%= '0' + String(d.getDate()) %>
-                                                                <% }else{ %>
-                                                                    <%= d.getDate() %>
-                                                                        <% }; %>
-                                                                            /
-                                                                            <% if(d.getMonth()<10){ %>
-                                                                                <%= '0' + String(d.getMonth()+1) %>
-                                                                                    <% }else{ %>
-                                                                                        <%= d.getMonth() %>
-                                                                                            <% }; %>
-                                                                                                /
-                                                                                                <%= d.getFullYear(); %>
-                                                                                                    <%= showtimesOfFilm[i].showtime_Begin;
+                                                <% var d=new Date(showtimesOfFilm[i].showtime_Date); var today=new
+                                                    Date() %>
+                                                    <% if(today < d){ %>
+                                                        <a href="/user/mua-ve/<%= showtimesOfFilm[i].showtime_ID  %>"
+                                                            class="content-rap-box-btn"
+                                                            style="font-size: 20px;width: 150px;"
+                                                            id="showtime_begin_main">
+
+                                                            <% if(d.getDate()<10){ %>
+                                                                <%= '0' + String(d.getDate()) %>
+                                                                    <% }else{ %>
+                                                                        <%= d.getDate() %>
+                                                                            <% }; %>
+                                                                                /
+                                                                                <% if(d.getMonth()<10){ %>
+                                                                                    <%= '0' + String(d.getMonth()+1) %>
+                                                                                        <% }else{ %>
+                                                                                            <%= d.getMonth() %>
+                                                                                                <% }; %>
+                                                                                                    /
+                                                                                                    <%= d.getFullYear();
                                                                                                         %>
+                                                                                                        <%= showtimesOfFilm[i].showtime_Begin;
+                                                                                                            %>
 
-                                                </a>
 
-                                                <% } %>
+
+                                                        </a>
+                                                        <% }%>
+                                                            <% } %>
                                         </div>
                                         <% } %>
                             </div>
@@ -253,7 +260,7 @@
         <!-- BEGIN COL 3 BANNER BÊN PHẢI SHOW CÁC PHIM ĐANG CHIẾU KHÁC -->
         <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 title-movie" style="text-align: center;">
             <% if(typeof(otherNowShowingFilms) !='undefined' ) { %>
-                <% if(otherNowShowingFilms.length>0 ) { %>
+                <% if(otherNowShowingFilms !=null ) { %>
                     <h3 style="text-transform: uppercase; font-size: 25px;">PHIM ĐANG CHIẾU</h3>
                     <% for(var i=0; i < otherNowShowingFilms.length;i++){ %>
                         <a href="/phim/<%= otherNowShowingFilms[i].film_ID %>">
@@ -290,11 +297,16 @@
 
 
 <script>
+
+
+
     var selectedCineplex = document.getElementById("form_control1");
     var title_cineplexName = document.getElementById("cineplexName-title");
     var showtime_begin_main = document.getElementById("showtime_begin_main");
     var form_LoadShowtimes = document.forms['form_LoadShowtimes'];
     var input_cineplexID = document.getElementById("input_cineplexID");
+    window.location = '#cineplexName-title';
+
 
     selectedCineplex.onchange = function () {
         var selectedCineplexName = selectedCineplex.options[selectedCineplex.selectedIndex].text;
@@ -302,12 +314,14 @@
 
         if (cineplexID) {
             input_cineplexID.value = cineplexID;
-            console.log(input_cineplexID.value);
             form_LoadShowtimes.submit();
         }
 
         if (selectedCineplexName) {
             title_cineplexName.innerHTML = selectedCineplexName;
         }
+
     }
+
+
 </script>

@@ -228,10 +228,12 @@ router.get('/phim/:id', async function (req, res) {
         limit: 4,
     });
 
-    // LẤY TẤT CẢ SUẤT CHIẾU CỦA PHIM
+    // LẤY TẤT CẢ SUẤT CHIẾU CỦA PHIM, NHƯNG > NGÀY HIỆN TẠI
+
     const showtimesOfFilm = await Showtime.findAll({
         where: {
             showtime_Film: id,
+
         },
         order: [
             ['showtime_Date', 'ASC'],
@@ -316,9 +318,84 @@ router.post('/phim/:id', async function (req, res) {
 
 // [GET] /he-thong-rap
 router.get('/he-thong-rap', async function (req, res) {
-    const cineplexSystem =
-        res.render('content/cineplex');
+    const allCineplexes = await Cineplex.findAll({ order: [['cineplex_ID', 'ASC']] });
+    var hideSlideHeader = "Chỉ để hide slide header";
+
+    // lấy suất chiếu mặc định khi chưa bắt onchange event
+    const minID = await Cineplex.min("cineplex_ID");
+    const cinemasOfCineplex = await Cinema.findAll({ where: { CineplexCineplexID: minID } });
+    const cinemaArr = [];
+    cinemasOfCineplex.forEach(cinema => {
+        cinemaArr.push(cinema.cinema_ID);
+    });
+
+    function format_date(originalDate) {
+        var day = new Date(originalDate);
+        var day_result = "";
+        day_result += addZero(day.getDate());
+        day_result += "/";
+        day_result += addZero(day.getMonth() + 1);
+        day_result += "/";
+        day_result += day.getFullYear();
+
+        return day_result;
+    }
+    // TẤT CẢ SUẤT CHIẾU CỦA CÁC RẠP VỪA LẤY
+    var defaultShowtimes = await Showtime.findAll({
+        where: {
+            showtime_Cinema: {
+                [Op.in]: cinemaArr,
+            }
+        },
+        order: [
+            ['showtime_Date', 'ASC']
+        ],
+        include: [{ model: Film }],
+    })
+
+    // var defaultShowtimes = [];
+    // if (ShowtimesOfCineplex != null) {
+    //     ShowtimesOfCineplex.forEach(showtime => {
+    //         defaultShowtimes.push({
+    //             showtimeFilmName: showtime.Film.film_Name,
+    //             showtimeDate: format_date(showtime.showtime_Date),
+    //             showtimeBegin: showtime.showtime_Begin.substr(0, 5),
+    //         })
+    //     });
+    // }
+
+    // res.send(defaultShowtimes)
+
+
+    res.render('home', { allCineplexes, defaultShowtimes, hideSlideHeader });
 });
+
+//GỬI QUA BĂNG AJAX
+router.post('/suat-chieu-cua-rap', async (req, res) => {
+    // const id = Number(req.params.id);
+    const id = Number(req.body.cineplexID);
+    const cinemasOfCineplex = await Cinema.findAll({ where: { CineplexCineplexID: id } });
+    const cinemaArr = [];
+    cinemasOfCineplex.forEach(cinema => {
+        cinemaArr.push(cinema.cinema_ID);
+    });
+
+    // TẤT CẢ SUẤT CHIẾU CỦA CÁC RẠP VỪA LẤY
+    const ShowtimesOfCineplex = await Showtime.findAll({
+        where: {
+            showtime_Cinema: {
+                [Op.in]: cinemaArr,
+            }
+        },
+        order: [
+            ['showtime_Date', 'ASC']
+        ],
+        include: [{ model: Film }],
+    })
+
+
+    res.json(ShowtimesOfCineplex);
+})
 
 router.get('/:slug', (req, res) => {
     res.render('404NotFound');

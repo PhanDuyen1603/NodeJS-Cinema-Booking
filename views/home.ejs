@@ -34,8 +34,8 @@
                             <% include partials/header/menu %>
 
                                 <!--Sile header-->
-                                <!-- Render ra trang /phim, nhưng không show slide -->
-                                <% if(typeof hideSlideHeader=='undefined' ) {%>
+                                <!-- Render ra trang một trang khác home, nhưng không show slide -->
+                                <% if(typeof(hideSlideHeader)=='undefined' ) {%>
                                     <% include partials/slide_header %>
                                         <% }%>
 
@@ -48,7 +48,7 @@
 
                 <main>
                     <!-- HỆ THỐNG RẠP-->
-                    <% if (typeof cineplex !=='undefined' ) { %>
+                    <% if (typeof allCineplexes !=='undefined' ) { %>
                         <% include content/cineplex %>
                             <!-- HỖ TRỢ-->
                             <% }if (typeof support !=='undefined' ) { %>
@@ -56,9 +56,10 @@
                                     <!-- GIỚi THIỆU -->
                                     <% }if (typeof intro !=='undefined' ) { %>
                                         <% include content/intro %>
+                                            <!-- SHOW FILM -->
                                             <% } if (typeof film !=='undefined' ){ %>
-                                                <!-- SHOW FILM -->
                                                 <% include content/showFilms %>
+                                                    <!-- CHI TIẾT PHIM -->
                                                     <% } if (typeof currentFilm !=='undefined' ) { %>
                                                         <% include content/film/film_details %>
                                                             <% } if (typeof searchNameFilm !=='undefined' ) { %>

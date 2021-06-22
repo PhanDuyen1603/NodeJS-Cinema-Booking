@@ -514,8 +514,9 @@
             margin-top: 10px;
             margin-bottom: 5px;
             margin-left: 5px;
-            border: 1px solid black;
-            width: 90px;
+            border: 2px dotted black;
+            /* width: 90px; */
+            /* padding: 10px 20px; */
         }
         
         .content-rap-box-btn:link,
