@@ -81,18 +81,22 @@
                         <div class="container">
                             <label> Tên cụm rạp:</label>
                             <input type="text" value="<%= cineplex[i].cineplex_Name %>" name="cineplexName" />
-                            <label> Địa chỉ :</label>
+                            <label> Địa chỉ:</label>
                             <input type="text" value="<%= cineplex[i].cineplex_Address %>" name="cineplexAddress" />
+
+                            <img width="800px" height="500px" src="<%= cineplex[i].cineplex_Image %>"> <br> <br>
+
+                            <label>Chọn hình ảnh mới:</label>
+                            <input type="file" name="cineplexImage" />
+                            <label> Google map:</label>
+                            <input type="text" value="<%= cineplex[i].cineplex_GoogleMap %>" name="cineplexMap"
+                                required>
+
                             <button type="submit" value="Cập nhật">
                                 Cập nhật
                             </button>
                         </div>
-                        <div class="container">
-                            <button type="button" class="cancelbtn"
-                                id="btn_close_cineplex_1_<%= cineplex[i].cineplex_ID %>">
-                                Cancel
-                            </button>
-                        </div>
+
                     </form>
                 </div>
                 <% } %>
@@ -104,7 +108,8 @@
             </span>
 
             <!-- FORM THÊM CỤM RẠP -->
-            <form action="/admin/cineplex/create" method="POST" class="modal-content animate">
+            <form action="/admin/cineplex/create" method="POST" class="modal-content animate"
+                enctype="multipart/form-data">
                 <div class="container">
                     <label>Tên cụm rạp:</label>
                     <input type="text" placeholder="Tên cụm rạp" id="cineplex_Name" name="cineplexName"
@@ -112,6 +117,13 @@
                     <label> Địa Chỉ :</label>
                     <input type="text" placeholder="Địa chỉ cụm rạp" id="cineplex_Address" name="cineplexAddress"
                         required /><br />
+
+                    <label> Hình ảnh:</label>
+                    <input type="file" name="cineplexImage" required />
+
+                    <label> Google map:</label>
+                    <input type="text" placeholder="Link nhúng Google map" name="cineplexMap" required>
+
                     <button type="submit" value="Thêm vào danh sách cụm rạp">
                         THÊM
                     </button>

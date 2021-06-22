@@ -25,8 +25,9 @@
                     <table>
                         <tr>
                             <th> Phim </th>
-                            <th> Tổng doanh thu </th>
                             <th> Số vé bán được </th>
+                            <th> Tổng doanh thu </th>
+
                         </tr>
                         <% if(filmStatistic.length==0){ %>
                             <% if(typeof(fromDate) !='undefined' && typeof(toDate) !='undefined' ){%>
@@ -46,11 +47,14 @@
                                                     <%= filmStatistic[i].filmName %>
                                                 </td>
                                                 <td>
-                                                    <%= filmStatistic[i].filmRevenue %> đ
-                                                </td>
-                                                <td>
                                                     <%= filmStatistic[i].filmSoldTicketAmount %>
                                                 </td>
+                                                <td>
+                                                    <%= Intl.NumberFormat('vi-VN', { style: 'currency' , currency: 'VND'
+                                                        }).format(filmStatistic[i].filmRevenue); %>
+
+                                                </td>
+
                                             </tr>
                                             <% }} %>
                     </table>
@@ -72,8 +76,8 @@
                                     <table>
                                         <tr>
                                             <th> Cụm rạp </th>
-                                            <th> Tổng doanh thu </th>
                                             <th> Số vé bán được </th>
+                                            <th> Tổng doanh thu </th>
                                         </tr>
                                         <% if(cineplexStatistic.length==0){ %>
                                             <% if(typeof(fromDate) !='undefined' && typeof(toDate) !='undefined' ){%>
@@ -93,11 +97,17 @@
                                                                     <%= cineplexStatistic[i].cineplexName %>
                                                                 </td>
                                                                 <td>
-                                                                    <%= cineplexStatistic[i].cineplexRevenue %> đ
-                                                                </td>
-                                                                <td>
                                                                     <%= cineplexStatistic[i].cineplexSoldTicketAmount %>
                                                                 </td>
+                                                                <td>
+                                                                    <% var revenue=(new Intl.NumberFormat('vi-VN', {
+                                                                        style: 'currency' , currency: 'VND'
+                                                                        }).format(cineplexStatistic[i].cineplexRevenue));
+                                                                        %>
+                                                                        <%= revenue %>
+
+                                                                </td>
+
                                                             </tr>
                                                             <% }} %>
                                     </table>
