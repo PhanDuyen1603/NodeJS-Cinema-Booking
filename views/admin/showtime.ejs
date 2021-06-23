@@ -37,7 +37,19 @@
                                 <td>
 
                                     <% var d=new Date(showtime[i].showtime_Date); %>
-                                        <%= d.getDate(); %>/<%= d.getMonth()+1; %>/<%= d.getFullYear(); %>
+                                        <% if(d.getDate()<10){ %>
+                                            <%= '0' + String(d.getDate()) %>
+                                                <% }else{ %>
+                                                    <%= d.getDate() %>
+                                                        <% }; %>
+                                                            /
+                                                            <% if(d.getMonth()<10){ %>
+                                                                <%= '0' + String(d.getMonth()+1) %>
+                                                                    <% }else{ %>
+                                                                        <%= d.getMonth() %>
+                                                                            <% }; %>
+                                                                                /
+                                                                                <%= d.getFullYear(); %>
                                 </td>
                                 <td>
                                     <%= showtime[i].showtime_Begin.substr(0,5) %> -

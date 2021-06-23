@@ -68,7 +68,7 @@
         <div id="show_showtimes">
             <% if(defaultShowtimes !=null){ %>
                 <% for (var i=0; i < defaultShowtimes.length; i++) { %>
-                    <a href="/user/mua-ve/defaultShowtimes[i].showtime_ID" class="content-rap-box-btn"
+                    <a href="/user/mua-ve/<%=defaultShowtimes[i].showtime_ID%>" class="content-rap-box-btn"
                         style="font-size: 20px; padding: 5px 10px;">
                         <%= defaultShowtimes[i].Film.film_Name %> <br>
                             <%= defaultShowtimes[i].showtime_Begin %> -
@@ -177,10 +177,10 @@
                                     formattedDate += showtimeDate.getDate();
                                 }
                                 formattedDate += "/";
-                                if (showtimeDate.getMonth() < 10) {
-                                    formattedDate += "0" + showtimeDate.getMonth();
+                                if (showtimeDate.getMonth() + 1 < 10) {
+                                    formattedDate += "0" + String(showtimeDate.getMonth() + 1);
                                 } else {
-                                    formattedDate += showtimeDate.getMonth();
+                                    formattedDate += String(showtimeDate.getMonth() + 1);
                                 }
                                 formattedDate += "/";
                                 formattedDate += showtimeDate.getFullYear();
@@ -197,6 +197,7 @@
                     $("#show_showtimes").html(htmlContent);
                 }
             });
+
         });
     });
 </script>

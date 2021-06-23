@@ -1105,7 +1105,22 @@ router.post('/cineplex/update/:id', upload.single('cineplexImage'), async functi
             }).then(res.redirect('/admin/cineplex')).catch(console.error);
         }
     } else {
-        await Cineplex.update({ cineplex_Address: cineplexAddress }, { where: { cineplex_ID: id } });
+        if (req.file) {
+            var path = './public/image/uploads/cineplex/' + String(Date.now()) + '-' + req.file.originalname;
+            var cineplexImage = path.substr(1, path.length);
+
+            // Xoá ảnh cũ
+            fs.unlink(path, () => {
+                console.log(`successfully deleted ${path}`);
+            });
+            // THêm ảnh mới
+            await rename(req.file.path, path);
+        }
+        await Cineplex.update({
+            cineplex_Address: cineplexAddress,
+            cineplex_Image: cineplexImage,
+            cineplex_GoogleMap: cineplexMap,
+        }, { where: { cineplex_ID: id } });
         res.redirect('/admin/cineplex');
     }
 
