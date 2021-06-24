@@ -15,7 +15,16 @@ const Cineplex = db.define('Cineplex', {
     cineplex_Address: {
         type: Sequelize.STRING,
         allowNull: false,
-    }
+    },
+    cineplex_Image: {
+        type: Sequelize.STRING,
+        allowNull: true,
+    },
+    cineplex_GoogleMap: {
+        type: Sequelize.TEXT,
+        allowNull: true,
+    },
+
 });
 
 module.exports = Cineplex;

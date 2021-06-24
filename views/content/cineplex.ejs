@@ -1,1 +1,203 @@
-<h1>This is he thong rap</h1>
+<style>
+    .title-section {
+        text-align: center;
+        text-transform: uppercase;
+        margin: 20px auto;
+    }
+
+    .cineplex-system {
+        text-align: center;
+        width: 80%;
+        margin: 40px auto;
+    }
+
+    .cinplex-system-content {
+        font-size: 20px;
+        float: left;
+    }
+
+    .cineplex-system-content-description {
+        background-image: linear-gradient(#e7c57b, white);
+        padding: 20px;
+        text-align: left !important;
+        margin: 40px 0;
+        /* border-radius: 30px; */
+    }
+
+    .cineplex-system-content-description span {
+        font-weight: bold;
+    }
+
+    #cineplex-system-select {
+        text-align: center;
+        padding: 15px 25px;
+        font-size: 20px;
+        font-weight: bold;
+        color: #e2a726;
+        border: 2px dotted #df9f16;
+        margin-bottom: 20px;
+        cursor: pointer;
+    }
+
+    /* .cineplex-system-showtime {
+        text-align: left;
+    } */
+</style>
+<!-- <h1 class="title-section">Hệ thống rạp tại Một Chút Phim Cinema</h1> -->
+
+<div class="cineplex-system" id="cineplex-system">
+
+    <!-- SELECT CỤM RẠP -->
+    <select id="cineplex-system-select">
+        <% if(allCineplexes !=null){ %>
+            <% for (var i=0; i < allCineplexes.length; i++) { %>
+                <option class="selectedCineplex" value="<%= allCineplexes[i].cineplex_ID %>"
+                    data-address="<%= allCineplexes[i].cineplex_Address %>"
+                    data-name="<%= allCineplexes[i].cineplex_Name %>"
+                    data-image="<%= allCineplexes[i].cineplex_Image %>"
+                    data-map="<%= allCineplexes[i].cineplex_GoogleMap %>">
+                    <%= allCineplexes[i].cineplex_Name %>
+                </option>
+                <% } %>
+                    <% } %>
+    </select>
+
+    <!-- SUẤT CHIẾU -->
+    <div class="cineplex-system-showtime">
+        <!-- LOAD BẰNG AJAX -->
+        <div id="show_showtimes">
+            <% if(defaultShowtimes !=null){ %>
+                <% for (var i=0; i < defaultShowtimes.length; i++) { %>
+                    <a href="/user/mua-ve/<%=defaultShowtimes[i].showtime_ID%>" class="content-rap-box-btn"
+                        style="font-size: 20px; padding: 5px 10px;">
+                        <%= defaultShowtimes[i].Film.film_Name %> <br>
+                            <%= defaultShowtimes[i].showtime_Begin %> -
+                                <%= defaultShowtimes[i].showtime_Date %>
+
+                    </a>
+                    <% } %>
+                        <% } %>
+        </div>
+    </div>
+
+    <!-- MÔ TẢ: GIỚI THIỆU, HÌNH ẢNH, GOOGLE MAP -->
+    <div class="cinplex-system-content">
+        <div class="cineplex-system-content-description">
+            Địa chỉ: <b>
+                <span id="cineplexAddress"></span>
+            </b>. <br>
+            Lấy cảm hứng từ ghế ngồi hạng thương gia trên máy
+            bay, cụm rạp <b>
+                <span id="cineplexName"></span>
+            </b>
+            ra đời mang đến một không gian xem phim sang trọng và đẳng cấp cho các tín đồ điện ảnh.
+            Là lựa chọn hoàn hảo cho các sự kiện đặc biệt để tạo nên những kỷ niệm tuyệt vời, khó quên.
+        </div>
+
+        <div>
+            <div id="cineplex-system-content-image">
+                <img width="100%" height="600px" id="cineplexImage"
+                    src="/public/image/background_all/he-thong-rap-3.jpg" alt="">
+            </div>
+            <div id="cineplex-system-content-map" style="margin-top: 50px;">
+                <iframe id="cineplexMap"
+                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15678.523092775275!2d106.6821717!3d10.762913!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x43900f1d4539a3d!2sVietnam%20National%20University%20Ho%20Chi%20Minh%20City%20-%20University%20of%20Science!5e0!3m2!1sen!2s!4v1624377579275!5m2!1sen!2s"
+                    width="100%" height="600px" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div id="defaultShowtimes" value="<%= defaultShowtimes %>" hidden></div>
+
+<script>
+
+    var cineplexSystem = document.getElementById('cineplex-system-select');
+    var cineplexAddress = document.getElementById('cineplexAddress');
+    var cineplexName = document.getElementById('cineplexName');
+    var cineplexImage = document.getElementById('cineplexImage');
+    var cineplexMap = document.getElementById('cineplexMap');
+
+    // GÁN GIÁ TRỊ MẶC ĐỊNH KHI CHƯA BẮT EVENT ONCHANGE
+    var selectedCineplex = cineplexSystem.options[0];
+    cineplexAddress.innerText = selectedCineplex.getAttribute('data-address');
+    cineplexName.innerText = selectedCineplex.getAttribute('data-name');
+
+    var image = selectedCineplex.getAttribute('data-image');
+    if (image) {
+        cineplexImage.setAttribute("src", image);
+    }
+
+    var map = selectedCineplex.getAttribute('data-map');
+    if (map) {
+        cineplexMap.setAttribute("src", map);
+    }
+
+
+    $(document).ready(function () {
+        $('#cineplex-system-select').change(function () {
+
+            selectedCineplex = cineplexSystem.options[cineplexSystem.selectedIndex];
+
+            cineplexAddress.innerText = selectedCineplex.getAttribute('data-address');
+            cineplexName.innerText = selectedCineplex.getAttribute('data-name');
+            var image = selectedCineplex.getAttribute('data-image');
+            if (image) {
+                cineplexImage.setAttribute("src", image);
+            }
+            var map = selectedCineplex.getAttribute('data-map');
+            if (map) {
+                cineplexMap.setAttribute("src", map);
+            }
+
+            var cineplexID = cineplexSystem.options[cineplexSystem.selectedIndex].value;
+
+            $.ajax({
+                url: "/suat-chieu-cua-rap",
+                method: "POST",
+                data: { cineplexID },
+                success: function (data) {
+                    var htmlContent = "";
+                    var today = new Date();
+                    if (data.length == 0) {
+                        htmlContent = "<h4><i>Vì tình hình dịch Covid diễn biến phức tạp. Rạp tạm dừng mọi hoạt động. Mong quý khách thông cảm</i></h4>";
+                    } else {
+                        data.forEach(showtime => {
+                            var showtimeDate = new Date(showtime.showtime_Date);
+
+                            // CHỈ SHOW SUẤT CHIẾU CHƯA DIỄN RA
+                            if (showtimeDate > today) {
+                                var formattedDate = "";
+
+                                if (showtimeDate.getDate() < 10) {
+                                    formattedDate += "0" + showtimeDate.getDate();
+                                } else {
+                                    formattedDate += showtimeDate.getDate();
+                                }
+                                formattedDate += "/";
+                                if (showtimeDate.getMonth() + 1 < 10) {
+                                    formattedDate += "0" + String(showtimeDate.getMonth() + 1);
+                                } else {
+                                    formattedDate += String(showtimeDate.getMonth() + 1);
+                                }
+                                formattedDate += "/";
+                                formattedDate += showtimeDate.getFullYear();
+                                htmlContent += `<a href="/user/mua-ve/${showtime.showtime_ID}" class="content-rap-box-btn" style="font-size: 20px; padding: 5px 10px;">
+                            ${showtime.Film.film_Name} <br>    
+                            ${showtime.showtime_Begin.substr(0, 5)} - ${formattedDate}
+                            
+                        </a>`;
+                            }
+                        });
+
+                    }
+
+                    $("#show_showtimes").html(htmlContent);
+                }
+            });
+
+        });
+    });
+</script>

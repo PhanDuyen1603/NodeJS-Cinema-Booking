@@ -648,6 +648,7 @@ router.get('/film', async function (req, res) {
     res.render('admin', { filmAll });
 });
 
+
 router.get('/film/create', async function (req, res) {
     res.redirect('/admin/film');
 });
@@ -995,8 +996,8 @@ router.get('/cineplex/create', async function (req, res) {
 
 
 // [POST] /admin/cineplex/create
-router.post('/cineplex/create', async function (req, res) {
-    var { cineplexName, cineplexAddress } = req.body;
+router.post('/cineplex/create', upload.single('cineplexImage'), async function (req, res) {
+    var { cineplexName, cineplexAddress, cineplexMap } = req.body;
     var found = await Cineplex.findOne({ where: { cineplex_Name: cineplexName } });
     if (found) {
         const cineplex = await Cineplex.findAll({
@@ -1007,17 +1008,27 @@ router.post('/cineplex/create', async function (req, res) {
         var crud_error = "CỤM RẠP ĐÃ TỒN TẠI !!";
         res.render('admin', { cineplex, crud_error });
     } else {
+
+        var path = './public/image/uploads/cineplex/' + String(Date.now()) + '-' + req.file.originalname;
+        var cineplexImage = path.substr(1, path.length);
+        // //Move file into path
+        await rename(req.file.path, path);
+
         var maxID = await Cineplex.max('cineplex_ID');
         if (maxID) {
             await Cineplex.create({
                 cineplex_ID: maxID + 1,
                 cineplex_Name: cineplexName,
                 cineplex_Address: cineplexAddress,
+                cineplex_Image: cineplexImage,
+                cineplex_GoogleMap: cineplexMap,
             }).then(res.redirect('/admin/cineplex')).catch(console.error);
         } else {
             await Cineplex.create({
                 cineplex_Name: cineplexName,
                 cineplex_Address: cineplexAddress,
+                cineplex_Image: cineplexImage,
+                cineplex_GoogleMap: cineplexMap,
             }).then(res.redirect('/admin/cineplex')).catch(console.error);
         }
 
@@ -1038,6 +1049,11 @@ router.get('/cineplex/delete/:id', async function (req, res) {
         var crud_error = "KHÔNG THỂ XOÁ CỤM RẠP NÀY !! \nCỤM RẠP ĐANG TRONG QUÁ TRÌNH HOẠT ĐỘNG\nHÃY CẨN THẬN!";
         res.render('admin', { cineplex, crud_error });
     } else {
+        const deletedCineplex = await Cineplex.findByPk(id);
+        const fileNameWithPath = '.' + deletedCineplex.cinplex_Image;
+        fs.unlink(fileNameWithPath, () => {
+            console.log(`successfully deleted ${fileNameWithPath}`);
+        });
         await Cineplex.destroy({
             where: {
                 cineplex_ID: id,
@@ -1047,9 +1063,9 @@ router.get('/cineplex/delete/:id', async function (req, res) {
 });
 
 // [POST] /admin/cineplex/update/:id
-router.post('/cineplex/update/:id', async function (req, res) {
+router.post('/cineplex/update/:id', upload.single('cineplexImage'), async function (req, res) {
     const id = Number(req.params.id);
-    var { cineplexName, cineplexAddress } = req.body;
+    var { cineplexName, cineplexAddress, cineplexMap } = req.body;
 
     // update name -> kiem tra trung -> neu trung, neu ko
     const updatedCineplex = await Cineplex.findByPk(id);
@@ -1065,9 +1081,23 @@ router.post('/cineplex/update/:id', async function (req, res) {
             var crud_error = "KHÔNG THỂ CẬP NHẬT !! \nTÊN CỤM RẠP CẬP NHẬT ĐÃ TỒN TẠI";
             res.render('admin', { cineplex, crud_error });
         } else {
+            if (req.file) {
+                var path = './public/image/uploads/cineplex/' + String(Date.now()) + '-' + req.file.originalname;
+                var cineplexImage = path.substr(1, path.length);
+
+                // Xoá ảnh cũ
+                fs.unlink(path, () => {
+                    console.log(`successfully deleted ${path}`);
+                });
+                // THêm ảnh mới
+                await rename(req.file.path, path);
+            }
+
             await Cineplex.update({
                 cineplex_Name: cineplexName,
                 cineplex_Address: cineplexAddress,
+                cineplex_Image: cineplexImage,
+                cineplex_GoogleMap: cineplexMap,
             }, {
                 where: {
                     cineplex_ID: id,
@@ -1075,7 +1105,22 @@ router.post('/cineplex/update/:id', async function (req, res) {
             }).then(res.redirect('/admin/cineplex')).catch(console.error);
         }
     } else {
-        await Cineplex.update({ cineplex_Address: cineplexAddress }, { where: { cineplex_ID: id } });
+        if (req.file) {
+            var path = './public/image/uploads/cineplex/' + String(Date.now()) + '-' + req.file.originalname;
+            var cineplexImage = path.substr(1, path.length);
+
+            // Xoá ảnh cũ
+            fs.unlink(path, () => {
+                console.log(`successfully deleted ${path}`);
+            });
+            // THêm ảnh mới
+            await rename(req.file.path, path);
+        }
+        await Cineplex.update({
+            cineplex_Address: cineplexAddress,
+            cineplex_Image: cineplexImage,
+            cineplex_GoogleMap: cineplexMap,
+        }, { where: { cineplex_ID: id } });
         res.redirect('/admin/cineplex');
     }
 

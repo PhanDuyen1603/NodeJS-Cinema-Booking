@@ -209,7 +209,8 @@ router.get('/phim/:id', async function (req, res) {
         }
     });
     const cinema = await Cinema.findAll();
-    const cineplex = await Cineplex.findAll();
+    // film_allCineplexes
+    const f_allCineplexes = await Cineplex.findAll();
 
     // //LẤY CÁC PHIM ĐANG CHIẾU KHÁC PHIM HIỆN TẠI (4 PHIM) ĐỂ SHOW BÊN PHẢI
     const otherNowShowingFilms = await Film.findAll({
@@ -228,7 +229,8 @@ router.get('/phim/:id', async function (req, res) {
         limit: 4,
     });
 
-    // LẤY TẤT CẢ SUẤT CHIẾU CỦA PHIM
+    // LẤY TẤT CẢ SUẤT CHIẾU CỦA PHIM, NHƯNG > NGÀY HIỆN TẠI
+
     const showtimesOfFilm = await Showtime.findAll({
         where: {
             showtime_Film: id,
@@ -242,47 +244,18 @@ router.get('/phim/:id', async function (req, res) {
         ]
     });
 
-    res.render('home', { currentFilm, cinema, cineplex, otherNowShowingFilms, showtimesOfFilm });
+    res.render('home', { currentFilm, cinema, f_allCineplexes, otherNowShowingFilms, showtimesOfFilm });
 
 });
 
-// [POST] /phim/id
-router.post('/phim/:id', async function (req, res) {
-    const id = Number(req.params.id);
-    var dateNow = Date.now();
-    var { cineplexID } = req.body;
 
-    var currentCineplex = await Cineplex.findByPk(cineplexID);
-
-    const currentFilm = await Film.findOne({
-        where: {
-            film_ID: id,
-            film_Public: true,
-        }
-    });
-    const cinema = await Cinema.findAll();
-    const cineplex = await Cineplex.findAll();
-    const otherNowShowingFilms = await Film.findAll({
-        where: {
-            'film_ID': {
-                [Op.ne]: id
-            },
-            film_DatePublic: {
-                [Op.lte]: dateNow,
-            },
-            film_Public: true,
-        },
-        order: [
-            ['film_DatePublic', 'DESC']
-        ],
-        limit: 4,
-    });
-
+router.post('/suat-chieu-cua-phim', async (req, res) => {
+    const { filmID, cineplexID } = req.body;
 
     //LẤY CÁC RẠP CỦA CỤM RẠP NÀY
     const allCinemasOfCineplex = await Cinema.findAll({
         where: {
-            CineplexCineplexID: cineplexID,
+            CineplexCineplexID: Number(cineplexID),
         }
     });
 
@@ -291,34 +264,108 @@ router.post('/phim/:id', async function (req, res) {
         list_cinemaID.push(Number(cinema.cinema_ID));
     });
 
-    //showtimes theo cum rap
+    // LẤY TẤT CẢ SUẤT CHIẾU CỦA TẤT CẢ RẠP CÓ TRONG CỤM RẠP 
     const showtimesOfFilm = await Showtime.findAll({
-        include: [
-            { model: Cinema, include: [{ model: Cineplex }] },
-            { model: Film },
-        ],
         where: {
-            showtime_Film: id,
+            showtime_Film: Number(filmID),
             showtime_Cinema: {
                 [Op.in]: list_cinemaID, //list_cinemaID
             }
         },
         order: [
-            ['showtime_Cinema', 'ASC'],
-            ['showtime_Film', 'ASC'],
+            ['showtime_Date', 'ASC'],
+            ['showtime_Begin', 'ASC'],
+        ],
+        include: [
+            { model: Film },
         ],
 
     });
 
+    res.json(showtimesOfFilm);
+})
 
-    res.render('home', { currentFilm, cinema, cineplex, otherNowShowingFilms, showtimesOfFilm, currentCineplex });
-});
 
 // [GET] /he-thong-rap
 router.get('/he-thong-rap', async function (req, res) {
-    const cineplexSystem =
-        res.render('content/cineplex');
+    const allCineplexes = await Cineplex.findAll({ order: [['cineplex_ID', 'ASC']] });
+    var hideSlideHeader = "Chỉ để hide slide header";
+
+    // lấy suất chiếu mặc định khi chưa bắt onchange event
+    const minID = await Cineplex.min("cineplex_ID");
+    const cinemasOfCineplex = await Cinema.findAll({ where: { CineplexCineplexID: minID } });
+    const cinemaArr = [];
+    cinemasOfCineplex.forEach(cinema => {
+        cinemaArr.push(cinema.cinema_ID);
+    });
+
+    function format_date(originalDate) {
+        var day = new Date(originalDate);
+        var day_result = "";
+        day_result += addZero(day.getDate());
+        day_result += "/";
+        day_result += addZero(day.getMonth() + 1);
+        day_result += "/";
+        day_result += day.getFullYear();
+
+        return day_result;
+    }
+    // TẤT CẢ SUẤT CHIẾU CỦA CÁC RẠP VỪA LẤY
+    var defaultShowtimes = await Showtime.findAll({
+        where: {
+            showtime_Cinema: {
+                [Op.in]: cinemaArr,
+            }
+        },
+        order: [
+            ['showtime_Date', 'ASC']
+        ],
+        include: [{ model: Film }],
+    })
+
+    // var defaultShowtimes = [];
+    // if (ShowtimesOfCineplex != null) {
+    //     ShowtimesOfCineplex.forEach(showtime => {
+    //         defaultShowtimes.push({
+    //             showtimeFilmName: showtime.Film.film_Name,
+    //             showtimeDate: format_date(showtime.showtime_Date),
+    //             showtimeBegin: showtime.showtime_Begin.substr(0, 5),
+    //         })
+    //     });
+    // }
+
+    // res.send(defaultShowtimes)
+
+
+    res.render('home', { allCineplexes, defaultShowtimes, hideSlideHeader });
 });
+
+//GỬI QUA BĂNG AJAX
+router.post('/suat-chieu-cua-rap', async (req, res) => {
+    // const id = Number(req.params.id);
+    const id = Number(req.body.cineplexID);
+    const cinemasOfCineplex = await Cinema.findAll({ where: { CineplexCineplexID: id } });
+    const cinemaArr = [];
+    cinemasOfCineplex.forEach(cinema => {
+        cinemaArr.push(cinema.cinema_ID);
+    });
+
+    // TẤT CẢ SUẤT CHIẾU CỦA CÁC RẠP VỪA LẤY
+    const ShowtimesOfCineplex = await Showtime.findAll({
+        where: {
+            showtime_Cinema: {
+                [Op.in]: cinemaArr,
+            }
+        },
+        order: [
+            ['showtime_Date', 'ASC']
+        ],
+        include: [{ model: Film }],
+    })
+
+
+    res.json(ShowtimesOfCineplex);
+})
 
 router.get('/:slug', (req, res) => {
     res.render('404NotFound');
