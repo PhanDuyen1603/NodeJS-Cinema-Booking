@@ -117,8 +117,7 @@
             margin-top: 20px;
             text-align: center;
         }
-        
-        .navbar-default .navbar-nav>.active>a,
+        /* .navbar-default .navbar-nav>.active>a,
         .navbar-default .navbar-nav>.active>a:focus,
         .navbar-default .navbar-nav>.active>a:hover,
         .navbar-nav>.active>a:active {
@@ -130,6 +129,7 @@
             color: #555;
             background-color: #e7e7e7;
         }
+         */
         
         .title-movie {
             text-decoration: none;
@@ -139,6 +139,26 @@
             width: 185px;
         }
         
+        .row-2-about-gift-card ul li {
+            font-size: 16px !important;
+        }
+        
+        .content-about-gift-card p {
+            font-size: 16px;
+        }
+        
+        .content-term-con-gift-term li {
+            font-size: 15px;
+        }
+        
+        .title-gift-card h1 {
+            color: #333 !important;
+            font-size: 24px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-family: Myriad Pro;
+        }
         
         .col-md-3.col-sm-3.movie-item {
             margin-bottom: 20px;
@@ -504,7 +524,7 @@
             height: 40px;
             line-height: 40px;
             border-left: 3px solid black;
-            border-right : 3px solid black;
+            border-right: 3px solid black;
             background-color: #AA5454;
             padding: 10px 20px;
             margin: auto;
@@ -924,6 +944,145 @@
             margin-bottom: 20px;
         }
         
+        .col1-layout .col-main {
+            float: none;
+            width: auto;
+            padding: 0;
+        }
+        
+        .cms-page-view .std {
+            padding: 0;
+            text-align: justify;
+        }
+        
+        .page-gift-card {
+            width: 980pX;
+            margin: 0 auto;
+        }
+        
+        .banner-gift-card {
+            float: left;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .cms-page-view .std img,
+        .cms-no-route .std img {
+            max-width: 100%;
+        }
+        
+        .banner-gift-card img {
+            display: inline;
+        }
+        
+        .about-gift-card {
+            float: left;
+            width: 100%;
+        }
+        
+        .about-gift-card>div {
+            float: left;
+            width: 100%;
+        }
+        
+        .cms-page-view .std p,
+        .cms-no-route .std p {
+            color: #636363;
+            font-family: Verdana, Arial, sans-serif;
+            font-size: 16px !important;
+            line-height: 24px;
+        }
+        
+        .term-gift-card {
+            float: left;
+            width: 100%;
+            margin-bottom: 5px;
+        }
+        
+        .term-gift-card h2 {
+            color: #333 !important;
+            font-size: 24px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-family: Myriad Pro;
+        }
+        
+        .content-term-con-gift-term {
+            float: left;
+            width: 100%;
+            position: relative;
+        }
+        
+        .content-term-con-gift-term h2 {
+            position: absolute;
+            z-index: 200;
+            top: -95px;
+            right: 0px;
+        }
+        
+        .cms-page-view .std img,
+        .cms-no-route .std img {
+            max-width: 100%;
+        }
+        
+        .content-term-con-gift-term ul {
+            float: left;
+            width: 90%;
+            padding-left: 20px;
+        }
+        
+        .cms-page-view .std li,
+        .cms-no-route .std li {
+            color: #636363;
+            font-family: Verdana, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 24px;
+        }
+        
+        .content-term-con-gift-term ul li {
+            float: left;
+            width: 100%;
+            list-style: disc;
+        }
+        
+        .cms-page-view .std p,
+        .cms-no-route .std p {
+            color: #636363;
+            font-family: Verdana, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 24px;
+        }
+        
+        .row-2-about-gift-card ul li {
+            float: left;
+            width: 100%;
+            list-style: disc;
+        }
+        
+        .row-2-about-gift-card {
+            float: left;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .row-2-about-gift-card h2 {
+            float: left;
+            width: 44%;
+            margin-right: 2%;
+        }
+        
+        .row-2-about-gift-card ul {
+            float: left;
+            width: 53%;
+        }
+        
+        .content-term-con-gift-term {
+            float: left;
+            width: 100%;
+            position: relative;
+        }
+        
         #lienhe {
             width: 100%;
             padding: 50px 0;
@@ -934,6 +1093,11 @@
         
         .btnIntro {
             width: 110%;
+        }
+        
+        .main {
+            margin: 0 auto;
+            margin-top: 30px;
         }
         
         .imgGioiThieu {
