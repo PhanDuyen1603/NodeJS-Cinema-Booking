@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="69a16346-6e37-4a6b-89d1-740f45dbafa0" name="Default Changelist" comment="add xml" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="vinh.dev" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="1taJSEL8BGK3dIPa2PAmqrbHEeG" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Admin\OneDrive\Desktop\NodeJS-Cinema-Booking" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Admin\OneDrive\Desktop\NodeJS-Cinema-Booking" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="69a16346-6e37-4a6b-89d1-740f45dbafa0" name="Default Changelist" comment="" />
+      <created>1623001268848</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1623001268848</updated>
+      <workItem from="1623001273026" duration="2754000" />
+      <workItem from="1623004401303" duration="2112000" />
+      <workItem from="1624032451966" duration="103000" />
+      <workItem from="1624032557634" duration="55000" />
+      <workItem from="1624032629951" duration="764000" />
+      <workItem from="1624190117835" duration="1979000" />
+    </task>
+    <task id="LOCAL-00001" summary="update code">
+      <created>1623001644090</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1623001644090</updated>
+    </task>
+    <task id="LOCAL-00002" summary="update ensure_logged_in_admin.js">
+      <created>1623001804562</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1623001804562</updated>
+    </task>
+    <task id="LOCAL-00003" summary="update email.js đổi email xác thực">
+      <created>1623001966271</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1623001966271</updated>
+    </task>
+    <task id="LOCAL-00004" summary="update film.js thay đổi giá trị null thành true">
+      <created>1623002026667</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1623002026667</updated>
+    </task>
+    <task id="LOCAL-00005" summary="update user.js">
+      <created>1623002078908</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1623002078908</updated>
+    </task>
+    <task id="LOCAL-00006" summary="update file public (đổi tên hình)">
+      <created>1623002217092</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1623002217092</updated>
+    </task>
+    <task id="LOCAL-00007" summary="update admin.js (thêm comment cho từng code)">
+      <created>1623002572205</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1623002572205</updated>
+    </task>
+    <task id="LOCAL-00008" summary="update forgotPassword.js (thêm comment cho từng code)">
+      <created>1623002632186</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1623002632186</updated>
+    </task>
+    <task id="LOCAL-00009" summary="update home.js (thêm router.get('/:slug')...)">
+      <created>1623002893960</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1623002893960</updated>
+    </task>
+    <task id="LOCAL-00010" summary="update home.js (thêm comment cho dễ nhìn và code thêm router.get('/:slug')...)">
+      <created>1623002924736</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1623002924736</updated>
+    </task>
+    <task id="LOCAL-00011" summary="update home.js (thêm comment cho dễ nhìn, code thêm router.get('/:slug')... và tạo thêm string xuất ra thông báo rõ ràng hơn)">
+      <created>1623003065200</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1623003065200</updated>
+    </task>
+    <task id="LOCAL-00012" summary="update updateInfo.js (thêm comment cho dễ nhìn, code thêm router.get('/:slug')... )">
+      <created>1623003138126</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1623003138126</updated>
+    </task>
+    <task id="LOCAL-00013" summary="update code">
+      <created>1623003295337</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1623003295337</updated>
+    </task>
+    <task id="LOCAL-00014" summary="update code (sai đang tìm cách fix)">
+      <created>1623004449510</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1623004449510</updated>
+    </task>
+    <task id="LOCAL-00015" summary="update code (sai đang tìm cách fix)">
+      <created>1623004774297</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1623004774297</updated>
+    </task>
+    <task id="LOCAL-00016" summary="update code">
+      <created>1623005749756</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1623005749756</updated>
+    </task>
+    <task id="LOCAL-00017" summary="update findall.js (thêm /update vào tag link href của trang admin để quản lý theo yêu cầu)">
+      <created>1623006440449</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1623006440449</updated>
+    </task>
+    <task id="LOCAL-00018" summary="update admin.js (thêm /update vào tag link href của trang admin để quản lý theo yêu cầu)">
+      <created>1623006460305</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1623006460305</updated>
+    </task>
+    <task id="LOCAL-00019" summary="add README.md.md">
+      <created>1624190977605</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1624190977605</updated>
+    </task>
+    <task id="LOCAL-00020" summary="add xml">
+      <created>1624191005805</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1624191005805</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="tu3.dev" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="tu3.dev" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="update ensure_logged_in_admin.js" />
+    <MESSAGE value="update email.js đổi email xác thực" />
+    <MESSAGE value="update film.js thay đổi giá trị null thành true" />
+    <MESSAGE value="update user.js" />
+    <MESSAGE value="update file public (đổi tên hình)" />
+    <MESSAGE value="update admin.js (thêm comment cho từng code)" />
+    <MESSAGE value="update forgotPassword.js (thêm comment cho từng code)" />
+    <MESSAGE value="update home.js (thêm router.get('/:slug')...)" />
+    <MESSAGE value="update home.js (thêm comment cho dễ nhìn và code thêm router.get('/:slug')...)" />
+    <MESSAGE value="update home.js (thêm comment cho dễ nhìn, code thêm router.get('/:slug')... và tạo thêm string xuất ra thông báo rõ ràng hơn)" />
+    <MESSAGE value="update updateInfo.js (thêm comment cho dễ nhìn, code thêm router.get('/:slug')... )" />
+    <MESSAGE value="update code (sai đang tìm cách fix)" />
+    <MESSAGE value="update code" />
+    <MESSAGE value="update findall.js (thêm /update vào tag link href của trang admin để quản lý theo yêu cầu)" />
+    <MESSAGE value="update admin.js (thêm /update vào tag link href của trang admin để quản lý theo yêu cầu)" />
+    <MESSAGE value="add reame.md" />
+    <MESSAGE value="add README.md.md" />
+    <MESSAGE value="add xml" />
+    <option name="LAST_COMMIT_MESSAGE" value="add xml" />
+  </component>
+</project>
