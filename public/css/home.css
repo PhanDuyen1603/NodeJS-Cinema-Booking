@@ -118,19 +118,11 @@
             margin-top: 20px;
             text-align: center;
         }
-        /* .navbar-default .navbar-nav>.active>a,
-        .navbar-default .navbar-nav>.active>a:focus,
-        .navbar-default .navbar-nav>.active>a:hover,
-        .navbar-nav>.active>a:active {
+
+        .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
             color: #555;
-            background-color: #e7e7e7;
+            background: none !important;
         }
-        
-        .navbar-nav>.active>a {
-            color: #555;
-            background-color: #e7e7e7;
-        }
-         */
         
         .title-movie {
             text-decoration: none;
