@@ -60,23 +60,23 @@
                                                     </div>
                                                     <% } %>
                                                         <% } else { %>
-                                                            <!-- <% for (var z in cinemaWidth) { %>
-                                                                            <div class="row">
-                                                                                <% for (var i=0; i <
-                                                                                    showtime.Cinema.cinema_Width; i++) {
-                                                                                    %>
-                                                                                    <div class="seat seat-standard active"
-                                                                                        onclick="selected(this)"
-                                                                                        loc="<%= cinemaWidth[z]%><%= i+1%>"
-                                                                                        id="<%= cinemaWidth[z]%><%= i+1%>"
-                                                                                        price="95000">
-                                                                                        <%= cinemaWidth[z]%>
-                                                                                            <%= i+1 %>
-                                                                                    </div>
-                                                                                    <% } %>
-                                                                            </div>
-                                                                            <% } %> -->
-                                                            <% } %>
+                                                            <% for (var z in cinemaWidth) { %>
+                                                                <div class="row">
+
+                                                                    <!-- MỖI HÀNG NGANG CÓ NHIỀU HÀNG DỌC   -->
+                                                                    <% for (var i=1; i <=showtime.Cinema.cinema_Length;
+                                                                        i++) { %>
+                                                                        <div class="seat seat-standard active"
+                                                                            zone="Thường" onclick="selected(this)"
+                                                                            loc="<%= cinemaWidth[z] + i%>"
+                                                                            id="<%= cinemaWidth[z] + i %>"
+                                                                            price="<%= Number(showtime.showtime_Price + 20000) %>">
+                                                                            <%= cinemaWidth[z] + i %>
+                                                                        </div>
+                                                                        <% } %>
+                                                                </div>
+                                                                <% } %>
+                                                                    <% } %>
                                 </div>
                                 <!-- END ticketbox -->
 
