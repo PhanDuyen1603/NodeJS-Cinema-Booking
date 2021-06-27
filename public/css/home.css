@@ -52,7 +52,8 @@
         
         .ctnGioiThieu>h3 {
             font-weight: 600;
-            font-size: 26px;
+            font-size: 29px;
+            margin-bottom: 15px;
         }
         
         h3.marginMap,
@@ -939,7 +940,7 @@
         
         .contentGioiThieu {
             width: 90%;
-            font-size: 15px;
+            font-size: 17px;
             margin-top: 20px;
             margin-bottom: 20px;
         }
