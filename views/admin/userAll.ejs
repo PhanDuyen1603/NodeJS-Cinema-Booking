@@ -1,0 +1,40 @@
+<h1 style="text-align: center; font-weight: 600;">DANH SÁCH TÀI KHOẢN NGƯỜI DÙNG</h1>
+<div class="container">
+    <div id="table">
+        <% if(userAll) { %>
+            <% if(userAll.length!=0){ %>
+                <table>
+                    <tr>
+                        <th>STT</th>
+                        <th>Họ và Tên </th>
+                        <th>Email </th>
+                        <th>Số điên thoại người dùng</th>
+                        <th>Thao tác</th>
+                    </tr>
+                    <% for (let i=0;i < userAll.length ; i++ ) { %>
+                        <tr>
+                            <td>
+                                <%= i+1 %>
+                            </td>
+                            <td>
+                                <%= userAll[i].user_Name %>
+                            </td>
+                            <td>
+                                <%= userAll[i].user_Email %>
+                            </td>
+                            <td>
+                                <%= userAll[i].user_NumberPhone %>
+                            </td>
+
+                            <td> <a href="/admin/user/delete/<%= userAll[i].user_ID %>"
+                                    onclick="return confirmAction()"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        <% } %>
+                </table>
+                <% }else{ %>
+                    <h1>Hiện tại hệ thống Một Chút Film chưa có user nào</h1>
+                    <% } %>
+                        <% } %>
+    </div>
+</div>

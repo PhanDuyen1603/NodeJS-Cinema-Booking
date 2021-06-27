@@ -1,0 +1,73 @@
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" />
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Đăng ký</title>
+    <link rel="stylesheet" type="text/css" href="public/css/signUp.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="container center">
+            <div class="">
+                <div class="logo logo--medium">
+                    <a href="/ " class="router-link-active"><img src="/public/image/Logo-Dien-03.png " alt="Một Chút Phim Accounts " class="logo-image" style="width: 200px" /></a>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center h-100">
+            <div class="card">
+                <h3 class="form-title font-green">Sign In</h3>
+                <div class="card-body">
+                    <!-- FORM -->
+                    <form method="post" accept-charset="utf-8" class="form signUp" role="form">
+                        <div style="
+                  text-align: center;
+                  color: rgb(224, 24, 24);
+                  font-size: 18px;
+                ">
+                            <p>
+                                <% if (typeof emailError !=='undefined' ) { %>
+                                    <%= emailError
+                  %>
+                                        <br /> Vui Lòng chọn một tài khoản khác !!
+                                        <% } %>
+                                            <% if (typeof
+                  phoneNumberError !=='undefined' ) { %>
+                                                <%= phoneNumberError %>
+                                                    <br /> Vui Lòng chọn một số điện thoại khác !!
+                                                    <% } %>
+                            </p>
+                        </div>
+
+                        <input type="email" name="user_Email" id="user_Email" value="" class="form-control input-lg form-label-group" placeholder="Email" required />
+
+                        <input type="text" name="user_Name" id="user_Name" value="" class="form-control input-lg" placeholder="Họ tên" required />
+
+                        <input type="text" name="user_NumberPhone" id="user_NumberPhone" value="" class="form-control input-lg" placeholder="Số điện thoại" required />
+
+                        <input type="password" name="user_Password" id="user_Password" value="" class="form-control input-lg" placeholder="Mật khẩu" required />
+
+                        <input type="password" name="user_ConfirmPassword" id="user_ConfirmPassword" value="" class="form-control input-lg" placeholder="Nhập lại mật khẩu" required />
+
+                        <br />
+                        <button class="btn green uppercase" type="submit">
+                Tạo tài khoản
+              </button>
+                        <br />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

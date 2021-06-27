@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Thông tin vé</title>
+
+    <script src="//maxcdn.  bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="/public/js/jquery/user/jquery-1.11.1.min.js"></script>
+    <script src="/public/js/jquery/user/jquery-latest.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <script src="/public/js/jquery/jquery-1.10.2.min.js"></script>
+    <script src="/public/js/jquery/noconflict.js"></script>
+    <script src="/public/js/jquery/varien_format_js.js"></script>
+    <script type="text/javascript" src="/public/js/qrcode.min.js"></script>
+    <script src="/util/formatSth.js"></script>
+    <link rel="stylesheet" type="text/css" href="/public/css/user/infoUser.css">
+
+</head>
+
+<body class="bgInfoUser" onload=onReady()>
+    <div class="row">
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+            <h1 style="text-align: center; color: black; font-weight: bold">Thông tin đặt chỗ của bạn</h1>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+            <div style="text-align: right; padding-right: 20%; margin-top: 20px ">
+                <% if(typeof(backToUser)=='undefined' ){ %>
+                    <a href="/"><button class="btnuser0">Trang chủ</button></a>
+                    <% }else{ %>
+                        <a href="/user/thong-tin-ca-nhan"><button class="btnuser0">Trở về</button></a>
+                        <% }%>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row profile">
+            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
+            </div>
+
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                <img src="<%= currentShowtime.Film.film_Image %>" alt="Không load được ảnh"
+                    style="object-fit: contain; height: 460px">
+            </div>
+
+            <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7">
+                <div class="profile-content">
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                        <div>
+                            <div id="id_qrcode"></div>
+                        </div>
+                    </div>
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                        <p>
+                            <%= booking.booking_ID %>
+                        </p>
+                    </div>
+
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                        <!-- <span>Tên phim:</span> -->
+                    </div>
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                        <p style="font-size: 30px; color:#E40002;text-transform: uppercase;">
+                            <%= currentShowtime.Film.film_Name %>
+                        </p>
+                    </div>
+
+
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                        <span>Cụm rạp : </span>
+                    </div>
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                        <p>
+                            <b>
+                                <%= currentShowtime.Cinema.Cineplex.cineplex_Name %>
+                            </b>
+                        </p>
+                    </div>
+
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                        <span>Rạp chiếu : </span>
+                    </div>
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                        <p>
+                            <b>
+                                <%= currentShowtime.Cinema.cinema_Name %>
+                            </b>
+                        </p>
+                    </div>
+
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                        <span>Ghế : </span>
+                    </div>
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                        <p>
+                            <b>
+                                <%= booking.booking_Seat %>
+                            </b>
+                        </p>
+                    </div>
+
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                        <span>Ngày chiếu : </span>
+                    </div>
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                        <p>
+                            <b>
+                                <%= showtimeDate %>
+                            </b>
+                        </p>
+                    </div>
+
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                        <span>Giờ chiếu : </span>
+                    </div>
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                        <p>
+                            <b>
+                                <%= currentShowtime.showtime_Begin.substr(0,5) %> - <%=
+                                        currentShowtime.showtime_End.substr(0,5) %>
+                            </b>
+                        </p>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                        <span>Ngày đặt chỗ: </span>
+                    </div>
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                        <p>
+                            <b>
+                                <%= bookingDate %> - <%= booking.booking_Time %>
+                            </b>
+                        </p>
+                    </div>
+
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                        <span>Tổng tiền : </span>
+                    </div>
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                        <b>
+                            <%= totalPrice %>
+                        </b>
+                    </div>
+
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3" style="margin-top: 10px;">
+                        <span>Lưu ý :</span>
+                    </div>
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9" style="margin-top: 10px;">
+                        <p><i>Thông tin đặt chỗ cũng đã được gửi về mail và số điện thoại mà bạn đã đăng ký. Vui lòng
+                                mang
+                                hoá đơn đặt chỗ đến tại rạp để nhận vé xem phim !!</i></p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
+
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        function onReady() {
+            var qrcode = new QRCode("id_qrcode", {
+                text: "<%= booking.booking_ID %>",
+                width: 75,
+                height: 75,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+
+
+        $j('.profile-content .price_UI').html(formatCurrency($j("#price_Total").attr('value'), { "pattern": "%s\u00a0\u20ab", "precision": 0, "requiredPrecision": 0, "decimalSymbol": ",", "groupSymbol": ".", "groupLength": 3, "integerRequired": 1 }));
+    </script>
+
+</body>
+
+</html>
