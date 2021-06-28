@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const db = require('./db.js');
+const db = require('./db');
 const Booking = require('./Booking');
 
 const Ticket = db.define('Ticket', {

@@ -1,7 +1,7 @@
 const Router = require('express').Router;
 const fs = require('fs');
-const user = require('../models/User.js');
-const sendEmail = require('../models/email.js');
+const user = require('../models/User');
+const sendEmail = require('../models/email');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const router = new Router();
