@@ -9,7 +9,6 @@ router.get('/', function (req, res) {
 });
 
 
-
 // [POST] /login
 router.post('/', async function (req, res) {
 	const { txtUserEmail, txtUserPassword } = req.body;
