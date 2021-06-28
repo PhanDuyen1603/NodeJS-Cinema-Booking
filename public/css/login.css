@@ -45,7 +45,6 @@ input[type="checkbox"] {
 .login-options {
     margin-top: 30px;
     margin-bottom: 30px;
-    overflow: hidden;
 }
 
 .login-options h4 {
@@ -56,8 +55,9 @@ input[type="checkbox"] {
 }
 
 .login-options .social-icons {
-    float: right;
+    /* float: right; */
     padding-top: 3px;
+  
 }
 
 .social-icons li {

@@ -68,15 +68,17 @@
         <div id="show_showtimes">
             <% if(defaultShowtimes !=null){ %>
                 <% for (var i=0; i < defaultShowtimes.length; i++) { %>
-                    <a href="/user/mua-ve/<%=defaultShowtimes[i].showtime_ID%>" class="content-rap-box-btn"
-                        style="font-size: 20px; padding: 5px 10px;">
-                        <%= defaultShowtimes[i].Film.film_Name %> <br>
-                            <%= defaultShowtimes[i].showtime_Begin %> -
-                                <%= defaultShowtimes[i].showtime_Date %>
-
-                    </a>
-                    <% } %>
-                        <% } %>
+                    <% var today=new Date(); %>
+                        <% var showtimeDate=new Date(defaultShowtimes[i].showtime_Date) %>
+                            <% if(showtimeDate> today){ %>
+                                <a href="/user/mua-ve/<%=defaultShowtimes[i].showtime_ID%>" class="content-rap-box-btn"
+                                    style="font-size: 20px; padding: 5px 10px;">
+                                    <%= defaultShowtimes[i].Film.film_Name %> <br>
+                                        <%= defaultShowtimes[i].showtime_Begin %> -
+                                            <%= defaultShowtimes[i].showtime_Date %>
+                                </a>
+                                <% }} %>
+                                    <% } %>
         </div>
     </div>
 
@@ -169,6 +171,7 @@
 
                             // CHỈ SHOW SUẤT CHIẾU CHƯA DIỄN RA
                             if (showtimeDate > today) {
+
                                 var formattedDate = "";
 
                                 if (showtimeDate.getDate() < 10) {
@@ -186,8 +189,7 @@
                                 formattedDate += showtimeDate.getFullYear();
                                 htmlContent += `<a href="/user/mua-ve/${showtime.showtime_ID}" class="content-rap-box-btn" style="font-size: 20px; padding: 5px 10px;">
                             ${showtime.Film.film_Name} <br>    
-                            ${showtime.showtime_Begin.substr(0, 5)} - ${formattedDate}
-                            
+                            ${showtime.showtime_Begin.substr(0, 5)} - ${formattedDate}                           
                         </a>`;
                             }
                         });
