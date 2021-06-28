@@ -1,7 +1,7 @@
 {
   "name": "a",
   "version": "1.0.0",
-  "description": "+ fix load film ở trang home                    => done\r + fix resize image film theo kích thước cửa sổ  => done\r + fix tên film dài đổi thành ...                => done",
+  "description": "nothing",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -20,6 +20,7 @@
   "dependencies": {
     "bcrypt": "^3.0.8",
     "body-parser": "^1.19.0",
+    "case-sensitive-paths-webpack-plugin": "^2.4.0",
     "cookie-session": "^1.4.0",
     "ejs": "^2.6.1",
     "ejs-lint": "^0.3.0",
@@ -41,8 +42,5 @@
     "util": "^0.12.4",
     "winston": "^3.2.1",
     "yargs": "^13.2.4"
-  },
-  "devDependencies": {
-    "case-sensitive-paths-webpack-plugin": "^2.4.0"
   }
 }
