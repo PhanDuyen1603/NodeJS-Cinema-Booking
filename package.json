@@ -42,5 +42,7 @@
     "winston": "^3.2.1",
     "yargs": "^13.2.4"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "case-sensitive-paths-webpack-plugin": "^2.4.0"
+  }
 }
