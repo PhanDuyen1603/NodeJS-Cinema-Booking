@@ -8,6 +8,8 @@ router.get('/', function (req, res) {
 	res.render('auth/login');
 });
 
+
+
 // [POST] /login
 router.post('/', async function (req, res) {
 	const { txtUserEmail, txtUserPassword } = req.body;
@@ -40,9 +42,34 @@ router.post('/', async function (req, res) {
 		}
 
 	}
-	console.log(txtUserEmail, txtUserPassword);
 	res.redirect('back');
 });
+
+//[POST] /login/google-login
+router.post('/google-login', async (req, res) => {
+	const { txtUserEmail, txtUserPassword, txtUserName } = req.body;
+	var maxID = await user.max('user_ID');
+	const hashPassword = await bcrypt.hash(txtUserPassword, 10);
+
+	const found = await user.findOne({ where: { user_Email: txtUserEmail, } });
+	//NẾU CHƯA ĐĂNG KÝ THÌ TẠO
+	if (!found) {
+		await user.create({
+			user_ID: Number(maxID) + 1,
+			user_Email: txtUserEmail,
+			user_Name: txtUserName,
+			user_NumberPhone: '9999-999-999',
+			user_Password: hashPassword,
+			user_Address: 'Chưa cập nhật',
+		}).then((User) => {
+			req.session.user_Id = User.user_ID;
+		}).catch(console.error);
+	} else {
+		req.session.user_Id = found.user_ID;
+	}
+
+	res.redirect('/');
+})
 
 router.get('/:slug', (req, res) => {
 	res.render('404NotFound');

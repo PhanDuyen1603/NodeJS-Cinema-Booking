@@ -1,5 +1,6 @@
 <link rel="stylesheet" type="text/css" href="/public/css/logged.css">
 
+
 <div class="header-top">
     <p>
         <% if(currentUser){ %>
@@ -13,6 +14,23 @@
                     </a>
                     <% } %>
                         <% } %>
-                            <a class="btn btn-danger" href="/logout">Đăng xuất</a>
+                            <a href="/logout" class="btn btn-danger" onclick="signOut();">Đăng xuất</a>
     </p>
 </div>
+
+
+<script>
+    function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+            console.log('\n\nUser signed out.\n\n');
+        });
+    }
+
+    function onLoad() {
+        gapi.load('auth2', function () {
+            gapi.auth2.init();
+        });
+    }
+
+</script>

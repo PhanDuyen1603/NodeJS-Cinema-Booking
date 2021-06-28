@@ -93,6 +93,7 @@
     var cineplexStatistic = document.getElementById("cineplex-statistic").getAttribute('value');
     var filmStatistic = document.getElementById("film-statistic").getAttribute('value');
 
+    //BIỂU ĐỒ CỤM RẠP
     if (cineplexStatistic.length != 0) {
         var labels = [];
         var revenueData = [];
@@ -140,7 +141,7 @@
             }]
         };
         config = {
-            type: 'line',//bar
+            type: 'bar',//bar
             data,
             options: {}
         };
@@ -150,6 +151,8 @@
         );
     }
 
+
+    // BIỂU ĐỒ PHIM
     if (filmStatistic.length != 0) {
         var labels = [];
         var revenueData = [];
@@ -168,8 +171,6 @@
             labels: labels,
             datasets: [{
                 label: 'DOANH THU (đ)',
-                // backgroundColor: 'rgb(255, 99, 132)',
-                // borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: '#B20C20',
                 borderColor: '#B20C20',
                 data: revenueData,
@@ -199,7 +200,7 @@
             }]
         };
         config = {
-            type: 'line',//bar
+            type: 'bar',//bar
             data,
             options: {}
         };
