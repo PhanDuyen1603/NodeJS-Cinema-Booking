@@ -9,7 +9,7 @@ const path = require('path');
 
 // Create app 
 const app = express();
-const port = process.env.PORT || 3000;
+
 
 // Set view engine 
 app.set('view engine', 'ejs');
@@ -48,6 +48,8 @@ app.use('/user', userRouter);
 app.use('/', homeRouter);
 
 //Connect database 
+const port = process.env.PORT || 3000;
+
 db.sync().then(function () {
 	app.listen(port);
 	console.log(`Server is listening on port ${port}`);
