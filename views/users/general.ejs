@@ -1,0 +1,212 @@
+<div class="content-area user-general">
+    <div class="row">
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
+            <div class="title-info">Email / Tên tài khoản : </div>
+            <br />
+            <div class="title-info">Số điện thoại : </div>
+            <br />
+            <div class="title-info">Mật khẩu : </div>
+            <br />
+            <div class="title-info">Địa chỉ : </div>
+            <br />
+            <div class="title-info">Tổng tiền bạn đã đặt vé : </div>
+        </div>
+        <form>
+            <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                <input type="email" class="radiusInfo" name='txtUserEmail' placeholder="<%= currentUser.user_Email %>"
+                    disabled>
+                <br />
+                <br />
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                <!-- <button  class="btnuser">Cập nhật</button> -->
+                <br />
+                <br />
+            </div>
+        </form>
+
+        <form action="/user/thong-tin-ca-nhan/cap-nhat/so-dien-thoai" method="POST">
+            <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                <input type="text" class="radiusInfo" name='userPhoneNumber'
+                    placeholder="<%= currentUser.user_NumberPhone %>">
+                <br />
+                <br />
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                <button type="submit" class="btnuser">Cập nhật</button>
+                <br />
+                <br />
+            </div>
+        </form>
+
+        <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+            <input id="input_pass1" class="radiusInfo" type='password' placeholder="*****************">
+            <br />
+            <br />
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+            <button id="myBtn1" class="btnuser">Cập nhật</button>
+            <br />
+            <br />
+        </div>
+
+        <form action="/user/thong-tin-ca-nhan/cap-nhat/dia-chi" method="POST">
+            <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                <input type='text' class="radiusInfo" name="userAddress" placeholder="<%= currentUser.user_Address %>">
+                <br />
+                <br />
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                <button type="submit" class="btnuser">Cập nhật</button>
+                <br />
+                <br />
+            </div>
+        </form>
+
+        <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+            <input style="border: none; font-weight: bold;" type='text' class="radiusInfo"
+                placeholder="<%= totalMoneyOfUser %>&nbsp;₫" disabled>
+
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+            <button id="xem_chi_tiet" type="submit" class="btnuser">Xem lịch sử</button>
+        </div>
+
+
+        <!--Password lần 2-->
+        <form action=" /user/thong-tin-ca-nhan/cap-nhat/mat-khau" method="POST">
+            <div id="myModal1" class="modal">
+                <div class="modal-content">
+                    <div class="row" style="text-align: center">
+                        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9 title-info">
+                            <p>Nhập lại mật khẩu</p>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                            <span class="exit1 exit_df">&times;</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                            <input id="input_pass2" type='password' name="userPassword"
+                                placeholder="Nhập mật khẩu của bạn vào đây" style="width: 60%">
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                            <button type="submit" class="btnuser">Cập nhật</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!--Thông tin chi tiết-->
+        <div id="table_xem_chi_tiet" class="modal2">
+            <div class="title">
+                <div class="top_title">Lịch sử đặt vé </div>
+                <div class="exit_xem_chi_tiet cancelbtn" style="cursor:pointer">Thoát</div>
+                <div class="table_top" style="margin-bottom: 0">
+                    <table>
+                        <tr>
+                            <th style="width: 3%">STT </th>
+                            <th style="width: 25%">Tên phim </th>
+                            <th style="width: 10%">Ảnh phim </th>
+                            <th style="width: 10%">Ngày chiếu</th>
+                            <th style="width: 21%">Cụm rạp / Rạp</th>
+                            <th style="width: 8%">Suất chiếu</th>
+                            <th style="width: 8%">Ghế</th>
+                            <th style="width: 8%">Tổng tiền</th>
+                            <th style="width: 7%">Review</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="table">
+                <table>
+                    <% for (var i=0; i < allBookings.length; i++ ) { %>
+                        <tr>
+                            <td style="width: 3%">
+                                <%= i+1 %>
+                            </td>
+                            <td style="width: 25%" class="title-movie">
+                                <%= allBookings[i].Showtime.Film.film_Name %>
+                            </td>
+                            <td style="width: 10%">
+                                <img src="<%= allBookings[i].Showtime.Film.film_Image %>">
+                            </td>
+                            <td style="width: 10%">
+                                <% var d=new Date(allBookings[i].Showtime.showtime_Date); %>
+                                    <%= d.getDate(); %>
+                                        /
+                                        <%= d.getMonth()+1; %>
+                                            /
+                                            <%= d.getFullYear(); %>
+                            </td>
+                            <td style="width: 21%">
+                                <%= allBookings[i].Showtime.Cinema.Cineplex.cineplex_Name %> / <%=
+                                        allBookings[i].Showtime.Cinema.cinema_Name %>
+                            </td>
+                            <td style="width: 8%">
+                                <%= allBookings[i].Showtime.showtime_Begin %>
+                                    <%= allBookings[i].Showtime.showtime_End %>
+                            </td>
+
+                            <td style="width: 8%">
+                                <%= allBookings[i].booking_Seat %>
+                            </td>
+                            <td style="width: 8%" id="money_ve" class="moneyve"
+                                value="<%= allBookings[i].booking_TotalPrice %>">
+                                &nbsp;₫</td>
+                            <td style="width: 7%">
+                                <a href="/user/thong-tin-ve/<%= allBookings[i].booking_ID%>">
+                                    <button class="btnuser0 btn-review-ticket">Xem</button></a>
+                            </td>
+                        </tr>
+                        <% } %>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* Nút đổi password*/
+        var modal1 = document.getElementById("myModal1");
+        var btn1 = document.getElementById("myBtn1");
+        var span1 = document.getElementsByClassName("exit1")[0];
+        btn1.onclick = function () {
+            modal1.style.display = "block";
+        }
+        span1.onclick = function () {
+            modal1.style.display = "none";
+        }
+        window.onclick = function (event) {
+            if (event.target == modal1) {
+                modal1.style.display = "none";
+            }
+        }
+        /* Xét 2 pass đã nhập có trùng nhau hay không*/
+        $("#input_pass2").change(function () {
+            var p = $("#input_pass1").val();
+            if ($(this).val() != p) {
+                alert("Mật khẩu không khớp! Vui lòng kiểm tra lại.");
+            }
+        });
+
+        /* Thông tin chi tiết*/
+        var modal_total = document.getElementById("table_xem_chi_tiet");
+        var btn_total = document.getElementById("xem_chi_tiet");
+        var span_total = document.getElementsByClassName("exit_xem_chi_tiet")[0];
+        btn_total.onclick = function () {
+            modal_total.style.display = "block";
+        }
+        span_total.onclick = function () {
+            modal_total.style.display = "none";
+        }
+        window.onclick = function (event) {
+            if (event.target == modal_total) {
+                modal_total.style.display = "none";
+            }
+        }
+
+        $j('.content-area .totalMoney').html(formatCurrency($j("#totalMoney_all").attr('value'), { "pattern": "%s\u00a0\u20ab", "precision": 0, "requiredPrecision": 0, "decimalSymbol": ",", "groupSymbol": ".", "groupLength": 3, "integerRequired": 1 }));
+        $j('.content-area .moneyve').html(formatCurrency($j("#money_ve").attr('value'), { "pattern": "%s\u00a0\u20ab", "precision": 0, "requiredPrecision": 0, "decimalSymbol": ",", "groupSymbol": ".", "groupLength": 3, "integerRequired": 1 }));
+    </script>
+</div>

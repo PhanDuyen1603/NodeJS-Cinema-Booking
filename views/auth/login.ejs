@@ -1,0 +1,150 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" />
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- ĐĂNG NHẬP BẰNG GOOGLE -->
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id" content="846732466367-ga9fi2bh7dpuki3p09eq6h0i4483pinu.apps.googleusercontent.com">
+<!------ Include the above in your HEAD tag ---------->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Đăng nhập Một Chút Phim</title>
+    <!--Made with love by Mutiullah Samim -->
+
+    <!--Bootsrap 4 CDN-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
+
+    <!--Fontawesome CDN-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+
+    <!--Custom styles-->
+    <link rel="stylesheet" type="text/css" href="/public/css/login.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="container center row">
+            <div class="">
+                <div class="logo logo--medium">
+                    <a href="/ " class="router-link-active"><img src="/public/image/Logo-Dien-03.png "
+                            alt="Một Chút Phim Accounts " class="logo-image" style="width: 200px" /></a>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center h-100">
+
+            <div class="card">
+                <h3 class="form-title font-green">Sign In</h3>
+                <div class="card-body">
+
+                    <!-- LOGIN FORM -->
+                    <form action="" method="POST">
+                        <div class="input-group form-group">
+                            <input type="email" name="txtUserEmail" id="txtUserEmail" class="form-control"
+                                placeholder="Email" required />
+                        </div>
+                        <div class="input-group form-group">
+                            <input type="password" name="txtUserPassword" id="txtUserPassword" class="form-control"
+                                placeholder="Password" required />
+                        </div>
+                        <div class="justify-content-center">
+                            <% if ( typeof loginError !=='undefined' ) { %>
+                                <label style="color: #e61515;">
+                                    <%= loginError %>
+                                </label>
+                                <% } if(typeof activateError !=='undefined' ){ %>z
+                                    <p style="color: #e61515;">
+                                        <%= activateError %>
+                                    </p>
+                                    <p>
+                                        <a href="/signup/confirm">Nhấp vào để tiến hành kích hoạt</a>
+                                    </p>
+                                    <% } %>
+                        </div>
+                        <div class="form-actions">
+                            <input type="submit" value="LOGIN" class="btn green uppercase" />
+                            <input type="checkbox" />Remember
+                            <a href="/forgotPassword" style="margin-left: 10px;">Forgot Password?</a>
+                        </div>
+                    </form>
+
+                    <div class="login-options">
+
+                        <h4>Or login with</h4>
+
+                        <ul class="social-icons">
+                            <!-- GOOGLE LOGIN -->
+                            <div style="float: right;" id="btn-login-google" class="g-signin2"
+                                data-onsuccess="onSignIn"></div>
+
+
+                            <!-- <li>
+                                <a class="social-icon-color facebook" data-original-title="facebook"
+                                    href="javascript:;"></a>
+                            </li>
+                            <li>
+                                <a class="social-icon-color twitter" data-original-title="Twitter"
+                                    href="javascript:;"></a>
+                            </li>
+                            <li>
+                                <a class="social-icon-color googleplus" data-original-title="Goole Plus"
+                                    href="javascript:;"></a>
+                            </li>
+                            <li>
+                                <a class="social-icon-color linkedin" data-original-title="Linkedin"
+                                    href="javascript:;"></a>
+                            </li> -->
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="create-account">
+                    <a href="/signUp" class="uppercase" id="register-btn">Create an account</a>
+                </div>
+
+
+                <form id="form-login-google" method="POST" action="/login/google-login" hidden>
+                    <input id="user-name" name="txtUserName" value="">
+                    <input id="user-email" name="txtUserEmail" value="">
+                    <input id="user-password" name="txtUserPassword" value="1">
+                    <!-- <input id="user-name" value=""> -->
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function onSignIn(googleUser) {
+            var profile = googleUser.getBasicProfile();
+
+            if (profile) {
+                var userName = document.getElementById('user-name');
+                userName.setAttribute('value', profile.getName());
+                var userEmail = document.getElementById('user-email');
+                userEmail.setAttribute('value', profile.getEmail());
+                var userPassword = document.getElementById('user-password');
+                userPassword.setAttribute('value', String(Date.now()));
+
+                var googleLoginForm = document.getElementById('form-login-google');
+                googleLoginForm.submit();
+            }
+
+            // console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            // console.log('Image URL: ' + profile.getImageUrl());
+
+        }
+
+
+
+
+    </script>
+
+</body>
+
+</html>

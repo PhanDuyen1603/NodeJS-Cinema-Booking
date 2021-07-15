@@ -1,0 +1,58 @@
+<div class="content-area">
+    <div class="tab-movies">
+        <div class="tab-movies-line">
+            <ul class="nav nav-tabs movie-home">
+                <li class="active"><a href="#phim_dang_chieu" data-toggle="tab" aria-expanded="true">Phim đang chiếu</a>
+                </li>
+                <li class=""><a href="#phim_sap_chieu" data-toggle="tab" aria-expanded="false">Phim sắp chiếu</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+
+                <!--Phim đang chiếu-->
+                <div id="phim_dang_chieu" class="tab-pane active">
+                    <div id="design-row-film-index" class="row">
+                        <% for (var i = 0; i < searchNameFilm.searchNameFilmPublic.length; i++ ) { %>
+                            <div class="col-md-3 col-sm-3 movie-item">
+                                <div class="article-movie-home">
+                                    <a href="/phim/<%= searchNameFilm.searchNameFilmPublic[i].dataValues.film_ID %>">
+                                        <img id="img-film-indexContent film-form" src="<%= searchNameFilm.searchNameFilmPublic[i].dataValues.film_Image %>"
+                                            alt="Không load được ảnh" width="185" height="260">
+                                    </a>
+                                    <div class="movie-technology">
+                </div>
+                                </div>
+                                <a href="/phim/<%= searchNameFilm.searchNameFilmPublic[i].dataValues.film_ID %>">
+                                    <div class="title-movie">
+                                        <h4><%= searchNameFilm.searchNameFilmPublic[i].dataValues.film_Name %></h4>
+                                    </div>
+                                </a>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!--Phim sắp chiếu-->
+                <div id="phim_sap_chieu" class="tab-pane">
+                    <div id="design-row-film-index" class="row">
+                        <% for (var i = 0; i < searchNameFilm.searchNameFilmNoPublic.length; i++ ) { %>
+                            <div class="col-md-3 col-sm-3 movie-item">
+                                <div class="article-movie-home">
+                                    <a href="/phim/<%= searchNameFilm.searchNameFilmNoPublic[i].dataValues.film_ID %>">
+                                        <img src="<%= searchNameFilm.searchNameFilmNoPublic[i].dataValues.film_Image %>"
+                                            alt="Không load được ảnh" width="185px" height="260px">
+                                    </a>
+                                </div>
+                                <a href="/phim/<%= searchNameFilm.searchNameFilmNoPublic[i].dataValues.film_ID %>">
+                                    <div class="title-movie">
+                                        <h4><%= searchNameFilm.searchNameFilmNoPublic[i].dataValues.film_Name %></h4>
+                                    </div>
+                                </a>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
