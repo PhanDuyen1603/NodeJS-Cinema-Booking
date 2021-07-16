@@ -16,13 +16,13 @@ app.set('view engine', 'ejs');
 app.set('views', './views');
 app.use('/public', express.static('public'));
 app.use(express.urlencoded({
-	extended: true,
+    extended: true,
 }));
 
 app.use(cookieSession({
-	name: 'session',
-	keys: [process.env.COOKIE_KEY || 'secret'],
-	maxAge: 24 * 60 * 60 * 1000
+    name: 'session',
+    keys: [process.env.COOKIE_KEY || 'secret'],
+    maxAge: 24 * 60 * 60 * 1000
 }));
 
 // MIDDLEWARES
@@ -31,7 +31,7 @@ app.use(authMiddleWare);
 
 //ROUTERS
 const forgotPasswordRouter = require('./routes/forgotPassword');
-const loginRouter = require('./routes/login');
+const loginRouter = require('./routes/Login');
 const signupRouter = require('./routes/signup');
 const adminRouter = require('./routes/admin');
 const userRouter = require('./routes/user');
@@ -50,10 +50,10 @@ app.use('/', homeRouter);
 //Connect database 
 const port = process.env.PORT || 3000;
 
-db.sync().then(function () {
-	app.listen(port);
-	console.log(`Server is listening on port ${port}`);
-}).catch(function (err) {
-	console.log(err);
-	process.exit(1);
+db.sync().then(function() {
+    app.listen(port);
+    console.log(`Server is listening on port ${port}`);
+}).catch(function(err) {
+    console.log(err);
+    process.exit(1);
 });

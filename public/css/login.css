@@ -47,17 +47,22 @@ input[type="checkbox"] {
     margin-bottom: 30px;
 }
 
-.login-options h4 {
+div#btn-login-google {
     float: left;
+    margin-left: 95px;
+    margin-top: 5px;
+}
+
+.login-options h4 {
     font-weight: 600;
     font-size: 15px;
     color: #7d91aa!important;
 }
 
 .login-options .social-icons {
-    /* float: right; */
-    padding-top: 3px;
-  
+    float: right;
+    padding-top: 8px;
+    padding-left: 10px !important;
 }
 
 .social-icons li {
