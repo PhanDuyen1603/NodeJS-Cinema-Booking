@@ -57,7 +57,7 @@ router.post('/google-login', async (req, res) => {
 			user_ID: Number(maxID) + 1,
 			user_Email: txtUserEmail,
 			user_Name: txtUserName,
-			user_NumberPhone: '9999-999-999',
+			user_NumberPhone: 'Chưa cập nhật',
 			user_Password: hashPassword,
 			user_Address: 'Chưa cập nhật',
 		}).then((User) => {
