@@ -27,7 +27,7 @@ const router = new Router();
 // ROUTERS FOR HEADER
 
 // [GET] /
-router.get('/', async function (req, res) {
+router.get('/', async function(req, res) {
     var dateNow = Date.now();
     var filmLimit = 12;
 
@@ -79,23 +79,23 @@ router.get('/', async function (req, res) {
 });
 
 // [GET] /gioi-thieu
-router.get('/gioi-thieu', function (req, res) {
+router.get('/gioi-thieu', function(req, res) {
     const intro = true;
     res.render('home', { intro });
 });
 
-router.get('/event', function (req, res) {
+router.get('/event', function(req, res) {
     const event = true;
     res.render('home', { event });
 });
 
-router.get('/ho-tro', function (req, res) {
+router.get('/ho-tro', function(req, res) {
     const support = true;
     res.render('home', { support });
 });
 
 // [GET] /phim
-router.get('/phim', async function (req, res) {
+router.get('/phim', async function(req, res) {
     var dateNow = Date.now();
 
     //Phim đang chiếu --> ngày chiếu <= ngày hiện tại && trạng thái: công chiếu
@@ -140,7 +140,7 @@ router.get('/phim', async function (req, res) {
     res.render('home', { film, hideSlideHeader });
 });
 
-router.get('/filmSearch', async function (req, res) {
+router.get('/filmSearch', async function(req, res) {
     var dateNow = Date.now();
     const NameFilm = req.query.txtSearch;
     const searchNameFilmPublic = await Film.findAll({
@@ -150,7 +150,7 @@ router.get('/filmSearch', async function (req, res) {
             },
             film_Public: true,
             film_Name: {
-                [Op.substring]: NameFilm,
+                [Op.iLike]: `%${NameFilm}%`
             },
         },
         order: [
@@ -164,7 +164,7 @@ router.get('/filmSearch', async function (req, res) {
             },
             film_Public: true,
             film_Name: {
-                [Op.substring]: NameFilm,
+                [Op.iLike]: `%${NameFilm}%`
             },
         },
         order: [
@@ -185,12 +185,12 @@ router.get('/filmSearch', async function (req, res) {
 });
 
 // [GET] /forgotPassword
-router.get('/forgotPassword', function (req, res) {
+router.get('/forgotPassword', function(req, res) {
     res.render('auth/forgotPassword');
 });
 
 // [GET] /logout
-router.get('/logout', function (req, res) {
+router.get('/logout', function(req, res) {
     if (req.session.user_Id) {
         delete req.session.user_Id;
     } else if (req.session.Admin) {
@@ -200,7 +200,7 @@ router.get('/logout', function (req, res) {
 });
 
 // [GET] /phim/id
-router.get('/phim/:id', async function (req, res) {
+router.get('/phim/:id', async function(req, res) {
     const id = Number(req.params.id);
     var dateNow = Date.now();
 
@@ -254,7 +254,7 @@ router.get('/phim/:id', async function (req, res) {
 });
 
 
-router.post('/suat-chieu-cua-phim', async (req, res) => {
+router.post('/suat-chieu-cua-phim', async(req, res) => {
     const { filmID, cineplexID } = req.body;
 
     //LẤY CÁC RẠP CỦA CỤM RẠP NÀY
@@ -292,7 +292,7 @@ router.post('/suat-chieu-cua-phim', async (req, res) => {
 
 
 // [GET] /he-thong-rap
-router.get('/he-thong-rap', async function (req, res) {
+router.get('/he-thong-rap', async function(req, res) {
     const allCineplexes = await Cineplex.findAll({
         order: [
             ['cineplex_ID', 'ASC']
@@ -350,7 +350,7 @@ router.get('/he-thong-rap', async function (req, res) {
 });
 
 //GỬI QUA BĂNG AJAX
-router.post('/suat-chieu-cua-rap', async (req, res) => {
+router.post('/suat-chieu-cua-rap', async(req, res) => {
     // const id = Number(req.params.id);
     const id = Number(req.body.cineplexID);
     const cinemasOfCineplex = await Cinema.findAll({ where: { CineplexCineplexID: id } });
