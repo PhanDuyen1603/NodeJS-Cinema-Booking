@@ -1,0 +1,36 @@
+<link rel="stylesheet" type="text/css" href="/public/css/logged.css">
+
+
+<div class="header-top">
+    <p>
+        <% if(currentUser){ %>
+            <% if(currentUser.user_Name !="Admin" ){ %>
+                <a class="btn btn-info" href="/user/thong-tin-ca-nhan">
+                    Xin chào:<%= currentUser.user_Name %>
+                </a>
+                <% }else{%>
+                    <a class="btn btn-info" href="/admin">
+                        Xin chào:<%= currentUser.user_Name %>
+                    </a>
+                    <% } %>
+                        <% } %>
+                            <a href="/logout" class="btn btn-danger" onclick="signOut();">Đăng xuất</a>
+    </p>
+</div>
+
+
+<script>
+    function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+            console.log('\n\nUser signed out.\n\n');
+        });
+    }
+
+    function onLoad() {
+        gapi.load('auth2', function () {
+            gapi.auth2.init();
+        });
+    }
+
+</script>

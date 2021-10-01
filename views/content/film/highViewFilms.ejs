@@ -1,0 +1,24 @@
+<% if(film.highViewFilms){ const highViewFilms=film.highViewFilms %>
+    <% for (var i=0; i < highViewFilms.length; i++ ) { %>
+        <div class="col-md-3 col-sm-3 movie-item">
+            <div class="article-movie-home">
+                <a href="/phim/<%= highViewFilms[i].film_ID %>">
+                    <img id="img-film-indexContent film-form" src="<%= highViewFilms[i].film_Image %>" alt="Không load được ảnh"
+                        width="185" height="260">
+                </a>
+                <div class="movie-technology">
+                </div>
+            </div>
+
+            <a href="/phim/<%= highViewFilms[i].film_ID %>">
+                <div class="title-movie">
+                    <h4>
+                        <%= highViewFilms[i].film_Name %>
+                    </h4>
+                </div>
+            </a>
+        </div>
+        <% } %>
+            <% }else{ %>
+                <h1>Chưa có phim nào được xem</h1>
+                <% } %>

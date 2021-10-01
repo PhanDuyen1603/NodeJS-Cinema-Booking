@@ -1,0 +1,91 @@
+<div class="content-area">
+    <div class="row">
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+            <div class="title-info">Email : </div>
+            <br />
+            <div class="title-info">Mật khẩu : </div>
+        </div>
+        <form>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                <input type="email" class="radiusInfo" name='txtUserEmail' placeholder="<%= currentUser.user_Email %>">
+                <br />
+                <br />
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                <!-- <button class="btnuser">Cập nhật</button> -->
+                <br />
+                <br />
+            </div>
+        </form>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+            <input id="input_pass" class="radiusInfo" type='password' placeholder="*************************">
+            <br />
+            <br />
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+            <button id="myBtn2" class="btnuser">Cập nhật</button>
+            <br />
+            <br />
+        </div>
+        <!--Password lần 2-->
+        <form action="/user/thong-tin-ca-nhan/cap-nhat/mat-khau" method="POST">
+            <div id="myModal2" class="modal">
+                <div class="modal-content">
+                    <div class="row" style="text-align: center">
+                        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9 title-info">
+                            <p>Nhập lại mật khẩu</p>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                            <span class="exit2 exit_df">&times;</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                            <input id="input_repass" type='password' name="userPassword"
+                                placeholder="Nhập mật khẩu của bạn vào đây" style="width: 60%">
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                            <button type="submit" class="btnuser">Cập nhật</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Get the modal
+        var modal2 = document.getElementById("myModal2");
+
+        // Get the button that opens the modal
+        var btn2 = document.getElementById("myBtn2");
+
+        // Get the <span> element that closes the modal
+        var span2 = document.getElementsByClassName("exit2")[0];
+
+        // When the user clicks the button, open the modal 
+        btn2.onclick = function () {
+            modal2.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span2.onclick = function () {
+            modal2.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal2) {
+                modal2.style.display = "none";
+            }
+        }
+
+        /* Xét 2 pass đã nhập có trùng nhau hay không*/
+        $("#input_repass").change(function () {
+            var p = $("#input_pass").val();
+            if ($(this).val() != p) {
+                alert("Mật khẩu không khớp! Vui lòng kiểm tra lại.");
+            }
+        })
+    </script>
+</div>

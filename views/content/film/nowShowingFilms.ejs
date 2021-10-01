@@ -1,0 +1,28 @@
+<% if(film.nowShowingFilms){var nowShowingFilms=film.nowShowingFilms %>
+    <% for (var i=0; i < nowShowingFilms.length; i++ ) { %>
+        <div class="col-md-3 col-sm-3 movie-item">
+            <div class="article-movie-home">
+                <a href="/phim/<%= nowShowingFilms[i].film_ID %>" class="product-image">
+                    <img id="img-film-indexContent film-form" src="<%= nowShowingFilms[i].film_Image %>" alt="Không load được ảnh"
+                    style="height: 260px;
+                    width: 185px;"
+                    >
+                    
+                </a>
+                <div class="movie-technology">
+                </div>
+
+            </div>
+
+            <a href="/phim/<%= nowShowingFilms[i].film_ID %>">
+                <div class="title-movie">
+                    <h4>
+                        <%= nowShowingFilms[i].film_Name %>
+                    </h4>
+                </div>
+            </a>
+        </div>
+        <% }%>
+            <% }else{ %>
+                <h1>Do dịch Covid-19, chưa có phim nào được công chiếu !!</h1>
+                <% } %>

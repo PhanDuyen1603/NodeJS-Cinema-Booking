@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MỘT CHÚT PHIM</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/public/css/home.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,300;0,400;0,700;1,300;1,600&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+    <!-- ĐĂNG NHẬP BẰNG GOOGLE -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id"
+        content="846732466367-4aa3ge25ndqkc4bamgm6ebqb7f8rv5iu.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+</head>
+
+<body>
+    <header>
+
+        <!--Header top-->
+        <% if (currentUser) { %>
+            <% include partials/header/logged %>
+                <% } else { %>
+                    <% include partials/header/noLogin %>
+                        <% } %>
+
+                            <!--Menu header-->
+                            <% include partials/header/menu %>
+
+                                <!--Sile header-->
+                                <!-- Render ra trang một trang khác home, nhưng không show slide -->
+                                <% if(typeof(hideSlideHeader)=='undefined' ) {%>
+                                    <% include partials/slide_header %>
+                                        <% }%>
+
+
+    </header>
+    <!-- MOVIE SELECTION -->
+    <% if (typeof homeMovieSelection !=='undefined' ) { %>
+        <% include partials/homeMovieSelection %>
+            <% } %>
+
+                <main>
+                    <!-- HỆ THỐNG RẠP-->
+                    <% if (typeof allCineplexes !=='undefined' ) { %>
+                        <% include content/cineplex %>
+                            <!-- HỖ TRỢ-->
+                            <% }if (typeof support !=='undefined' ) { %>
+                                <% include content/support %>
+                                    <!-- GIỚi THIỆU -->
+                                    <% }if (typeof intro !=='undefined' ) { %>
+                                        <% include content/intro %>
+                                            <!-- SỰ KIỆN -->
+                                            <% }if (typeof event !=='undefined' ) { %>
+                                                <% include content/event %>
+                                                    <!-- SHOW FILM -->
+                                                    <% } if (typeof film !=='undefined' ){ %>
+                                                        <% include content/showFilms %>
+                                                            <!-- CHI TIẾT PHIM -->
+                                                            <% } if (typeof currentFilm !=='undefined' ) { %>
+                                                                <% include content/film/film_details %>
+                                                                    <% } if (typeof searchNameFilm !=='undefined' ) { %>
+                                                                        <% include content/searchNameFilm %>
+                                                                            <% } %>
+                </main>
+
+                <footer>
+                    <% include partials/footer %>
+                </footer>
+</body>
+
+</html>

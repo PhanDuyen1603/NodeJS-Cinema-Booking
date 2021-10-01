@@ -1,0 +1,213 @@
+<style>
+    .container {
+        /* font-style: italic; */
+    }
+
+    #chart-container {
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    .chart {
+        width: 90%;
+        margin: auto;
+    }
+
+    h3 {
+        font-weight: bold;
+    }
+</style>
+
+<div class="container">
+    <div class="">
+        <h1 class="admin-title">Thống kê doanh thu</h1>
+        <form method="POST">
+            <label> Từ ngày: </label> <input type="date" name="fromDate" required />
+            <label> Đến ngày:</label> <input type="date" name="toDate" required />
+            <button type="submit" class="btn-statistic">Thống kê</button>
+        </form>
+    </div>
+    <br>
+
+    <% if(typeof(fromDate) !='undefined' && typeof(toDate) !='undefined' ){%>
+        <h2>
+            DOANH SỐ TỪ
+            <span style="color: red;">
+                <%= fromDate %>
+            </span>ĐẾN <span style="color: red;">
+                <%= toDate %>
+            </span>
+        </h2>
+        <% if(cineplexStatistic.length!=0){ %>
+            <div class="container">
+                <h3>CỤM RẠP</h3>
+                <div id="chart-container">
+                    <div class="chart">
+                        <h4>Tổng doanh thu</h4>
+                        <canvas id="cineplex-revenue-chart"></canvas>
+                    </div>
+                    <div class="chart">
+                        <h4>Tổng số vé đã bán</h4>
+                        <canvas id="cineplex-soldTicket-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <% }else{ %>
+                <h3>CỤM RẠP</h3>
+                <h4>
+                    <%= nonProfit %>
+                </h4>
+                <% } %>
+                    <% if(filmStatistic.length!=0){ %>
+                        <div class="container">
+                            <h3>PHIM</h3>
+                            <div class="container" id="chart-container">
+                                <div class="chart">
+                                    <h4>Tổng doanh thu</h4>
+                                    <canvas id="film-revenue-chart"></canvas>
+                                </div>
+                                <div class="chart">
+                                    <h4>Tổng số vé đã bán</h4>
+                                    <canvas id="film-soldTicket-chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <% }else{ %>
+                            <h3>PHIM</h3>
+                            <h4>
+                                <%= nonProfit %>
+                            </h4>
+                            <% } %>
+                                <%} %>
+
+</div>
+
+
+<div id="cineplex-statistic" value="<%= cineplexStatistic %>" hidden>
+</div>
+<div id="film-statistic" value="<%= filmStatistic %>" hidden>
+</div>
+
+<script>
+    var cineplexStatistic = document.getElementById("cineplex-statistic").getAttribute('value');
+    var filmStatistic = document.getElementById("film-statistic").getAttribute('value');
+
+    //BIỂU ĐỒ CỤM RẠP
+    if (cineplexStatistic.length != 0) {
+        var labels = [];
+        var revenueData = [];
+        var soldTicketData = [];
+        var data = [];
+        var config = [];
+
+        var cineplexStats = JSON.parse(cineplexStatistic);
+
+        cineplexStats.forEach(cst => {
+            labels.push(cst.cineplexName);
+            revenueData.push(cst.cineplexRevenue);
+            soldTicketData.push(cst.cineplexSoldTicketAmount)
+        });
+        data = {
+            labels: labels,
+            datasets: [{
+                label: 'DOANH THU (đ)',
+                backgroundColor: '#E84218',
+                borderColor: '#E84218',
+                data: revenueData,
+            }]
+        };
+        config = {
+            type: 'bar',//bar
+            data,
+            options: {}
+        };
+        var myChart = new Chart(
+            document.getElementById('cineplex-revenue-chart'),
+            config
+        );
+
+        data = [];
+        config = [];
+
+        //LINE CHART for sold ticket
+        data = {
+            labels: labels,
+            datasets: [{
+                label: 'VÉ ĐÃ BÁN (vé)',
+                backgroundColor: '#E84218',
+                borderColor: '#E84218',
+                data: soldTicketData,
+            }]
+        };
+        config = {
+            type: 'bar',//bar
+            data,
+            options: {}
+        };
+        var myLineChart = new Chart(
+            document.getElementById('cineplex-soldTicket-chart'),
+            config
+        );
+    }
+
+
+    // BIỂU ĐỒ PHIM
+    if (filmStatistic.length != 0) {
+        var labels = [];
+        var revenueData = [];
+        var soldTicketData = [];
+        var data = [];
+        var config = [];
+
+        var filmStats = JSON.parse(filmStatistic);
+
+        filmStats.forEach(cst => {
+            labels.push(cst.filmName);
+            revenueData.push(cst.filmRevenue);
+            soldTicketData.push(cst.filmSoldTicketAmount)
+        });
+        data = {
+            labels: labels,
+            datasets: [{
+                label: 'DOANH THU (đ)',
+                backgroundColor: '#B20C20',
+                borderColor: '#B20C20',
+                data: revenueData,
+            }]
+        };
+        config = {
+            type: 'bar',//bar
+            data,
+            options: {}
+        };
+        var myChart = new Chart(
+            document.getElementById('film-revenue-chart'),
+            config
+        );
+
+        data = [];
+        config = [];
+
+        //LINE CHART for sold ticket
+        data = {
+            labels: labels,
+            datasets: [{
+                label: 'VÉ ĐÃ BÁN (vé)',
+                backgroundColor: '#B20C20',
+                borderColor: '#B20C20',
+                data: soldTicketData,
+            }]
+        };
+        config = {
+            type: 'bar',//bar
+            data,
+            options: {}
+        };
+        var myLineChart = new Chart(
+            document.getElementById('film-soldTicket-chart'),
+            config
+        );
+    }
+
+</script>

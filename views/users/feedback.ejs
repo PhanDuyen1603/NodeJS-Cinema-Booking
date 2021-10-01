@@ -1,0 +1,41 @@
+<div class="content-area">
+    <div style="text-align: center">
+        <div style="font-weight: bold; font-size: 20px">Vui lòng nhập thông tin bên dưới, sẽ có nhân viên hỗ trợ ngay
+            khi có thể!</div>
+    </div>
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+            <strong>Số điện thoại : </strong>
+            <br />
+            <br />
+            <strong>Email :</strong>
+            <br />
+            <br />
+            <br />
+            <br />
+            <strong>Phản hồi :</strong>
+        </div>
+        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+            <input type="text" class="radiusInfo" name='txtUserNumberPhone' placeholder="Số điện thoại của bạn"
+                style="width: 240px">
+            <br />
+            <br />
+            <input type="email" class="radiusInfo" name='txtUserEmail' value="<%= currentUser.user_Email %>"
+                placeholder="Email bạn muốn nhận thư phản hồi" style="width: 240px">
+            <br />
+            <br />
+            <textarea class="radiusInfo" name='txtUserEmail' placeholder="Thắc mắc của bạn" rows="5"> </textarea>
+        </div>
+    </div>
+    <div style="text-align: right; padding-right: 20%; margin-top: 20px ">
+        <button id="feedback" class="btnuser">Gửi</button>
+    </div>
+
+    <script>
+        $("#feedback").click(function () {
+            alert("Tính năng đang được phát triển, vui lòng thử lại sau :))");
+        })
+    </script>
+</div>

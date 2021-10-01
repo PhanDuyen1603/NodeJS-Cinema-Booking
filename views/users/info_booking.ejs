@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Thông tin vé</title>
+
+    <script src="//maxcdn.  bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="/public/js/jquery/user/jquery-1.11.1.min.js"></script>
+    <script src="/public/js/jquery/user/jquery-latest.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <script src="/public/js/jquery/jquery-1.10.2.min.js"></script>
+    <script src="/public/js/jquery/noconflict.js"></script>
+    <script src="/public/js/jquery/varien_format_js.js"></script>
+    <script type="text/javascript" src="/public/js/qrcode.min.js"></script>
+    <script src="/util/formatSth.js"></script>
+    <link rel="stylesheet" type="text/css" href="/public/css/user/infoUser.css">
+
+</head>
+
+<body class="bgInfoUser" onload=onReady()>
+    <div class="row">
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+            <h1 style="text-align: center; color: black; font-weight: bold">Thông tin đặt chỗ của bạn</h1>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+            <div style="text-align: right; padding-right: 20%; margin-top: 20px ">
+                <a href="/" type="submit" class="btnuser0">Trở về trang chủ</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row profile">
+            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
+            </div>
+
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                <img src="<%= booking.Showtime.Film.film_Image %>" alt="Không load được ảnh" style="object-fit: contain; height: 460px">
+            </div>
+
+            <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7">
+                <div class="profile-content">
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                        <div>
+                            <div id="id_qrcode"></div>
+                        </div>
+                    </div>
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                        <p>
+                            <%= booking.booking_ID %>
+                        </p>
+                    </div>
+
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                        <!-- <strong>Tên phim:</strong> -->
+                    </div>
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                        <p style="font-size: 30px; color:#E40002;text-transform: uppercase;">
+                            <%= booking.Showtime.Film.film_Name %>
+                        </p>
+                    </div>
+
+
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                        <strong>Cụm rạp : </strong>
+                    </div>
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                        <p>
+                            <%= booking.Showtime.Cinema.Cineplex.cineplex_Name %>
+                        </p>
+                    </div>
+
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                        <strong>Rạp chiếu : </strong>
+                    </div>
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                        <p>
+                            <%= booking.Showtime.Cinema.cinema_Name %>
+                        </p>
+                    </div>
+
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                        <strong>Ghế : </strong>
+                    </div>
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                        <p>
+                            <%= booking.booking_Seat %>
+                        </p>
+                    </div>
+
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                        <strong>Ngày chiếu : </strong>
+                    </div>
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                        <p>
+                            <%= showtimeDate %>
+                        </p>
+                    </div>
+
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                        <strong>Giờ chiếu : </strong>
+                    </div>
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                        <p>
+                            <%= booking.Showtime.showtime_Begin %>
+                        </p>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                        <strong>Ngày đặt chỗ: </strong>
+                    </div>
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                        <p>
+                            <%= bookingDate %> -
+                                <%= booking.booking_Time %>
+                        </p>
+                    </div>
+
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                        <strong>Tổng tiền : </strong>
+                    </div>
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                        <%= booking.booking_TotalPrice %>
+                    </div>
+
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3" style="margin-top: 10px;">
+                        <strong>Lưu ý :</strong>
+                    </div>
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9" style="margin-top: 10px;">
+                        <p><i>Thông tin đặt chỗ cũng đã được gửi về mail và số điện thoại mà bạn đã đăng ký. Vui lòng
+                                mang
+                                hoá đơn đặt chỗ đến tại rạp để nhận vé xem phim !!</i></p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
+
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function onReady() {
+            var qrcode = new QRCode("id_qrcode", {
+                text: "<%= booking.booking_ID %>",
+                width: 75,
+                height: 75,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+
+
+        $j('.profile-content .price_UI').html(formatCurrency($j("#price_Total").attr('value'), {
+            "pattern": "%s\u00a0\u20ab",
+            "precision": 0,
+            "requiredPrecision": 0,
+            "decimalSymbol": ",",
+            "groupSymbol": ".",
+            "groupLength": 3,
+            "integerRequired": 1
+        }));
+    </script>
+
+</body>
+
+</html>
